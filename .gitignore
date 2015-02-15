@@ -24,3 +24,10 @@ proguard/
 
 # Log Files
 *.log
+
+# IntelliJ IDEA files
+/.idea/workspace.xml
+/.idea/libraries
+
+# MacOS file
+.DS_Store
