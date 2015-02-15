@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Name prefix"
+        android:ems="10"
+        android:id="@+id/m_edt_txt_name_prefix"
+        android:layout_weight="1" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Name"
+        android:ems="10"
+        android:id="@+id/m_edt_txt_name"
+        android:layout_weight="1" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Middlename"
+        android:ems="10"
+        android:id="@+id/m_edt_txt_middlename"
+        android:layout_weight="1" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Lastname"
+        android:ems="10"
+        android:id="@+id/m_edt_txt_lastname"
+        android:layout_weight="1" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Name suffix"
+        android:ems="10"
+        android:id="@+id/m_edt_txt_name_suffix"
+        android:layout_weight="1" />
+</LinearLayout>
