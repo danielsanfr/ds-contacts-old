@@ -3,28 +3,21 @@ package br.com.danielsan.dscontacts.fragments;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import br.com.danielsan.dscontacts.R;
-
-import static br.com.danielsan.dscontacts.fragments.SectionContactFragment.Type.Email;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +41,7 @@ public class SectionContactFragment extends Fragment {
     private LayoutInflater mLayoutInflater;
     private ViewGroup mViewGroup;
     private LinearLayout mLnrLytContainer;
-    private Button mBtnAddNew;
+    private ImageView mImgVwAddNew;
 
     public enum Type {
         Default,
@@ -114,12 +107,12 @@ public class SectionContactFragment extends Fragment {
         View view = inflater.inflate(R.layout.section_contact_fragment, container, false);
 
         TextView mTxtVwTitle = (TextView) view.findViewById(R.id.m_txt_vw_title);
-        mBtnAddNew = (Button) view.findViewById(R.id.m_btn_add_new);
+        mImgVwAddNew = (ImageView) view.findViewById(R.id.m_img_vw_add_new);
         mLnrLytContainer = (LinearLayout) view.findViewById(R.id.m_lnr_lyt_container);
 
         mTxtVwTitle.setText(mTitle);
 
-        mBtnAddNew.setOnClickListener(new View.OnClickListener() {
+        mImgVwAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View viewChild = mLayoutInflater.inflate(mContactItem, mViewGroup, false);
@@ -133,7 +126,7 @@ public class SectionContactFragment extends Fragment {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnrTag.setAdapter(adapter);
 
-                ImageButton imgBtnClear = (ImageButton) viewChild.findViewById(R.id.m_img_btn_clear);
+                ImageView imgBtnClear = (ImageView) viewChild.findViewById(R.id.m_img_btn_clear);
                 imgBtnClear.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -155,7 +148,7 @@ public class SectionContactFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnrTag.setAdapter(adapter);
 
-        ImageButton imgBtnClear = (ImageButton) viewChild.findViewById(R.id.m_img_btn_clear);
+        ImageView imgBtnClear = (ImageView) viewChild.findViewById(R.id.m_img_btn_clear);
         imgBtnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
