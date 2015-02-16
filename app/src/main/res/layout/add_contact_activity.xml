@@ -84,10 +84,16 @@
                     android:layout_gravity="center_horizontal"
                     android:textStyle="bold" />
 
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="#FF9E9E9E" />
+
                 <Spinner
                     android:id="@+id/m_spnr_group"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
             </LinearLayout>
 
         </LinearLayout>
