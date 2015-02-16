@@ -1,6 +1,5 @@
 package br.com.danielsan.dscontacts.activities;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -9,27 +8,23 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-import br.com.danielsan.dscontacts.MainActivity;
 import br.com.danielsan.dscontacts.R;
-import br.com.danielsan.dscontacts.fragments.SectionContactFragment;
+import br.com.danielsan.dscontacts.MainActivity;
+import br.com.danielsan.dscontacts.fragments.OnSectionInteractionListener;
+import br.com.danielsan.dscontacts.fragments.SectionWithTagFragment;
 
 public class AddContactActivity extends ActionBarActivity
-        implements SectionContactFragment.OnFragmentInteractionListener {
+        implements OnSectionInteractionListener {
 
     private Spinner mSpnrGroup;
 
@@ -53,12 +48,17 @@ public class AddContactActivity extends ActionBarActivity
                 NavUtils.navigateUpTo(AddContactActivity.this, intent);
             }
         });
+        mActDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
+                NavUtils.navigateUpTo(AddContactActivity.this, intent);
+            }
+        });
 
         ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setCustomView(lnrLyt);
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFFEF6C00));
-
         actionBar.setDisplayOptions(
                 ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM |
                         ActionBar.DISPLAY_SHOW_HOME |
@@ -70,8 +70,8 @@ public class AddContactActivity extends ActionBarActivity
                 )
         );
 
-        ArrayList<String> groups = new ArrayList<>();
-        groups.add("Frineds");
+        ArrayList<String> groups = new ArrayList<String>();
+        groups.add("Friends");
         groups.add("Family");
         groups.add("Coworkers");
         groups.add("Create New group");
@@ -82,13 +82,9 @@ public class AddContactActivity extends ActionBarActivity
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpnrGroup.setAdapter(adapter);
 
-
-
-
         if (savedInstanceState == null) {
             ArrayList<String> phoneTags = new ArrayList<String>();
-            ArrayList<String> emailTags = new ArrayList<String>();
-            ArrayList<String> addressTags = new ArrayList<String>();
+            ArrayList<String> emailAndAddressTags = new ArrayList<String>();
             ArrayList<String> specialDatesTags = new ArrayList<String>();
 
             phoneTags.add("Mobile");
@@ -101,76 +97,28 @@ public class AddContactActivity extends ActionBarActivity
             phoneTags.add("Other");
             phoneTags.add("Custom");
 
-            emailTags.add("Home");
-            emailTags.add("Job");
-            emailTags.add("Other");
-            emailTags.add("Custom");
-
-            addressTags.add("Home");
-            addressTags.add("Job");
-            addressTags.add("Other");
-            addressTags.add("Custom");
+            emailAndAddressTags.add("Home");
+            emailAndAddressTags.add("Job");
+            emailAndAddressTags.add("Other");
+            emailAndAddressTags.add("Custom");
 
             specialDatesTags.add("Birthday");
             specialDatesTags.add("Commemorative Date");
             specialDatesTags.add("Other");
             specialDatesTags.add("Custom");
 
-            addFragment(R.id.m_frm_lyt_1, SectionContactFragment.newInstance("Phone", phoneTags));
-            addFragment(R.id.m_frm_lyt_2, SectionContactFragment.newInstance("E-mail", emailTags, SectionContactFragment.Type.Email));
-            addFragment(R.id.m_frm_lyt_3, SectionContactFragment.newInstance("Address", addressTags));
-            addFragment(R.id.m_frm_lyt_4, SectionContactFragment.newInstance("Special dates", specialDatesTags, SectionContactFragment.Type.Date));
+            addFragment(R.id.m_frm_lyt_1, SectionWithTagFragment.newInstance("Phone", phoneTags));
+            addFragment(R.id.m_frm_lyt_2, SectionWithTagFragment.newInstance("E-mail", emailAndAddressTags));
+            addFragment(R.id.m_frm_lyt_3, SectionWithTagFragment.newInstance("Address", emailAndAddressTags));
+            addFragment(R.id.m_frm_lyt_4, SectionWithTagFragment.newInstance("Special dates", specialDatesTags));
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.add_contact, menu);
-//        return true;
-//    }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent intent = new Intent(this, MainActivity.class);
-                NavUtils.navigateUpTo(this, intent);
-                break;
-            case R.id.action_create_group:
-                break;
-            //noinspection SimplifiableIfStatement
-            case R.id.action_settings:
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void onSectionInteractionListener(Uri uri) {
     }
 
     private void addFragment(int id, Fragment fragment) {
         getSupportFragmentManager().beginTransaction().add(id, fragment).commit();
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.add_contact_fragment, container, false);
-            return rootView;
-        }
     }
 }

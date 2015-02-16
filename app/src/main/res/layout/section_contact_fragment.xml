@@ -50,11 +50,4 @@
 
     </LinearLayout>
 
-    <!--<Button-->
-        <!--android:text="Add new"-->
-        <!--android:id="@+id/m_btn_add_new"-->
-        <!--android:visibility="visible"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-
 </LinearLayout>
