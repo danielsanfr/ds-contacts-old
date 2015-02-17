@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import br.com.danielsan.dscontacts.activities.AddContactActivity;
@@ -37,6 +38,7 @@ public class MainActivity extends ActionBarActivity
 
     private ListView mLstVw;
 
+    private FloatingActionsMenu mFloatingActionsMenu;
     private FloatingActionHidden mFloatingActionButtonHidden;
 
     @Override
@@ -50,9 +52,25 @@ public class MainActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         mLstVw = (ListView) findViewById(R.id.m_lst_Vw);
-        FloatingActionsMenu floatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+        mFloatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+        FloatingActionButton fabAddContact = (FloatingActionButton) findViewById(R.id.action_add_contact);
+        FloatingActionButton fabCreateGroup = (FloatingActionButton) findViewById(R.id.action_create_group);
 
-        mFloatingActionButtonHidden = FloatingActionHidden.builder(floatingActionsMenu, mLstVw);
+        mFloatingActionButtonHidden = FloatingActionHidden.builder(mFloatingActionsMenu, mLstVw);
+        fabAddContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, AddContactActivity.class));
+                mFloatingActionsMenu.collapse();
+            }
+        });
+        fabCreateGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, AddContactActivity.class));
+                mFloatingActionsMenu.collapse();
+            }
+        });
 
         mLstVw.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_activated_1,
@@ -148,11 +166,6 @@ public class MainActivity extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_add_contact:
-                startActivity(new Intent(this, AddContactActivity.class));
-                break;
-            case R.id.action_create_group:
-                break;
             //noinspection SimplifiableIfStatement
             case R.id.action_settings:
                 return true;
