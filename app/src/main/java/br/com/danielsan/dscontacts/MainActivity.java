@@ -7,10 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,10 +16,11 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import br.com.danielsan.dscontacts.activities.AddContactActivity;
-
+import br.com.danielsan.dscontacts.misc.fab.FloatingActionHidden;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -39,6 +37,8 @@ public class MainActivity extends ActionBarActivity
 
     private ListView mLstVw;
 
+    private FloatingActionHidden mFloatingActionButtonHidden;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +50,9 @@ public class MainActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         mLstVw = (ListView) findViewById(R.id.m_lst_Vw);
+        FloatingActionsMenu floatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+
+        mFloatingActionButtonHidden = FloatingActionHidden.builder(floatingActionsMenu, mLstVw);
 
         mLstVw.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_activated_1,
@@ -146,8 +149,7 @@ public class MainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_add_contact:
-                Intent intent = new Intent(this, AddContactActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, AddContactActivity.class));
                 break;
             case R.id.action_create_group:
                 break;
