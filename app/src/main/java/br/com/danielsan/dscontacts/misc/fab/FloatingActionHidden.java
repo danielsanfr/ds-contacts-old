@@ -17,7 +17,7 @@ import br.com.danielsan.dscontacts.R;
 
 public class FloatingActionHidden {
 
-    private static final int TRANSLATE_DURATION_MILLIS = 300;
+    private static final int TRANSLATE_DURATION_MILLIS = 400;
 
     private int mScrollThreshold;
     private View mView;
