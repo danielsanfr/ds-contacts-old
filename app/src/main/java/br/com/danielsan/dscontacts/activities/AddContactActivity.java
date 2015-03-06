@@ -107,10 +107,10 @@ public class AddContactActivity extends ActionBarActivity
             specialDatesTags.add("Other");
             specialDatesTags.add("Custom");
 
-            addFragment(R.id.m_frm_lyt_1, SectionWithTagFragment.newInstance("Phone", phoneTags));
-            addFragment(R.id.m_frm_lyt_2, SectionWithTagFragment.newInstance("E-mail", emailAndAddressTags));
-            addFragment(R.id.m_frm_lyt_3, SectionWithTagFragment.newInstance("Address", emailAndAddressTags));
-            addFragment(R.id.m_frm_lyt_4, SectionWithTagFragment.newInstance("Special dates", specialDatesTags));
+            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance("Phone", phoneTags));
+            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance("E-mail", emailAndAddressTags));
+            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance("Address", emailAndAddressTags));
+            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance("Special dates", specialDatesTags));
         }
     }
 
@@ -119,6 +119,7 @@ public class AddContactActivity extends ActionBarActivity
     }
 
     private void addFragment(int id, Fragment fragment) {
+//        getSupportFragmentManager().beginTransaction().
         getSupportFragmentManager().beginTransaction().add(id, fragment).commit();
     }
 }
