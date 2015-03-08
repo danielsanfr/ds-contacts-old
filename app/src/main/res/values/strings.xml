@@ -77,6 +77,14 @@
     <string name="phone">Phone</string>
     <string name="email">E-mail</string>
     <string name="groups">Groups</string>
+    <string name="name">Name</string>
+    <string name="name_prefix">Name prefix</string>
+    <string name="middlename">Middlename</string>
+    <string name="lastname">Lastname</string>
+    <string name="name_sufix">Name suffix</string>
+    <string name="organization">Organization</string>
+    <string name="add_organization">Add organization</string>
+    <string name="title">Title</string>
     <string-array name="other_fields_titles">
         <item>IM</item>
         <item>Notes</item>
@@ -84,7 +92,6 @@
         <item>Web site</item>
         <item>Events</item>
         <item>Address</item>
-        <item>Organization</item>
         <item>Relationship</item>
     </string-array>
 

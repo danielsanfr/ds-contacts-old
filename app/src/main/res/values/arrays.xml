@@ -7,7 +7,6 @@
         <item>-1</item>
         <item>@array/field_events</item>
         <item>@array/field_address_and_email</item>
-        <item>-1</item>
         <item>@array/field_relationship</item>
     </array>
 </resources>

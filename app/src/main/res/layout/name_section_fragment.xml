@@ -11,13 +11,42 @@
     card_view:cardCornerRadius="4dp"
     tools:context="br.com.danielsan.dscontacts.fragments.NameSectionFragment" >
 
-    <com.andexert.expandablelayout.library.ExpandableLayout
-        android:id="@+id/m_expdb_lyt_name_section"
-        xmlns:expandable="http://schemas.android.com/apk/res-auto"
-        android:padding="5dp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        expandable:headerLayout="@layout/header_layout_name"
-        expandable:contentLayout="@layout/content_layout_name" />
+        android:layout_height="fill_parent">
+
+        <com.andexert.expandablelayout.library.ExpandableLayout
+            android:id="@+id/m_expdb_lyt_name_section"
+            xmlns:expandable="http://schemas.android.com/apk/res-auto"
+            android:padding="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            expandable:headerLayout="@layout/header_layout_name"
+            expandable:contentLayout="@layout/content_layout_name" />
+
+        <Button
+            android:id="@+id/m_btn_add_organization"
+            android:text="@string/add_organization"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/m_edt_txt_organization"
+            android:inputType="text"
+            android:hint="@string/organization"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/m_edt_txt_title"
+            android:inputType="text"
+            android:hint="@string/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
 
 </android.support.v7.widget.CardView>

@@ -8,7 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Name prefix"
+        android:hint="@string/name_prefix"
         android:ems="10"
         android:id="@+id/m_edt_txt_name_prefix"
         android:layout_weight="1" />
@@ -17,16 +17,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Name"
+        android:hint="@string/name"
         android:ems="10"
-        android:id="@+id/m_edt_txt_name"
+        android:id="@+id/m_edt_txt_content_name"
         android:layout_weight="1" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Middlename"
+        android:hint="@string/middlename"
         android:ems="10"
         android:id="@+id/m_edt_txt_middlename"
         android:layout_weight="1" />
@@ -35,7 +35,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Lastname"
+        android:hint="@string/lastname"
         android:ems="10"
         android:id="@+id/m_edt_txt_lastname"
         android:layout_weight="1" />
@@ -44,7 +44,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:hint="Name suffix"
+        android:hint="@string/name_sufix"
         android:ems="10"
         android:id="@+id/m_edt_txt_name_suffix"
         android:layout_weight="1" />
