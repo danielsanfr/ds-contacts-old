@@ -24,13 +24,16 @@ import java.util.List;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.MainActivity;
+import br.com.danielsan.dscontacts.custom.CancelDoneActionBar;
+import br.com.danielsan.dscontacts.custom.CancelDoneActionBar.OnCancelDoneActionBarListener;
 import br.com.danielsan.dscontacts.fragments.OnSectionInteractionListener;
 import br.com.danielsan.dscontacts.fragments.OtherFieldsDialog;
 import br.com.danielsan.dscontacts.fragments.OtherFieldsDialog.OnOtherFieldsDialogInteractionListener;
 import br.com.danielsan.dscontacts.fragments.SectionWithTagFragment;
 
 public class AddContactActivity extends ActionBarActivity
-        implements OnSectionInteractionListener, OnOtherFieldsDialogInteractionListener {
+        implements OnSectionInteractionListener, OnOtherFieldsDialogInteractionListener,
+                   OnCancelDoneActionBarListener {
 
     private Spinner mSpnrGroup;
     private Button mBtnAddField;
@@ -46,38 +49,7 @@ public class AddContactActivity extends ActionBarActivity
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.m_action_bar);
 //        setSupportActionBar(toolbar);
 
-        LinearLayout lnrLyt = (LinearLayout) View.inflate(this, R.layout.action_bar_add_contact, null);
-        View mActDone = lnrLyt.findViewById(R.id.m_act_done);
-        View mActCancel = lnrLyt.findViewById(R.id.m_act_cancel);
-
-        mActCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
-                NavUtils.navigateUpTo(AddContactActivity.this, intent);
-            }
-        });
-        mActDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
-                NavUtils.navigateUpTo(AddContactActivity.this, intent);
-            }
-        });
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(lnrLyt);
-        actionBar.setBackgroundDrawable(new ColorDrawable(0xFFEF6C00));
-        actionBar.setDisplayOptions(
-                ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM |
-                        ActionBar.DISPLAY_SHOW_HOME |
-                        ActionBar.DISPLAY_SHOW_TITLE);
-        actionBar.setCustomView(lnrLyt,
-                new ActionBar.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                )
-        );
+        new CancelDoneActionBar(this);
 
         mBtnAddField = (Button) findViewById(R.id.m_btn_add_field);
         mBtnAddField.setOnClickListener(new OnClickListener() {
@@ -134,5 +106,17 @@ public class AddContactActivity extends ActionBarActivity
         if (mOtherFieldsTagsId.size() == 0) {
             mBtnAddField.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onDoneActionBarClicked() {
+        Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
+        NavUtils.navigateUpTo(AddContactActivity.this, intent);
+    }
+
+    @Override
+    public void onCancelActionBarClicked() {
+        Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
+        NavUtils.navigateUpTo(AddContactActivity.this, intent);
     }
 }
