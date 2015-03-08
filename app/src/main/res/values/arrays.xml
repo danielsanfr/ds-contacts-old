@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="other_fields_tags">
+        <item>@array/field_im</item>
+        <item>-1</item>
+        <item>-1</item>
+        <item>-1</item>
+        <item>@array/field_events</item>
+        <item>@array/field_address_and_email</item>
+        <item>-1</item>
+        <item>@array/field_relationship</item>
+    </array>
+</resources>

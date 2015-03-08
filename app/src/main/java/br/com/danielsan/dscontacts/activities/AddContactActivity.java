@@ -109,7 +109,14 @@ public class AddContactActivity extends ActionBarActivity
     }
 
     @Override
-    public void onOtherFieldsDialogInteraction(String type) {
-        Log.d("=========", type + " =================");
+    public void onOtherFieldsDialogInteraction(String type, int tagId) {
+        if (tagId == -1) {
+            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance(type));
+        } else {
+            addFragment(R.id.m_lnr_lyt_sections,
+                        SectionWithTagFragment.newInstance(type,
+                                                           getResources()
+                                                           .getStringArray(tagId)));
+        }
     }
 }

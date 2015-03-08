@@ -73,7 +73,7 @@
         <item>Coworkers</item>
         <item>Create New group</item>
     </string-array>
-        <string-array name="other_fields">
+    <string-array name="other_fields_titles">
         <item>IM</item>
         <item>Notes</item>
         <item>Nickname</item>

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +45,9 @@ public class OtherFieldsDialog extends DialogFragment implements OnClickListener
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         ListView listView = new ListView(getActivity());
 
-        listView.setAdapter(new OtherFieldsAdapter(getActivity(), this));
+        Resources resources = getResources();
+        listView.setAdapter(new OtherFieldsAdapter(getActivity(), resources.getStringArray(R.array.other_fields_titles),
+                                                   resources.obtainTypedArray(R.array.other_fields_tags), this));
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Add other field");
@@ -57,8 +61,10 @@ public class OtherFieldsDialog extends DialogFragment implements OnClickListener
     public void onClick(View view) {
         if (mListener != null) {
             TextView textView = (TextView) view;
-            mListener.onOtherFieldsDialogInteraction(textView.getText().toString());
+            mListener.onOtherFieldsDialogInteraction(textView.getText().toString(),
+                                                     (int) textView.getTag());
         }
+        dismiss();
     }
 
     @Override
@@ -81,17 +87,25 @@ public class OtherFieldsDialog extends DialogFragment implements OnClickListener
     private static class OtherFieldsAdapter extends ArrayAdapter<String> {
 
         private OnClickListener mOnClickListener;
+        private int[] mTagsId;
 
-        public OtherFieldsAdapter(Activity activity, OnClickListener onClickListener) {
+        public OtherFieldsAdapter(Activity activity, String[] titles, TypedArray typedArray,
+                                  OnClickListener onClickListener) {
             super(activity, android.R.layout.simple_list_item_activated_1,
-                  android.R.id.text1, activity.getResources().getStringArray(R.array.other_fields));
+                  android.R.id.text1, titles);
             mOnClickListener = onClickListener;
+            int length = typedArray.length();
+            mTagsId = new int[length];
+            for (int i = 0; i < length; i++) {
+                mTagsId[i] = typedArray.getResourceId(i, -1);
+            }
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView textView = (TextView) super.getView(position, convertView, parent);
             textView.setOnClickListener(mOnClickListener);
+            textView.setTag(mTagsId[position]);
             return  textView;
         }
     }
@@ -107,7 +121,7 @@ public class OtherFieldsDialog extends DialogFragment implements OnClickListener
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnOtherFieldsDialogInteractionListener {
-        public void onOtherFieldsDialogInteraction(String type);
+        public void onOtherFieldsDialogInteraction(String type, int TagsId);
     }
 
 }
