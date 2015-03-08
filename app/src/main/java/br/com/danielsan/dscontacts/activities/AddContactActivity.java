@@ -3,19 +3,15 @@ package br.com.danielsan.dscontacts.activities;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -26,6 +22,8 @@ import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.MainActivity;
 import br.com.danielsan.dscontacts.custom.CancelDoneActionBar;
 import br.com.danielsan.dscontacts.custom.CancelDoneActionBar.OnCancelDoneActionBarListener;
+import br.com.danielsan.dscontacts.fragments.GroupSectionFragment;
+import br.com.danielsan.dscontacts.fragments.NameSectionFragment;
 import br.com.danielsan.dscontacts.fragments.OnSectionInteractionListener;
 import br.com.danielsan.dscontacts.fragments.OtherFieldsDialog;
 import br.com.danielsan.dscontacts.fragments.OtherFieldsDialog.OnOtherFieldsDialogInteractionListener;
@@ -35,7 +33,6 @@ public class AddContactActivity extends ActionBarActivity
         implements OnSectionInteractionListener, OnOtherFieldsDialogInteractionListener,
                    OnCancelDoneActionBarListener {
 
-    private Spinner mSpnrGroup;
     private Button mBtnAddField;
     private List<String> mOtherFieldsTitles;
     private List<Integer> mOtherFieldsTagsId;
@@ -70,23 +67,21 @@ public class AddContactActivity extends ActionBarActivity
         }
         typedArray.recycle();
 
-        mSpnrGroup = (Spinner) findViewById(R.id.m_spnr_group);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item,
-                resources.getStringArray(R.array.field_group));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpnrGroup.setAdapter(adapter);
+        addFragment(R.id.frm_lyt_group_section, GroupSectionFragment.newInstance());
 
-        if (savedInstanceState == null) {
-            addFragment(SectionWithTagFragment.newInstance(getResources().getString(R.string.phone),
-                                                           resources.getStringArray(R.array.field_phone)));
-            addFragment(SectionWithTagFragment.newInstance(getResources().getString(R.string.email),
-                                                           resources.getStringArray(R.array.field_address_and_email)));
-        }
+        addFragment(NameSectionFragment.newInstance());
+        addFragment(SectionWithTagFragment.newInstance(getResources().getString(R.string.phone),
+                                                       resources.getStringArray(R.array.field_phone)));
+        addFragment(SectionWithTagFragment.newInstance(getResources().getString(R.string.email),
+                                                       resources.getStringArray(R.array.field_address_and_email)));
     }
 
     private void addFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().add(R.id.m_lnr_lyt_sections, fragment).commit();
+        this.addFragment(R.id.m_lnr_lyt_sections, fragment);
+    }
+
+    private void addFragment(int id, Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().add(id, fragment).commit();
     }
 
     @Override
@@ -110,8 +105,7 @@ public class AddContactActivity extends ActionBarActivity
 
     @Override
     public void onDoneActionBarClicked() {
-        Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
-        NavUtils.navigateUpTo(AddContactActivity.this, intent);
+        onCancelActionBarClicked();
     }
 
     @Override

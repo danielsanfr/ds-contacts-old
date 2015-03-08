@@ -14,6 +14,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="other">Other</string>
     <string name="custom">Custom</string>
+    <string name="add_another_field">Add another field</string>
     <string-array name="field_phone">
         <item>Mobile</item>
         <item>Home</item>
@@ -75,6 +76,7 @@
     </string-array>
     <string name="phone">Phone</string>
     <string name="email">E-mail</string>
+    <string name="groups">Groups</string>
     <string-array name="other_fields_titles">
         <item>IM</item>
         <item>Notes</item>

@@ -1,0 +1,23 @@
+<android.support.v7.widget.CardView
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    card_view:cardCornerRadius="4dp"
+    tools:context="br.com.danielsan.dscontacts.fragments.NameSectionFragment" >
+
+    <com.andexert.expandablelayout.library.ExpandableLayout
+        android:id="@+id/expandableLayout"
+        xmlns:expandable="http://schemas.android.com/apk/res-auto"
+        android:padding="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        expandable:headerLayout="@layout/header_layout_name"
+        expandable:contentLayout="@layout/content_layout_name" />
+
+</android.support.v7.widget.CardView>
