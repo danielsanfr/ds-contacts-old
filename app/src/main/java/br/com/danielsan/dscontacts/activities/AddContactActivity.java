@@ -1,5 +1,6 @@
 package br.com.danielsan.dscontacts.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -9,11 +10,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -21,12 +24,14 @@ import java.util.ArrayList;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.MainActivity;
 import br.com.danielsan.dscontacts.fragments.OnSectionInteractionListener;
+import br.com.danielsan.dscontacts.fragments.OtherFieldsDialog;
 import br.com.danielsan.dscontacts.fragments.SectionWithTagFragment;
 
 public class AddContactActivity extends ActionBarActivity
         implements OnSectionInteractionListener {
 
     private Spinner mSpnrGroup;
+    private Button mBtnAddField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,14 @@ public class AddContactActivity extends ActionBarActivity
                         ViewGroup.LayoutParams.MATCH_PARENT
                 )
         );
+
+        mBtnAddField = (Button) findViewById(R.id.m_btn_add_field);
+        mBtnAddField.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OtherFieldsDialog.newInstance().show(getFragmentManager(), "");
+            }
+        });
 
         ArrayList<String> groups = new ArrayList<String>();
         groups.add("Friends");

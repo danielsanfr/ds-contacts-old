@@ -12,5 +12,70 @@
     <string name="title_activity_add_contact">New Contact</string>
     <string name="hello_world">Hello world!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="other">Other</string>
+    <string name="custom">Custom</string>
+    <string-array name="field_phone">
+        <item>Mobile</item>
+        <item>Home</item>
+        <item>Job</item>
+        <item>Principal</item>
+        <item>Job Fax</item>
+        <item>Home Fax</item>
+        <item>Pager</item>
+        <item>@string/other</item>
+        <item>@string/custom</item>
+    </string-array>
+    <string-array name="field_address_and_email">
+        <item>Home</item>
+        <item>Job</item>
+        <item>@string/other</item>
+        <item>@string/custom</item>
+    </string-array>
+    <string-array name="field_events">
+        <item>Birthday</item>
+        <item>Commemorative Date</item>
+        <item>@string/other</item>
+        <item>@string/custom</item>
+    </string-array>
+    <string-array name="field_im">
+        <item>AIM</item>
+        <item>Windows Live</item>
+        <item>Yahoo</item>
+        <item>Skype</item>
+        <item>QQ</item>
+        <item>Hangouts</item>
+        <item>ICQ</item>
+        <item>Jabber</item>
+        <item>QQ</item>
+        <item>@string/other</item>
+        <item>@string/custom</item>
+    </string-array>
+    <string-array name="field_relationship">
+        <item>Assistent</item>
+        <item>Brother</item>
+        <item>Child</item>
+        <item>Local partner</item>
+        <item>Father</item>
+        <item>Friend</item>
+        <item>Manager</item>
+        <item>Mother</item>
+        <item>Partner</item>
+        <item>Relative</item>
+        <item>Sister</item>
+        <item>Wife</item>
+        <item>Husband</item>
+        <item>@string/other</item>
+        <item>@string/custom</item>
+    </string-array>
+    <string-array name="other_fields">
+        <item>IM</item>
+        <item>Notes</item>
+        <item>Nickname</item>
+        <item>Web site</item>
+        <item>Events</item>
+        <item>Address</item>
+        <item>Organization</item>
+        <item>Relationship</item>
+    </string-array>
 
 </resources>
