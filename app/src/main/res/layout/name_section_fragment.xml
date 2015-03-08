@@ -12,7 +12,7 @@
     tools:context="br.com.danielsan.dscontacts.fragments.NameSectionFragment" >
 
     <com.andexert.expandablelayout.library.ExpandableLayout
-        android:id="@+id/expandableLayout"
+        android:id="@+id/m_expdb_lyt_name_section"
         xmlns:expandable="http://schemas.android.com/apk/res-auto"
         android:padding="5dp"
         android:layout_width="fill_parent"
