@@ -131,5 +131,8 @@ public class AddContactActivity extends ActionBarActivity
             addFragment(SectionWithTagFragment.newInstance(type, getResources()
                                                                  .getStringArray(tagId)));
         }
+        if (mOtherFieldsTagsId.size() == 0) {
+            mBtnAddField.setVisibility(View.GONE);
+        }
     }
 }
