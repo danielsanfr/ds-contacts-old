@@ -2,6 +2,7 @@ package br.com.danielsan.dscontacts.activities;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
@@ -9,7 +10,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -17,6 +17,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.MainActivity;
@@ -30,6 +34,8 @@ public class AddContactActivity extends ActionBarActivity
 
     private Spinner mSpnrGroup;
     private Button mBtnAddField;
+    private List<String> mOtherFieldsTitles;
+    private List<Integer> mOtherFieldsTagsId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +83,20 @@ public class AddContactActivity extends ActionBarActivity
         mBtnAddField.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                OtherFieldsDialog.newInstance().show(getFragmentManager(), "");
+                OtherFieldsDialog.newInstance((ArrayList<String>) mOtherFieldsTitles).show(getFragmentManager(), "");
             }
         });
 
         Resources resources = getResources();
+
+        TypedArray typedArray = resources.obtainTypedArray(R.array.other_fields_tags);
+        mOtherFieldsTitles = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.other_fields_titles)));
+        mOtherFieldsTagsId = new ArrayList<>();
+        int length = typedArray.length();
+        for (int i = 0; i < length; i++) {
+            mOtherFieldsTagsId.add(typedArray.getResourceId(i, -1));
+        }
+        typedArray.recycle();
 
         mSpnrGroup = (Spinner) findViewById(R.id.m_spnr_group);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -109,7 +124,9 @@ public class AddContactActivity extends ActionBarActivity
     }
 
     @Override
-    public void onOtherFieldsDialogInteraction(String type, int tagId) {
+    public void onOtherFieldsDialogInteraction(String type, int position) {
+        mOtherFieldsTitles.remove(position);
+        int tagId = mOtherFieldsTagsId.remove(position);
         if (tagId == -1) {
             addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance(type));
         } else {
