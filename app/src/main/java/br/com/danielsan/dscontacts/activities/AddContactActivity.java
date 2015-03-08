@@ -106,17 +106,15 @@ public class AddContactActivity extends ActionBarActivity
         mSpnrGroup.setAdapter(adapter);
 
         if (savedInstanceState == null) {
-            addFragment(R.id.m_lnr_lyt_sections,
-                    SectionWithTagFragment.newInstance("Phone",
-                                                       resources.getStringArray(R.array.field_phone)));
-            addFragment(R.id.m_lnr_lyt_sections,
-                    SectionWithTagFragment.newInstance("E-mail",
-                                                       resources.getStringArray(R.array.field_address_and_email)));
+            addFragment(SectionWithTagFragment.newInstance("Phone",
+                                                           resources.getStringArray(R.array.field_phone)));
+            addFragment(SectionWithTagFragment.newInstance("E-mail",
+                                                           resources.getStringArray(R.array.field_address_and_email)));
         }
     }
 
-    private void addFragment(int id, Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().add(id, fragment).commit();
+    private void addFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().add(R.id.m_lnr_lyt_sections, fragment).commit();
     }
 
     @Override
@@ -128,12 +126,10 @@ public class AddContactActivity extends ActionBarActivity
         mOtherFieldsTitles.remove(position);
         int tagId = mOtherFieldsTagsId.remove(position);
         if (tagId == -1) {
-            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance(type));
+            addFragment(SectionWithTagFragment.newInstance(type));
         } else {
-            addFragment(R.id.m_lnr_lyt_sections,
-                        SectionWithTagFragment.newInstance(type,
-                                                           getResources()
-                                                           .getStringArray(tagId)));
+            addFragment(SectionWithTagFragment.newInstance(type, getResources()
+                                                                 .getStringArray(tagId)));
         }
     }
 }
