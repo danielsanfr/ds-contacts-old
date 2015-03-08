@@ -73,6 +73,8 @@
         <item>Coworkers</item>
         <item>Create New group</item>
     </string-array>
+    <string name="phone">Phone</string>
+    <string name="email">E-mail</string>
     <string-array name="other_fields_titles">
         <item>IM</item>
         <item>Notes</item>

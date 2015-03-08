@@ -106,9 +106,9 @@ public class AddContactActivity extends ActionBarActivity
         mSpnrGroup.setAdapter(adapter);
 
         if (savedInstanceState == null) {
-            addFragment(SectionWithTagFragment.newInstance("Phone",
+            addFragment(SectionWithTagFragment.newInstance(getResources().getString(R.string.phone),
                                                            resources.getStringArray(R.array.field_phone)));
-            addFragment(SectionWithTagFragment.newInstance("E-mail",
+            addFragment(SectionWithTagFragment.newInstance(getResources().getString(R.string.email),
                                                            resources.getStringArray(R.array.field_address_and_email)));
         }
     }
