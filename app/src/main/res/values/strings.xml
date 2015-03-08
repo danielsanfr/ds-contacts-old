@@ -67,7 +67,13 @@
         <item>@string/other</item>
         <item>@string/custom</item>
     </string-array>
-    <string-array name="other_fields">
+    <string-array name="field_group">
+        <item>Friends</item>
+        <item>Family</item>
+        <item>Coworkers</item>
+        <item>Create New group</item>
+    </string-array>
+        <string-array name="other_fields">
         <item>IM</item>
         <item>Notes</item>
         <item>Nickname</item>

@@ -2,6 +2,7 @@ package br.com.danielsan.dscontacts.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
@@ -83,47 +84,22 @@ public class AddContactActivity extends ActionBarActivity
             }
         });
 
-        ArrayList<String> groups = new ArrayList<String>();
-        groups.add("Friends");
-        groups.add("Family");
-        groups.add("Coworkers");
-        groups.add("Create New group");
+        Resources resources = getResources();
 
         mSpnrGroup = (Spinner) findViewById(R.id.m_spnr_group);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, groups);
+                android.R.layout.simple_spinner_item,
+                resources.getStringArray(R.array.field_group));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpnrGroup.setAdapter(adapter);
 
         if (savedInstanceState == null) {
-            ArrayList<String> phoneTags = new ArrayList<String>();
-            ArrayList<String> emailAndAddressTags = new ArrayList<String>();
-            ArrayList<String> specialDatesTags = new ArrayList<String>();
-
-            phoneTags.add("Mobile");
-            phoneTags.add("Job");
-            phoneTags.add("Home");
-            phoneTags.add("Principal");
-            phoneTags.add("Job Fax");
-            phoneTags.add("Home Fax");
-            phoneTags.add("Pager");
-            phoneTags.add("Other");
-            phoneTags.add("Custom");
-
-            emailAndAddressTags.add("Home");
-            emailAndAddressTags.add("Job");
-            emailAndAddressTags.add("Other");
-            emailAndAddressTags.add("Custom");
-
-            specialDatesTags.add("Birthday");
-            specialDatesTags.add("Commemorative Date");
-            specialDatesTags.add("Other");
-            specialDatesTags.add("Custom");
-
-            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance("Phone", phoneTags));
-            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance("E-mail", emailAndAddressTags));
-            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance("Address", emailAndAddressTags));
-            addFragment(R.id.m_lnr_lyt_sections, SectionWithTagFragment.newInstance("Special dates", specialDatesTags));
+            addFragment(R.id.m_lnr_lyt_sections,
+                    SectionWithTagFragment.newInstance("Phone",
+                                                       resources.getStringArray(R.array.field_phone)));
+            addFragment(R.id.m_lnr_lyt_sections,
+                    SectionWithTagFragment.newInstance("E-mail",
+                                                       resources.getStringArray(R.array.field_address_and_email)));
         }
     }
 
@@ -132,7 +108,6 @@ public class AddContactActivity extends ActionBarActivity
     }
 
     private void addFragment(int id, Fragment fragment) {
-//        getSupportFragmentManager().beginTransaction().
         getSupportFragmentManager().beginTransaction().add(id, fragment).commit();
     }
 }

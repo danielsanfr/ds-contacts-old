@@ -15,7 +15,7 @@ import br.com.danielsan.dscontacts.R;
 public class SectionWithTagFragment extends SimpleSectionFragment {
     protected static final String ARG_TAGS = "tags";
 
-    protected ArrayList<String> mTags;
+    protected String[] mTags;
 
     /**
      * Use this factory method to create a new instance of
@@ -25,10 +25,10 @@ public class SectionWithTagFragment extends SimpleSectionFragment {
      * @param tags Parameter 2.
      * @return A new instance of fragment SectionFragment.
      */
-    public static SimpleSectionFragment newInstance(String title, ArrayList<String> tags) {
+    public static SimpleSectionFragment newInstance(String title, String[] tags) {
         SimpleSectionFragment fragment = new SectionWithTagFragment();
         Bundle args = buildBundle(title);
-        args.putStringArrayList(ARG_TAGS, tags);
+        args.putStringArray(ARG_TAGS, tags);
         fragment.setArguments(args);
         return fragment;
     }
@@ -41,7 +41,7 @@ public class SectionWithTagFragment extends SimpleSectionFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mTags = getArguments().getStringArrayList(ARG_TAGS);
+            mTags = getArguments().getStringArray(ARG_TAGS);
         }
     }
 
