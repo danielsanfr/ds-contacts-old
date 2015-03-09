@@ -117,7 +117,7 @@ public class EditTextDialogFragment extends DialogFragment implements OnClickLis
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnEditTextDialogListener {
-        public void onEditTextListenerInteraction(String title);
+        public void onEditTextListenerInteraction(String text);
     }
 
 }

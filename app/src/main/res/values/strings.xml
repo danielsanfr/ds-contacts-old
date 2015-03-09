@@ -15,6 +15,7 @@
     <string name="other">Other</string>
     <string name="custom">Custom</string>
     <string name="add_another_field">Add another field</string>
+    <string name="create_new_group">Create new group</string>
     <string-array name="field_phone">
         <item>Mobile</item>
         <item>Home</item>
@@ -72,7 +73,7 @@
         <item>Friends</item>
         <item>Family</item>
         <item>Coworkers</item>
-        <item>Create New group</item>
+        <item>@string/create_new_group</item>
     </string-array>
     <string name="phone">Phone</string>
     <string name="email">E-mail</string>

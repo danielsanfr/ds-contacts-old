@@ -60,9 +60,8 @@ public class SectionWithTagFragment extends SimpleSectionFragment implements OnI
         Map<Integer, View> sectionItem = mSectionItems.remove(counterSectionItems);
 
         mSpnrTag = (Spinner) view.findViewById(R.id.spnr_tag);
-        mSpnrTagAdapter = new ArrayAdapter<>(getActivity(),
-                                                          android.R.layout.simple_spinner_item,
-                                                          mTags);
+        mSpnrTagAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
+                                             mTags);
         mSpnrTagAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpnrTag.setOnItemSelectedListener(this);
         mSpnrTag.setAdapter(mSpnrTagAdapter);
@@ -88,11 +87,11 @@ public class SectionWithTagFragment extends SimpleSectionFragment implements OnI
     public void onNothingSelected(AdapterView<?> adapterView) { }
 
     @Override
-    public void onEditTextListenerInteraction(String title) {
+    public void onEditTextListenerInteraction(String text) {
         if (mTagsSize != mTags.size()) {
             mSpnrTagAdapter.remove(mSpnrTagAdapter.getItem(0));
         }
-        mSpnrTagAdapter.insert(title, 0);
+        mSpnrTagAdapter.insert(text, 0);
         mSpnrTag.setSelection(0, true);
     }
 }
