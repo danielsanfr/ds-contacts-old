@@ -3,7 +3,7 @@ package br.com.danielsan.dscontacts.fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +34,7 @@ public class OtherFieldsDialog extends DialogFragment implements OnItemClickList
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
+     * @param titles Parameter 1.
      * @return A new instance of fragment OtherFieldsDialog.
      */
     public static OtherFieldsDialog newInstance(ArrayList<String> titles) {

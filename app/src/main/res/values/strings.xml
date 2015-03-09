@@ -84,6 +84,8 @@
     <string name="organization">Organization</string>
     <string name="add_organization">Add organization</string>
     <string name="title">Title</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
     <string-array name="other_fields_titles">
         <item>IM</item>
         <item>Notes</item>

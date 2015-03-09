@@ -10,9 +10,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +50,7 @@ public class AddContactActivity extends ActionBarActivity
         mBtnAddField.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                OtherFieldsDialog.newInstance((ArrayList<String>) mOtherFieldsTitles).show(getFragmentManager(), "");
+                OtherFieldsDialog.newInstance((ArrayList<String>) mOtherFieldsTitles).show(getSupportFragmentManager(), "");
             }
         });
 
@@ -113,4 +111,5 @@ public class AddContactActivity extends ActionBarActivity
         Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
         NavUtils.navigateUpTo(AddContactActivity.this, intent);
     }
+
 }
