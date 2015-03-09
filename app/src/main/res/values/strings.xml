@@ -78,10 +78,9 @@
     <string name="email">E-mail</string>
     <string name="groups">Groups</string>
     <string name="name">Name</string>
-    <string name="name_prefix">Name prefix</string>
-    <string name="middlename">Middlename</string>
-    <string name="lastname">Lastname</string>
-    <string name="name_sufix">Name suffix</string>
+    <string name="first_name">First name</string>
+    <string name="middle_name">Middle name</string>
+    <string name="last_name">Last name</string>
     <string name="organization">Organization</string>
     <string name="add_organization">Add organization</string>
     <string name="title">Title</string>

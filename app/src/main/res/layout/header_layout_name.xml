@@ -17,7 +17,7 @@
         android:inputType="textPersonName"
         android:hint="@string/name"
         android:ems="10"
-        android:id="@+id/m_edt_txt_header_name"
+        android:id="@+id/m_edt_txt_name"
         android:layout_weight="1"
         android:layout_gravity="center_vertical" />
 
