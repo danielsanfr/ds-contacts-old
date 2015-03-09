@@ -7,10 +7,11 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 * Use the {@link OtherFieldsDialog#newInstance} factory method to
 * create an instance of this fragment.
 */
-public class OtherFieldsDialog extends DialogFragment implements OnClickListener{
+public class OtherFieldsDialog extends DialogFragment implements OnItemClickListener {
     protected static final String ARG_TITLES = "titles";
 
     private OnOtherFieldsDialogInteractionListener mListener;
@@ -58,7 +59,8 @@ public class OtherFieldsDialog extends DialogFragment implements OnClickListener
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         ListView listView = new ListView(getActivity());
-        listView.setAdapter(new OtherFieldsAdapter(getActivity(), mTitles, this));
+        listView.setAdapter(new OtherFieldsAdapter(getActivity(), mTitles));
+        listView.setOnItemClickListener(this);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle("Add other field");
@@ -69,7 +71,7 @@ public class OtherFieldsDialog extends DialogFragment implements OnClickListener
     }
 
     @Override
-    public void onClick(View view) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (mListener != null) {
             TextView textView = (TextView) view;
             mListener.onOtherFieldsDialogInteraction(textView.getText().toString(),
@@ -96,20 +98,14 @@ public class OtherFieldsDialog extends DialogFragment implements OnClickListener
     }
 
     private static class OtherFieldsAdapter extends ArrayAdapter<String> {
-
-        private OnClickListener mOnClickListener;
-
-        public OtherFieldsAdapter(Activity activity, ArrayList<String> titles,
-                                  OnClickListener onClickListener) {
+        public OtherFieldsAdapter(Activity activity, ArrayList<String> titles) {
             super(activity, android.R.layout.simple_list_item_activated_1,
                   android.R.id.text1, titles);
-            mOnClickListener = onClickListener;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView textView = (TextView) super.getView(position, convertView, parent);
-            textView.setOnClickListener(mOnClickListener);
             textView.setTag(position);
             return  textView;
         }
