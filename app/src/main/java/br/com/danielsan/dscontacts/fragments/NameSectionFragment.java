@@ -81,7 +81,7 @@ public class NameSectionFragment extends Fragment implements OnClickListener {
         mEdtTxtLastName.addTextChangedListener(mEdtTxtNamePartsTextWatcher);
 
         mImgVwExpandName.setOnClickListener(this);
-        mExpdbLytNameSection.getContentRelativeLayout().setOnClickListener(null);
+        mExpdbLytNameSection.getContentLayout().setOnClickListener(null);
 
         mImgBtnPhoto.setOnClickListener(mImgBtnPhotoOnClickListener);
         mBtnAddOrganization.setOnClickListener(mBtnAddOrganizationOnClickListener);
