@@ -3,6 +3,10 @@ package br.com.danielsan.dscontacts;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.support.annotation.ColorRes;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -18,13 +22,17 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import br.com.danielsan.dscontacts.activities.AddContactActivity;
 import br.com.danielsan.dscontacts.adapters.MainFragmentPagerAdapter;
 import br.com.danielsan.dscontacts.misc.fab.FabHidden;
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements ViewPager.OnPageChangeListener,
+        NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    public static final String CURRENT_COLOR = "current_color";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -34,25 +42,29 @@ public class MainActivity extends ActionBarActivity
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
-    private CharSequence mTitle;
+    private CharSequence mTitle = "DS Contacts";
 
     private FabHidden mFabHidden;
     private FloatingActionButton mFabAddContact;
 
+    private int mCurrentColor;
     private ActionBar mActionBar;
     private ViewPager mMainViewPager;
+    private Drawable mLastBackgrouDrawable;
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
+    private SystemBarTintManager mSystemBarTintManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        // create our manager instance after the content view is set
+        mSystemBarTintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        mSystemBarTintManager.setStatusBarTintEnabled(true);
+
         mActionBar = this.getSupportActionBar();
-        if (mActionBar != null) {
-            mActionBar.setElevation(0);
-            mActionBar.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.orange_500)));
-        }
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -61,8 +73,10 @@ public class MainActivity extends ActionBarActivity
         mMainViewPager = (ViewPager) this.findViewById(R.id.vw_pgr_main);
         mPagerSlidingTabStrip = (PagerSlidingTabStrip) this.findViewById(R.id.pg_sld_tab_stp_main);
 
-        mMainViewPager.setAdapter(new MainFragmentPagerAdapter(this.getSupportFragmentManager()));
+        mMainViewPager.setAdapter(new MainFragmentPagerAdapter(this));
         mPagerSlidingTabStrip.setViewPager(mMainViewPager);
+        mPagerSlidingTabStrip.setOnPageChangeListener((MainFragmentPagerAdapter) mMainViewPager.getAdapter());
+        mMainViewPager.setCurrentItem(1);
 
 
 
@@ -85,6 +99,19 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURRENT_COLOR, mCurrentColor);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mCurrentColor = savedInstanceState.getInt(CURRENT_COLOR);
+        this.changeColor(mCurrentColor);
     }
 
     @Override
@@ -143,6 +170,46 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void changeColor(@ColorRes int colorResId) {
+        int newColor = this.getResources().getColor(colorResId);
+        mSystemBarTintManager.setTintColor(newColor);
+        mPagerSlidingTabStrip.setBackgroundColor(newColor);
+        // change ActionBar color just if an ActionBar is available
+        Drawable colorDrawable = new ColorDrawable(newColor);
+        Drawable bottomDrawable = new ColorDrawable(getResources().getColor(android.R.color.transparent));
+        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{colorDrawable, bottomDrawable});
+
+        if (mLastBackgrouDrawable == null)
+            mActionBar.setBackgroundDrawable(layerDrawable);
+        else {
+            LayerDrawable layerDrawable2 = new LayerDrawable(new Drawable[]{ mLastBackgrouDrawable, layerDrawable });
+            mActionBar.setBackgroundDrawable(layerDrawable2);
+
+//            TransitionDrawable transitionDrawable = new TransitionDrawable(new Drawable[]{mLastBackgrouDrawable,
+//                                                                                          layerDrawable});
+//            mActionBar.setBackgroundDrawable(transitionDrawable);
+//            transitionDrawable.startTransition(100);
+        }
+
+        mCurrentColor = newColor;
+        mLastBackgrouDrawable = layerDrawable;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     /**
