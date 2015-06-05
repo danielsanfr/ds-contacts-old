@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -32,8 +33,6 @@ public class MainActivity extends ActionBarActivity
         implements ViewPager.OnPageChangeListener,
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    public static final String CURRENT_COLOR = "current_color";
-
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -47,7 +46,6 @@ public class MainActivity extends ActionBarActivity
     private FabHidden mFabHidden;
     private FloatingActionButton mFabAddContact;
 
-    private int mCurrentColor;
     private ActionBar mActionBar;
     private ViewPager mMainViewPager;
     private Drawable mLastBackgrouDrawable;
@@ -102,16 +100,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(CURRENT_COLOR, mCurrentColor);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mCurrentColor = savedInstanceState.getInt(CURRENT_COLOR);
-        this.changeColor(mCurrentColor);
+        this.changeColor(((MainFragmentPagerAdapter) mMainViewPager.getAdapter()).getColor(mMainViewPager.getCurrentItem()));
     }
 
     @Override
@@ -176,6 +167,7 @@ public class MainActivity extends ActionBarActivity
         int newColor = this.getResources().getColor(colorResId);
         mSystemBarTintManager.setTintColor(newColor);
         mPagerSlidingTabStrip.setBackgroundColor(newColor);
+        
         // change ActionBar color just if an ActionBar is available
         Drawable colorDrawable = new ColorDrawable(newColor);
         Drawable bottomDrawable = new ColorDrawable(getResources().getColor(android.R.color.transparent));
@@ -186,14 +178,7 @@ public class MainActivity extends ActionBarActivity
         else {
             LayerDrawable layerDrawable2 = new LayerDrawable(new Drawable[]{ mLastBackgrouDrawable, layerDrawable });
             mActionBar.setBackgroundDrawable(layerDrawable2);
-
-//            TransitionDrawable transitionDrawable = new TransitionDrawable(new Drawable[]{mLastBackgrouDrawable,
-//                                                                                          layerDrawable});
-//            mActionBar.setBackgroundDrawable(transitionDrawable);
-//            transitionDrawable.startTransition(100);
         }
-
-        mCurrentColor = newColor;
         mLastBackgrouDrawable = layerDrawable;
     }
 
