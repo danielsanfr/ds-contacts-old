@@ -18,7 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import br.com.danielsan.dscontacts.activities.AddContactActivity;
 import br.com.danielsan.dscontacts.misc.fab.FabHidden;
@@ -39,36 +38,26 @@ public class MainActivity extends ActionBarActivity
     private ListView mLstVw;
 
     private FabHidden mFabHidden;
-    private FloatingActionsMenu mFloatingActionsMenu;
+    private FloatingActionButton mFabAddContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xFFEF6C00));
+        this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.orange_500)));
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         mLstVw = (ListView) findViewById(R.id.m_lst_Vw);
-        mFloatingActionsMenu = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
-        FloatingActionButton fabAddContact = (FloatingActionButton) findViewById(R.id.action_add_contact);
-        FloatingActionButton fabCreateGroup = (FloatingActionButton) findViewById(R.id.action_create_group);
+        mFabAddContact = (FloatingActionButton) findViewById(R.id.fab_add_contact);
 
-        mFabHidden = new FabHidden(mFloatingActionsMenu, mLstVw);
-        fabAddContact.setOnClickListener(new View.OnClickListener() {
+        mFabHidden = new FabHidden(mFabAddContact, mLstVw);
+        mFabAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, AddContactActivity.class));
-                mFloatingActionsMenu.collapse();
-            }
-        });
-        fabCreateGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AddContactActivity.class));
-                mFloatingActionsMenu.collapse();
             }
         });
 
