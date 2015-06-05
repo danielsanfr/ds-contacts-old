@@ -15,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -41,6 +39,7 @@ public class MainActivity extends ActionBarActivity
     private FabHidden mFabHidden;
     private FloatingActionButton mFabAddContact;
 
+    private ActionBar mActionBar;
     private ViewPager mMainViewPager;
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
 
@@ -49,7 +48,11 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        this.getSupportActionBar().setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.orange_500)));
+        mActionBar = this.getSupportActionBar();
+        if (mActionBar != null) {
+            mActionBar.setElevation(0);
+            mActionBar.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.orange_500)));
+        }
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
