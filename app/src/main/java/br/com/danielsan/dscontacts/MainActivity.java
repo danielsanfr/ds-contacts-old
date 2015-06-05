@@ -167,7 +167,7 @@ public class MainActivity extends ActionBarActivity
         int newColor = this.getResources().getColor(colorResId);
         mSystemBarTintManager.setTintColor(newColor);
         mPagerSlidingTabStrip.setBackgroundColor(newColor);
-        
+
         // change ActionBar color just if an ActionBar is available
         Drawable colorDrawable = new ColorDrawable(newColor);
         Drawable bottomDrawable = new ColorDrawable(getResources().getColor(android.R.color.transparent));
