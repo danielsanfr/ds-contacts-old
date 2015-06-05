@@ -3,6 +3,7 @@ package br.com.danielsan.dscontacts;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -17,9 +18,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import br.com.danielsan.dscontacts.activities.AddContactActivity;
+import br.com.danielsan.dscontacts.adapters.MainFragmentPagerAdapter;
 import br.com.danielsan.dscontacts.misc.fab.FabHidden;
 
 public class MainActivity extends ActionBarActivity
@@ -35,10 +38,11 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-    private ListView mLstVw;
-
     private FabHidden mFabHidden;
     private FloatingActionButton mFabAddContact;
+
+    private ViewPager mMainViewPager;
+    private PagerSlidingTabStrip mPagerSlidingTabStrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,53 +53,28 @@ public class MainActivity extends ActionBarActivity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-        mLstVw = (ListView) findViewById(R.id.m_lst_Vw);
         mFabAddContact = (FloatingActionButton) findViewById(R.id.fab_add_contact);
 
-        mFabHidden = new FabHidden(mFabAddContact, mLstVw);
+        mMainViewPager = (ViewPager) this.findViewById(R.id.vw_pgr_main);
+        mPagerSlidingTabStrip = (PagerSlidingTabStrip) this.findViewById(R.id.pg_sld_tab_stp_main);
+
+        mMainViewPager.setAdapter(new MainFragmentPagerAdapter(this.getSupportFragmentManager()));
+        mPagerSlidingTabStrip.setViewPager(mMainViewPager);
+
+
+
+
+
+
+
+
+//        mFabHidden = new FabHidden(mFabAddContact, mLstVw);
         mFabAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, AddContactActivity.class));
             }
         });
-
-        mLstVw.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
 
         mTitle = getTitle();
 
