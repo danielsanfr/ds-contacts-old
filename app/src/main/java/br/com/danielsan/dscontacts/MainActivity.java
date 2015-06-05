@@ -21,7 +21,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import br.com.danielsan.dscontacts.activities.AddContactActivity;
-import br.com.danielsan.dscontacts.misc.fab.FloatingActionHidden;
+import br.com.danielsan.dscontacts.misc.fab.FabHidden;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -38,8 +38,8 @@ public class MainActivity extends ActionBarActivity
 
     private ListView mLstVw;
 
+    private FabHidden mFabHidden;
     private FloatingActionsMenu mFloatingActionsMenu;
-    private FloatingActionHidden mFloatingActionButtonHidden;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity
         FloatingActionButton fabAddContact = (FloatingActionButton) findViewById(R.id.action_add_contact);
         FloatingActionButton fabCreateGroup = (FloatingActionButton) findViewById(R.id.action_create_group);
 
-        mFloatingActionButtonHidden = FloatingActionHidden.builder(mFloatingActionsMenu, mLstVw);
+        mFabHidden = new FabHidden(mFloatingActionsMenu, mLstVw);
         fabAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

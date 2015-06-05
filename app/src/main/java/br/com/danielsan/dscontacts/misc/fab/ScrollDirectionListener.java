@@ -1,6 +1,9 @@
 package br.com.danielsan.dscontacts.misc.fab;
 
+/**
+ * Created by daniel on 04/06/15.
+ */
 public interface ScrollDirectionListener {
-    void onScrollDown();
     void onScrollUp();
+    void onScrollDown();
 }
