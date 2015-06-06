@@ -28,10 +28,9 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 
         mArgbEvaluator = new ArgbEvaluator();
         Resources resources = mMainActivity.getResources();
-        mPageColors = new Integer[] { resources.getColor(R.color.orange_500),
-                                      resources.getColor(R.color.blue_500),
-                                      resources.getColor(R.color.green_500)
-                                    };
+        mPageColors = new Integer[] { resources.getColor(R.color.blue_500),
+                                      resources.getColor(R.color.green_500),
+                                      resources.getColor(R.color.orange_500) };
     }
 
     @Override
