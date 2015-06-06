@@ -15,21 +15,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/pg_sld_tab_stp_main"
-            android:layout_height="48dp"
+        <com.dd.ShadowLayout
+            android:id="@+id/shadow_layout"
+            android:layout_marginTop="-5dp"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-4dp"
             android:layout_width="match_parent"
-            android:background="@color/orange_500"
-            android:textColor="#96FFFFFF"
-            app:pstsTabTextAllCaps="false"
-            app:pstsShouldExpand="true"
-            app:pstsIndicatorHeight="3dp"
-            app:pstsTabTextColor="@drawable/selector_p_s_t_s_title"
-            app:pstsIndicatorColor="@android:color/white" />
+            android:layout_height="wrap_content"
+            app:sl_dx="0dp"
+            app:sl_dy="2dp"
+            app:sl_cornerRadius="0dp"
+            app:sl_shadowRadius="3dp"
+            app:sl_shadowColor="#AA000000" >
+
+            <com.astuetz.PagerSlidingTabStrip
+                android:id="@+id/pg_sld_tab_stp_main"
+                android:layout_height="48dp"
+                android:layout_width="match_parent"
+                android:background="@color/orange_500"
+                android:textColor="#96FFFFFF"
+                app:pstsTabTextAllCaps="false"
+                app:pstsShouldExpand="true"
+                app:pstsIndicatorHeight="3dp"
+                app:pstsTabTextColor="@drawable/selector_p_s_t_s_title"
+                app:pstsIndicatorColor="@android:color/white" />
+
+        </com.dd.ShadowLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vw_pgr_main"
-            android:layout_below="@+id/pg_sld_tab_stp_main"
+            android:layout_below="@+id/shadow_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
