@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.TransitionDrawable;
-import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -163,23 +160,11 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void changeColor(@ColorRes int colorResId) {
-        int newColor = this.getResources().getColor(colorResId);
+    public void changeColor(Integer newColor) {
         mSystemBarTintManager.setTintColor(newColor);
         mPagerSlidingTabStrip.setBackgroundColor(newColor);
-
-        // change ActionBar color just if an ActionBar is available
-        Drawable colorDrawable = new ColorDrawable(newColor);
-        Drawable bottomDrawable = new ColorDrawable(getResources().getColor(android.R.color.transparent));
-        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{colorDrawable, bottomDrawable});
-
-        if (mLastBackgrouDrawable == null)
-            mActionBar.setBackgroundDrawable(layerDrawable);
-        else {
-            LayerDrawable layerDrawable2 = new LayerDrawable(new Drawable[]{ mLastBackgrouDrawable, layerDrawable });
-            mActionBar.setBackgroundDrawable(layerDrawable2);
-        }
-        mLastBackgrouDrawable = layerDrawable;
+        mLastBackgrouDrawable = new ColorDrawable(newColor);
+        mActionBar.setBackgroundDrawable(mLastBackgrouDrawable);
     }
 
     @Override
