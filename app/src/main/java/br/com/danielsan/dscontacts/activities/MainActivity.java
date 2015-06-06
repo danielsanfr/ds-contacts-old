@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,27 +21,21 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import br.com.danielsan.dscontacts.fragments.MainFragment;
 import br.com.danielsan.dscontacts.fragments.NavigationDrawerFragment;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.MainFragmentPagerAdapter;
 import br.com.danielsan.dscontacts.misc.fab.FabHidden;
+import br.com.danielsan.dscontacts.util.FragmentsTransaction;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-
-    @InjectView(R.id.vw_pgr_main)
-    protected ViewPager mMainViewPager;
-    @InjectView(R.id.fab_add_contact)
-    protected FloatingActionButton mFabAddContact;
-    @InjectView(R.id.pg_sld_tab_stp_main)
-    protected PagerSlidingTabStrip mPagerSlidingTabStrip;
+public class MainActivity extends BaseActivity
+        implements  NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private CharSequence mTitle;
-    private FabHidden mFabHidden;
     private ActionBar mActionBar;
-    private Drawable mLastBackgrouDrawable;
+    private MainFragment mMainFragment;
     private SystemBarTintManager mSystemBarTintManager;
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -57,6 +50,7 @@ public class MainActivity extends ActionBarActivity
         if (mActionBar != null)
             mActionBar.setElevation(0);
 
+        mFragmentsTransaction = new FragmentsTransaction(this, R.id.container);
         // create our manager instance after the content view is set
         mSystemBarTintManager = new SystemBarTintManager(this);
         // enable status bar tint
@@ -65,43 +59,30 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 this.getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-        mMainViewPager.setAdapter(new MainFragmentPagerAdapter(this));
-        mPagerSlidingTabStrip.setViewPager(mMainViewPager);
-        mPagerSlidingTabStrip.setOnPageChangeListener((MainFragmentPagerAdapter) mMainViewPager.getAdapter());
-        mMainViewPager.setCurrentItem(1);
-
-
-
-
-
-
-//        mFabHidden = new FabHidden(mFabAddContact, mLstVw);
-        mFabAddContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AddContactActivity.class));
-            }
-        });
-
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        mMainFragment = new MainFragment();
+        mFragmentsTransaction.replace(mMainFragment);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        this.changeColor(((MainFragmentPagerAdapter) mMainViewPager.getAdapter()).getColor(mMainViewPager.getCurrentItem()));
+        if (mMainFragment != null)
+            mMainFragment.setCurrentColor();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        mFragmentsTransaction.replace(PlaceholderFragment.newInstance(position + 1));
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+//                .commit();
     }
 
     public void onSectionAttached(int number) {
@@ -154,9 +135,7 @@ public class MainActivity extends ActionBarActivity
 
     public void changeColor(Integer newColor) {
         mSystemBarTintManager.setTintColor(newColor);
-        mPagerSlidingTabStrip.setBackgroundColor(newColor);
-        mLastBackgrouDrawable = new ColorDrawable(newColor);
-        mActionBar.setBackgroundDrawable(mLastBackgrouDrawable);
+        mActionBar.setBackgroundDrawable(new ColorDrawable(newColor));
     }
 
     /**
@@ -182,13 +161,6 @@ public class MainActivity extends ActionBarActivity
         }
 
         public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.main_fragment, container, false);
-            return rootView;
         }
 
         @Override

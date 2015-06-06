@@ -107,8 +107,7 @@ public class AddContactActivity extends ActionBarActivity
 
     @Override
     public void onCancelActionBarClicked() {
-        Intent intent = new Intent(AddContactActivity.this, MainActivity.class);
-        NavUtils.navigateUpTo(AddContactActivity.this, intent);
+        this.finish();
     }
 
 }

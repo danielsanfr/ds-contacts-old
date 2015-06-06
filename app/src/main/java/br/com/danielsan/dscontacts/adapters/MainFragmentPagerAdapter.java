@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import br.com.danielsan.dscontacts.activities.MainActivity;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.ContactListFragment;
+import br.com.danielsan.dscontacts.fragments.MainFragment;
 
 /**
  * Created by daniel on 05/06/15.
@@ -19,15 +20,15 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
     private static final String[] TITLES = { "Favorites", "Contacts", "Groups" };
 
     private Integer[] mPageColors;
-    private MainActivity mMainActivity;
+    private MainFragment mMainFragment;
     private ArgbEvaluator mArgbEvaluator;
 
-    public MainFragmentPagerAdapter(MainActivity mainActivity) {
-        super(mainActivity.getSupportFragmentManager());
-        mMainActivity = mainActivity;
+    public MainFragmentPagerAdapter(MainFragment mainFragment) {
+        super(mainFragment.getActivity().getSupportFragmentManager());
+        mMainFragment = mainFragment;
 
         mArgbEvaluator = new ArgbEvaluator();
-        Resources resources = mMainActivity.getResources();
+        Resources resources = mMainFragment.getResources();
         mPageColors = new Integer[] { resources.getColor(R.color.blue_500),
                                       resources.getColor(R.color.green_500),
                                       resources.getColor(R.color.orange_500) };
@@ -60,10 +61,10 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
          *         https://github.com/kubaspatny/viewpagerbackgroundanimation
          */
         if(position < (this.getCount() -1) && position < (mPageColors.length - 1))
-            mMainActivity.changeColor((Integer) mArgbEvaluator.evaluate(positionOffset, mPageColors[position], mPageColors[position + 1]));
+            mMainFragment.changeColor((Integer) mArgbEvaluator.evaluate(positionOffset, mPageColors[position], mPageColors[position + 1]));
         else
             // the last page color
-            mMainActivity.changeColor(mPageColors[mPageColors.length - 1]);
+            mMainFragment.changeColor(mPageColors[mPageColors.length - 1]);
     }
 
     @Override
