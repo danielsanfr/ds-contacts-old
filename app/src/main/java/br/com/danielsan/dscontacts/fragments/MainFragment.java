@@ -25,6 +25,8 @@ import butterknife.OnClick;
  */
 public class MainFragment extends BFragment {
 
+    public static final String POSITION = "position";
+
     @InjectView(R.id.vw_pgr_main)
     protected ViewPager mMainViewPager;
     @InjectView(R.id.fab_add_contact)
@@ -34,6 +36,14 @@ public class MainFragment extends BFragment {
 
     private FabHidden mFabHidden;
 
+    public static MainFragment newInstance(int position) {
+        MainFragment fragment = new MainFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(POSITION, position);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     public MainFragment() {}
 
     @Nullable
@@ -42,12 +52,17 @@ public class MainFragment extends BFragment {
         View view = inflater.inflate(R.layout.fragmnet_main, container, false);
         ButterKnife.inject(this, view);
 
+//        mFabHidden = new FabHidden(mFabAddContact, mLstVw);
         mMainViewPager.setAdapter(new MainFragmentPagerAdapter(this));
         mPagerSlidingTabStrip.setViewPager(mMainViewPager);
         mPagerSlidingTabStrip.setOnPageChangeListener((MainFragmentPagerAdapter) mMainViewPager.getAdapter());
-        mMainViewPager.setCurrentItem(1);
 
-//        mFabHidden = new FabHidden(mFabAddContact, mLstVw);
+
+        Bundle arguments = this.getArguments();
+        if (arguments != null && arguments.containsKey(POSITION))
+            mMainViewPager.setCurrentItem(arguments.getInt(POSITION));
+        else
+            mMainViewPager.setCurrentItem(0);
 
         return view;
     }
