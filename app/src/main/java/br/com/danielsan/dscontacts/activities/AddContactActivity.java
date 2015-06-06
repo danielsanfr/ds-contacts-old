@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.danielsan.dscontacts.R;
-import br.com.danielsan.dscontacts.MainActivity;
 import br.com.danielsan.dscontacts.custom.CancelDoneActionBar;
 import br.com.danielsan.dscontacts.custom.CancelDoneActionBar.OnCancelDoneActionBarListener;
 import br.com.danielsan.dscontacts.fragments.GroupSectionFragment;

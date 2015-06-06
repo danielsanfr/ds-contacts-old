@@ -1,4 +1,4 @@
-package br.com.danielsan.dscontacts;
+package br.com.danielsan.dscontacts.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,7 +22,8 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import br.com.danielsan.dscontacts.activities.AddContactActivity;
+import br.com.danielsan.dscontacts.fragments.NavigationDrawerFragment;
+import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.MainFragmentPagerAdapter;
 import br.com.danielsan.dscontacts.misc.fab.FabHidden;
 

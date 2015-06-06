@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import br.com.danielsan.dscontacts.MainActivity;
+import br.com.danielsan.dscontacts.activities.MainActivity;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.ContactListFragment;
 
