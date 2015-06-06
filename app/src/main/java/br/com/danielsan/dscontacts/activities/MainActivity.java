@@ -26,57 +26,49 @@ import br.com.danielsan.dscontacts.fragments.NavigationDrawerFragment;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.MainFragmentPagerAdapter;
 import br.com.danielsan.dscontacts.misc.fab.FabHidden;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity
-        implements ViewPager.OnPageChangeListener,
-        NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    @InjectView(R.id.vw_pgr_main)
+    protected ViewPager mMainViewPager;
+    @InjectView(R.id.fab_add_contact)
+    protected FloatingActionButton mFabAddContact;
+    @InjectView(R.id.pg_sld_tab_stp_main)
+    protected PagerSlidingTabStrip mPagerSlidingTabStrip;
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle = "DS Contacts";
-
+    private CharSequence mTitle;
     private FabHidden mFabHidden;
-    private FloatingActionButton mFabAddContact;
-
     private ActionBar mActionBar;
-    private ViewPager mMainViewPager;
     private Drawable mLastBackgrouDrawable;
-    private PagerSlidingTabStrip mPagerSlidingTabStrip;
     private SystemBarTintManager mSystemBarTintManager;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        ButterKnife.inject(this);
+
+        mTitle = this.getTitle();
+        mActionBar = this.getSupportActionBar();
+        if (mActionBar != null)
+            mActionBar.setElevation(0);
 
         // create our manager instance after the content view is set
         mSystemBarTintManager = new SystemBarTintManager(this);
         // enable status bar tint
         mSystemBarTintManager.setStatusBarTintEnabled(true);
 
-        mActionBar = this.getSupportActionBar();
-        if (mActionBar != null)
-            mActionBar.setElevation(0);
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mFabAddContact = (FloatingActionButton) findViewById(R.id.fab_add_contact);
-
-        mMainViewPager = (ViewPager) this.findViewById(R.id.vw_pgr_main);
-        mPagerSlidingTabStrip = (PagerSlidingTabStrip) this.findViewById(R.id.pg_sld_tab_stp_main);
+                this.getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         mMainViewPager.setAdapter(new MainFragmentPagerAdapter(this));
         mPagerSlidingTabStrip.setViewPager(mMainViewPager);
         mPagerSlidingTabStrip.setOnPageChangeListener((MainFragmentPagerAdapter) mMainViewPager.getAdapter());
         mMainViewPager.setCurrentItem(1);
-
-
 
 
 
@@ -90,8 +82,6 @@ public class MainActivity extends ActionBarActivity
                 startActivity(new Intent(MainActivity.this, AddContactActivity.class));
             }
         });
-
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -129,10 +119,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void restoreActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        mActionBar.setDisplayShowTitleEnabled(true);
+        mActionBar.setTitle(mTitle);
     }
 
 
@@ -168,21 +157,6 @@ public class MainActivity extends ActionBarActivity
         mPagerSlidingTabStrip.setBackgroundColor(newColor);
         mLastBackgrouDrawable = new ColorDrawable(newColor);
         mActionBar.setBackgroundDrawable(mLastBackgrouDrawable);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 
     /**
