@@ -23,7 +23,7 @@
             android:textColor="#96FFFFFF"
             app:pstsTabTextAllCaps="false"
             app:pstsShouldExpand="true"
-            app:pstsIndicatorHeight="2dp"
+            app:pstsIndicatorHeight="3dp"
             app:pstsTabTextColor="@drawable/selector_p_s_t_s_title"
             app:pstsIndicatorColor="@android:color/white" />
 

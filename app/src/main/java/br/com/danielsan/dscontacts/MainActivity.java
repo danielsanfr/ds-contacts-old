@@ -60,6 +60,8 @@ public class MainActivity extends ActionBarActivity
         mSystemBarTintManager.setStatusBarTintEnabled(true);
 
         mActionBar = this.getSupportActionBar();
+        if (mActionBar != null)
+            mActionBar.setElevation(0);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
