@@ -23,7 +23,6 @@ import android.widget.TextView;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.DrawerAdapter;
 import br.com.danielsan.dscontacts.fragments.base.BFragment;
-import br.com.danielsan.dscontacts.util.RoundImageDrawable;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnItemClick;
@@ -104,7 +103,7 @@ public class NavigationDrawerFragment extends BFragment {
 
         mUserNameTextView.setText("Daniel San");
         mUserEmailTextView.setText("daniel.samrocha@gmail.com");
-        mAvatarImageView.setImageDrawable(new RoundImageDrawable(this.getResources(), R.drawable.img_avatar));
+        mAvatarImageView.setImageResource(R.drawable.img_avatar);
 
         mDrawerListView.setAdapter(new DrawerAdapter(this.getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);

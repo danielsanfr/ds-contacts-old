@@ -1,5 +1,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true"
     android:layout_width="match_parent"
@@ -14,16 +15,23 @@
         android:paddingTop="15dp"
         android:background="@drawable/wallpaper_drawer" >
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/img_vw_avatar"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:id="@+id/img_vw_avatar"
+            android:scaleType="fitCenter"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            app:riv_oval="true"
+            app:riv_border_width="1dip"
+            app:riv_corner_radius="30dip"
+            app:riv_border_color="@drawable/row_selected_gray"
+            app:riv_mutate_background="true" />
 
         <LinearLayout
             android:orientation="vertical"
