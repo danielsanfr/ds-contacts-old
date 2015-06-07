@@ -18,11 +18,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.danielsan.dscontacts.R;
+import br.com.danielsan.dscontacts.adapters.DrawerAdapter;
+import br.com.danielsan.dscontacts.util.RoundImageDrawable;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnItemClick;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -52,8 +58,16 @@ public class NavigationDrawerFragment extends Fragment {
      */
     private ActionBarDrawerToggle mDrawerToggle;
 
+    @InjectView(R.id.lst_vw_drawer)
+    protected ListView mDrawerListView;
+    @InjectView(R.id.txt_vw_user_name)
+    protected TextView mUserNameTextView;
+    @InjectView(R.id.txt_vw_user_email)
+    protected TextView mUserEmailTextView;
+    @InjectView(R.id.img_vw_avatar)
+    protected ImageView mAvatarImageView;
+
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
@@ -89,27 +103,17 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-         View view = inflater.inflate(R.layout.navigation_drawer_fragment, null);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.navigation_drawer_fragment, null);
+        ButterKnife.inject(this, view);
 
-        mDrawerListView = (ListView) view.findViewById(R.id.lst_vw_drawer);
-        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
-            }
-        });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
+        mUserNameTextView.setText("Daniel San");
+        mUserEmailTextView.setText("daniel.samrocha@gmail.com");
+        mAvatarImageView.setImageDrawable(new RoundImageDrawable(this.getResources(), R.drawable.img_avatar));
+
+        mDrawerListView.setAdapter(new DrawerAdapter(this.getActivity()));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return view;
     }
 
@@ -201,6 +205,12 @@ public class NavigationDrawerFragment extends Fragment {
         if (mCallbacks != null) {
             mCallbacks.onNavigationDrawerItemSelected(position);
         }
+    }
+
+    @OnItemClick(R.id.lst_vw_drawer)
+    protected void mDrawerListViewOonItemClick(AdapterView<?> parent, View view, int position, long id) {
+        view.setSelected(true);
+//        this.selectItem(position);
     }
 
     @Override

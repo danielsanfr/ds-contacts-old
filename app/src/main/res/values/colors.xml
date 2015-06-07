@@ -10,6 +10,11 @@
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
 
+    <color name="text_primary_color">#212121</color>
+
+    <drawable name="row_pressed_gray">#0c000000</drawable>
+    <drawable name="row_selected_gray">#2c000000</drawable>
+
     <color name="blue_500">#2196F3</color>
     <color name="green_500">#4CaF50</color>
     <color name="orange_300">#FFB74D</color>
