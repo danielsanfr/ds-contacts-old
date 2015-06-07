@@ -4,53 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-        <com.dd.ShadowLayout
-            android:id="@+id/shadow_layout"
-            android:layout_marginTop="-5dp"
-            android:layout_marginLeft="-4dp"
-            android:layout_marginRight="-4dp"
+    <FrameLayout
+        android:id="@+id/frm_lyt"
+        android:layout_height="54dp"
+        android:layout_width="match_parent" >
+
+        <ImageView
+            android:layout_marginLeft="-30dp"
+            android:layout_marginRight="-30dp"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:drawable/dialog_holo_light_frame" />
+
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/pg_sld_tab_stp_main"
+            android:layout_height="48dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:sl_dx="0dp"
-            app:sl_dy="2dp"
-            app:sl_cornerRadius="0dp"
-            app:sl_shadowRadius="3dp"
-            app:sl_shadowColor="#AA000000" >
+            android:background="@color/orange_500"
+            android:textColor="#96FFFFFF"
+            app:pstsShouldExpand="true"
+            app:pstsIndicatorHeight="3dp"
+            app:pstsTabTextAllCaps="false"
+            app:pstsIndicatorColor="@android:color/white"
+            app:pstsTabTextColor="@drawable/selector_p_s_t_s_title" />
 
-            <com.astuetz.PagerSlidingTabStrip
-                android:id="@+id/pg_sld_tab_stp_main"
-                android:layout_height="48dp"
-                android:layout_width="match_parent"
-                android:background="@color/orange_500"
-                android:textColor="#96FFFFFF"
-                app:pstsShouldExpand="true"
-                app:pstsIndicatorHeight="3dp"
-                app:pstsTabTextAllCaps="false"
-                app:pstsIndicatorColor="@android:color/white"
-                app:pstsTabTextColor="@drawable/selector_p_s_t_s_title" />
+    </FrameLayout>
 
-        </com.dd.ShadowLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vw_pgr_main"
+        android:layout_below="@+id/frm_lyt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vw_pgr_main"
-            android:layout_below="@+id/shadow_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_add_contact"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            app:fab_size="normal"
-            app:fab_title="Add Contact"
-            app:fab_colorNormal="@color/orange_500"
-            app:fab_colorPressed="@color/orange_300"
-            app:fab_icon="@drawable/ic_person_add_white" />
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_contact"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        app:fab_size="normal"
+        app:fab_title="Add Contact"
+        app:fab_colorNormal="@color/orange_500"
+        app:fab_colorPressed="@color/orange_300"
+        app:fab_icon="@drawable/ic_person_add_white" />
 
 </RelativeLayout>
