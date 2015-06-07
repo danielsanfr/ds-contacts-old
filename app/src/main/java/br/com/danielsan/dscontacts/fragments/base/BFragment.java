@@ -24,4 +24,11 @@ public class BFragment extends Fragment {
             throw new ClassCastException("Activity must extend BaseActivity.");
         }
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mBaseActivity = null;
+    }
+
 }
