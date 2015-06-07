@@ -20,6 +20,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
     private static final String[] TITLES = { "Favorites", "Contacts", "Groups" };
 
     private Integer[] mPageColors;
+    private Integer[] mPressedColors;
     private MainFragment mMainFragment;
     private ArgbEvaluator mArgbEvaluator;
 
@@ -32,6 +33,9 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
         mPageColors = new Integer[] { resources.getColor(R.color.blue_500),
                                       resources.getColor(R.color.green_500),
                                       resources.getColor(R.color.orange_500) };
+        mPressedColors = new Integer[] { resources.getColor(R.color.blue_300),
+                                         resources.getColor(R.color.green_300),
+                                         resources.getColor(R.color.orange_300) };
     }
 
     @Override
@@ -53,6 +57,10 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
         return mPageColors[position];
     }
 
+    public Integer getPressedColor(int position) {
+        return mPressedColors[position];
+    }
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         // Thanks: http://kubaspatny.github.io/2014/09/18/viewpager-background-transition/
@@ -68,7 +76,9 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
     }
 
     @Override
-    public void onPageSelected(int position) {}
+    public void onPageSelected(int position) {
+        mMainFragment.changFabPressedColor(mPressedColors[position]);
+    }
 
     @Override
     public void onPageScrollStateChanged(int state) {}

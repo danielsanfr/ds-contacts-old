@@ -57,12 +57,13 @@ public class MainFragment extends BFragment {
         mPagerSlidingTabStrip.setViewPager(mMainViewPager);
         mPagerSlidingTabStrip.setOnPageChangeListener((MainFragmentPagerAdapter) mMainViewPager.getAdapter());
 
-
         Bundle arguments = this.getArguments();
         if (arguments != null && arguments.containsKey(POSITION))
             mMainViewPager.setCurrentItem(arguments.getInt(POSITION));
         else
             mMainViewPager.setCurrentItem(0);
+
+        this.setCurrentColor();
 
         return view;
     }
@@ -73,10 +74,19 @@ public class MainFragment extends BFragment {
     }
 
     public void setCurrentColor() {
-        this.changeColor(((MainFragmentPagerAdapter) mMainViewPager.getAdapter()).getColor(mMainViewPager.getCurrentItem()));
+        int position = mMainViewPager.getCurrentItem();
+        MainFragmentPagerAdapter mainFragmentPagerAdapter = (MainFragmentPagerAdapter) mMainViewPager.getAdapter();
+
+        this.changeColor(mainFragmentPagerAdapter.getColor(position));
+        this.changFabPressedColor(mainFragmentPagerAdapter.getPressedColor(position));
+    }
+
+    public void changFabPressedColor(Integer newColor) {
+        mFabAddContact.setColorPressed(newColor);
     }
 
     public void changeColor(Integer newColor) {
+        mFabAddContact.setColorNormal(newColor);
         mPagerSlidingTabStrip.setBackgroundColor(newColor);
         ((MainActivity) mBaseActivity).changeColor(newColor);
     }
