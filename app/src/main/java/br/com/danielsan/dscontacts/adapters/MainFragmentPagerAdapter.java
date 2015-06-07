@@ -3,13 +3,9 @@ package br.com.danielsan.dscontacts.adapters;
 import android.animation.ArgbEvaluator;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.com.danielsan.dscontacts.activities.MainActivity;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.ContactListFragment;
 import br.com.danielsan.dscontacts.fragments.FavoritesGridFragment;
@@ -18,7 +14,7 @@ import br.com.danielsan.dscontacts.fragments.MainFragment;
 /**
  * Created by daniel on 05/06/15.
  */
-public class MainFragmentPagerAdapter extends FragmentPagerAdapter
+public class MainFragmentPagerAdapter extends FragmentStatePagerAdapter
         implements ViewPager.OnPageChangeListener {
 
     private static final String[] TITLES = { "Favorites", "Contacts", "Groups" };
