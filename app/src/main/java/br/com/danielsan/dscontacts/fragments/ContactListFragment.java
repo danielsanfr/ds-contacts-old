@@ -13,8 +13,11 @@ import br.com.danielsan.dscontacts.adapters.ContactsAdapter;
  */
 public class ContactListFragment extends ListFragment {
 
-    public ContactListFragment() {
+    public static ContactListFragment newInstance() {
+        return new ContactListFragment();
     }
+
+    public ContactListFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -6,9 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.danielsan.dscontacts.activities.MainActivity;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.ContactListFragment;
+import br.com.danielsan.dscontacts.fragments.FavoritesGridFragment;
 import br.com.danielsan.dscontacts.fragments.MainFragment;
 
 /**
@@ -40,7 +44,14 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter
 
     @Override
     public Fragment getItem(int position) {
-        return new ContactListFragment();
+        switch (position) {
+            case 0:
+                return new FavoritesGridFragment();
+            case 1:
+            case 2:
+            default:
+                return new ContactListFragment();
+        }
     }
 
     @Override
