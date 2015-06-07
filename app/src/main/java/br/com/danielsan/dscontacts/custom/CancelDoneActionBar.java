@@ -18,7 +18,7 @@ public class CancelDoneActionBar {
         mActivity = activity;
         setListener();
 
-        LinearLayout lnrLyt = (LinearLayout) View.inflate(mActivity, R.layout.action_bar_add_contact, null);
+        LinearLayout lnrLyt = (LinearLayout) View.inflate(mActivity, R.layout.custom_action_bar_add_contact, null);
         View mActDone = lnrLyt.findViewById(R.id.m_act_done);
         View mActCancel = lnrLyt.findViewById(R.id.m_act_cancel);
         mActDone.setOnClickListener(new View.OnClickListener() {

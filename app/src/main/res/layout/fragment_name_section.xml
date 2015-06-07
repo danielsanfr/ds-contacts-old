@@ -22,8 +22,8 @@
             android:padding="5dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            expandable:el_headerLayout="@layout/header_layout_name"
-            expandable:el_contentLayout="@layout/content_layout_name" />
+            expandable:el_headerLayout="@layout/expandable_layout_header_name"
+            expandable:el_contentLayout="@layout/expandable_layout_content_name" />
 
         <Button
             android:id="@+id/m_btn_add_organization"

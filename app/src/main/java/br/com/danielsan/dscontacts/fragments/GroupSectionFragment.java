@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import br.com.danielsan.dscontacts.R;
-import br.com.danielsan.dscontacts.fragments.EditTextDialogFragment.OnEditTextDialogListener;
+import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment;
+import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment.OnEditTextDialogListener;
 
 public class GroupSectionFragment extends Fragment implements OnItemSelectedListener, OnEditTextDialogListener {
 
@@ -39,7 +40,7 @@ public class GroupSectionFragment extends Fragment implements OnItemSelectedList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.group_section_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_group_section, container, false);
 
         mGroups = new ArrayList<>();
         mGroups.addAll(Arrays.asList(getResources().getStringArray(R.array.field_group)));

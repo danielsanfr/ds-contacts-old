@@ -13,7 +13,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 import br.com.danielsan.dscontacts.R;
-import br.com.danielsan.dscontacts.fragments.EditTextDialogFragment.OnEditTextDialogListener;
+import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment;
+import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment.OnEditTextDialogListener;
 
 public class SectionWithTagFragment extends SimpleSectionFragment implements OnItemSelectedListener, OnEditTextDialogListener {
     protected static final String ARG_TAGS = "tags";
@@ -55,7 +56,7 @@ public class SectionWithTagFragment extends SimpleSectionFragment implements OnI
 
     @Override
     protected View addContactItem() {
-        View view = super.addContactItem(R.layout.section_contact_item_with_tag);
+        View view = super.addContactItem(R.layout.component_section_contact_item_with_tag);
         Integer counterSectionItems = mCounterSectionItems - 1;
         Map<Integer, View> sectionItem = mSectionItems.remove(counterSectionItems);
 

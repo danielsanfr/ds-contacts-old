@@ -1,4 +1,4 @@
-package br.com.danielsan.dscontacts.fragments;
+package br.com.danielsan.dscontacts.fragments.dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;

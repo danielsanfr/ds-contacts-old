@@ -99,7 +99,7 @@ public class NavigationDrawerFragment extends BFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mFragmentContainerView = inflater.inflate(R.layout.navigation_drawer_fragment, null);
+        mFragmentContainerView = inflater.inflate(R.layout.fragment_navigation_drawer, null);
         ButterKnife.inject(this, mFragmentContainerView);
 
         mUserNameTextView.setText("Daniel San");

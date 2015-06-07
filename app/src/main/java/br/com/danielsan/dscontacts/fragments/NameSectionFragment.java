@@ -53,7 +53,7 @@ public class NameSectionFragment extends Fragment implements OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.name_section_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_name_section, container, false);
 
         mExpdbLytNameSection = (ExpandableLayout) view.findViewById(R.id.m_expdb_lyt_name_section);
         mImgVwExpandName     = (ImageView) view.findViewById(R.id.m_img_vw_expand_name);

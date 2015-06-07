@@ -1,4 +1,4 @@
-package br.com.danielsan.dscontacts.fragments;
+package br.com.danielsan.dscontacts.fragments.dialogs;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,7 +15,7 @@ import br.com.danielsan.dscontacts.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link br.com.danielsan.dscontacts.fragments.EditTextDialogFragment.OnEditTextDialogListener} interface
+ * {@link EditTextDialogFragment.OnEditTextDialogListener} interface
  * to handle interaction events.
  * Use the {@link EditTextDialogFragment#newInstance} factory method to
  * create an instance of this fragment.

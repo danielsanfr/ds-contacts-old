@@ -1,10 +1,8 @@
 package br.com.danielsan.dscontacts.activities;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -22,8 +20,8 @@ import br.com.danielsan.dscontacts.custom.CancelDoneActionBar.OnCancelDoneAction
 import br.com.danielsan.dscontacts.fragments.GroupSectionFragment;
 import br.com.danielsan.dscontacts.fragments.NameSectionFragment;
 import br.com.danielsan.dscontacts.fragments.OnSectionInteractionListener;
-import br.com.danielsan.dscontacts.fragments.OtherFieldsDialog;
-import br.com.danielsan.dscontacts.fragments.OtherFieldsDialog.OnOtherFieldsDialogInteractionListener;
+import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
+import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog.OnOtherFieldsDialogInteractionListener;
 import br.com.danielsan.dscontacts.fragments.SectionWithTagFragment;
 
 public class AddContactActivity extends ActionBarActivity
@@ -37,7 +35,7 @@ public class AddContactActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_contact_activity);
+        setContentView(R.layout.activity_add_contact);
 
         // To use toolbar instead of the ActionBar
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.m_action_bar);

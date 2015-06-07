@@ -79,7 +79,7 @@ public class SimpleSectionFragment extends Fragment {
         mViewGroup = container;
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.section_contact_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_section_contact, container, false);
 
         mLnrLytContainer = (LinearLayout) view.findViewById(R.id.m_lnr_lyt_container);
         mImgVwAddNew = (ImageView) view.findViewById(R.id.m_img_vw_add_new);
@@ -98,7 +98,7 @@ public class SimpleSectionFragment extends Fragment {
     }
 
     protected View addContactItem() {
-        return addContactItem(R.layout.section_contact_item);
+        return addContactItem(R.layout.component_section_contact_item);
     }
 
     protected View addContactItem(int layout) {
