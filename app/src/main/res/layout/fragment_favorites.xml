@@ -9,11 +9,10 @@
         android:id="@+id/grd_vw_favorites"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="170dp"
+        android:columnWidth="150dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="10dp"
-        android:horizontalSpacing="5dp"
-        android:stretchMode="spacingWidth"
+        android:stretchMode="spacingWidthUniform"
         android:gravity="center" />
 
 </FrameLayout>
