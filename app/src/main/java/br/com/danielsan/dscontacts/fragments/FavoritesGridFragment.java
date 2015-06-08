@@ -11,12 +11,16 @@ import android.widget.GridView;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.FavoritesAdapter;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnItemClick;
 
 /**
  * Created by daniel on 07/06/15.
  */
 public class FavoritesGridFragment extends Fragment {
+
+    @InjectView(R.id.grd_vw_favorites)
+    protected GridView mFavoritesGridView;
 
     public static FavoritesGridFragment newInstance() {
         return new FavoritesGridFragment();
@@ -27,13 +31,12 @@ public class FavoritesGridFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        GridView gridView = (GridView) inflater.inflate(R.layout.fragment_favorites, container, false);
-        ButterKnife.inject(this, gridView);
+        View view = inflater.inflate(R.layout.fragment_favorites, container, false);
+        ButterKnife.inject(this, view);
 
-        gridView.setAdapter(new FavoritesAdapter());
+        mFavoritesGridView.setAdapter(new FavoritesAdapter());
 
-
-        return gridView;
+        return view;
     }
 
     @OnItemClick(R.id.grd_vw_favorites)
