@@ -38,6 +38,8 @@ public class MainActivity extends BaseActivity
         mSystemBarTintManager = new SystemBarTintManager(this);
         // enable status bar tint
         mSystemBarTintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        mSystemBarTintManager.setNavigationBarTintEnabled(true);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 this.getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
