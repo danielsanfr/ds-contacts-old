@@ -60,14 +60,12 @@ public class ContactsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ContactsViewHolder holder;
+        ContactsViewHolder holder;
         if (convertView == null) {
             convertView = View.inflate(parent.getContext(), R.layout.item_contacts, null);
             holder = new ContactsViewHolder(convertView);
-            convertView.setTag(holder);
-        } else {
+        } else
             holder = (ContactsViewHolder) convertView.getTag();
-        }
 
         holder.updateCheckedState(this.getItem(position));
 
