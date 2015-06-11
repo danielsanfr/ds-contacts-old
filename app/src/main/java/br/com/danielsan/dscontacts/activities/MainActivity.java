@@ -8,12 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 import br.com.danielsan.dscontacts.fragments.MainFragment;
 import br.com.danielsan.dscontacts.fragments.NavigationDrawerFragment;
 import br.com.danielsan.dscontacts.R;
-import br.com.danielsan.dscontacts.util.FragmentsTransaction;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity
@@ -21,7 +18,6 @@ public class MainActivity extends BaseActivity
 
     private CharSequence mTitle;
     private MainFragment mMainFragment;
-    private SystemBarTintManager mSystemBarTintManager;
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     @Override
@@ -31,15 +27,11 @@ public class MainActivity extends BaseActivity
         ButterKnife.inject(this);
 
         mTitle = this.getTitle();
-        mActionBar.setElevation(0);
 
-        mFragmentsTransaction = new FragmentsTransaction(this, R.id.container);
-        // create our manager instance after the content view is set
-        mSystemBarTintManager = new SystemBarTintManager(this);
         // enable status bar tint
-        mSystemBarTintManager.setStatusBarTintEnabled(true);
+        this.getSystemBarTintManager().setStatusBarTintEnabled(true);
         // enable navigation bar tint
-        mSystemBarTintManager.setNavigationBarTintEnabled(true);
+        this.getSystemBarTintManager().setNavigationBarTintEnabled(true);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 this.getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -48,7 +40,12 @@ public class MainActivity extends BaseActivity
         mNavigationDrawerFragment.setUp((DrawerLayout) this.findViewById(R.id.drawer_layout));
 
         mMainFragment = new MainFragment();
-        mFragmentsTransaction.replace(mMainFragment);
+        this.replaceFragment(mMainFragment);
+    }
+
+    @Override
+    protected int getMasterContainer() {
+        return R.id.container;
     }
 
     @Override
@@ -94,7 +91,7 @@ public class MainActivity extends BaseActivity
     }
 
     public void changeColor(Integer newColor) {
-        mSystemBarTintManager.setTintColor(newColor);
+        this.getSystemBarTintManager().setTintColor(newColor);
         mActionBar.setBackgroundDrawable(new ColorDrawable(newColor));
     }
 

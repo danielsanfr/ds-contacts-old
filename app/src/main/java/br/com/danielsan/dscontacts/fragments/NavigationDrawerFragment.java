@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.DrawerAdapter;
-import br.com.danielsan.dscontacts.fragments.base.BFragment;
+import br.com.danielsan.dscontacts.fragments.base.MasterFragment;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnItemClick;
@@ -32,7 +32,7 @@ import butterknife.OnItemClick;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends BFragment {
+public class NavigationDrawerFragment extends MasterFragment {
 
     /**
      * Remember the position of the selected item.

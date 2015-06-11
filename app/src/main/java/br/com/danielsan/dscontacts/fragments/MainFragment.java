@@ -14,7 +14,7 @@ import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.activities.AddContactActivity;
 import br.com.danielsan.dscontacts.activities.MainActivity;
 import br.com.danielsan.dscontacts.adapters.MainFragmentPagerAdapter;
-import br.com.danielsan.dscontacts.fragments.base.BFragment;
+import br.com.danielsan.dscontacts.fragments.base.MasterFragment;
 import br.com.danielsan.dscontacts.misc.fab.FabHidden;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -23,7 +23,7 @@ import butterknife.OnClick;
 /**
  * Created by daniel on 06/06/15.
  */
-public class MainFragment extends BFragment {
+public class MainFragment extends MasterFragment {
 
     public static final String POSITION = "position";
 

@@ -22,12 +22,6 @@ public class BFragment extends Fragment {
     public BFragment() {}
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        BFragment.setInsets(mBaseActivity, view);
-    }
-
-    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -41,14 +35,6 @@ public class BFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mBaseActivity = null;
-    }
-
-    public static void setInsets(Activity activity, View view) {
-        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.KITKAT)
-            return;
-        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
-        SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
-        view.setPadding(0, config.getPixelInsetTop(true) + 16, config.getPixelInsetRight(), config.getPixelInsetBottom());
     }
 
 }
