@@ -63,10 +63,10 @@ public class GroupSectionFragment extends Fragment implements OnItemSelectedList
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String group = ((TextView) view).getText().toString();
-        if (group.equals(getResources().getString(R.string.create_new_group))) {
+        TextView textView = (TextView) view;
+        if (textView != null && textView.getText().toString().equals(getResources().getString(R.string.create_new_group))) {
             EditTextDialogFragment editTextDialogFragment =
-            EditTextDialogFragment.newInstance(group);
+            EditTextDialogFragment.newInstance(textView.getText().toString());
             editTextDialogFragment.setOnEditTextDialogListener(this);
             editTextDialogFragment.show(getFragmentManager(), "");
         }

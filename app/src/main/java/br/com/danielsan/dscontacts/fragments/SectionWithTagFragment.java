@@ -75,8 +75,8 @@ public class SectionWithTagFragment extends SimpleSectionFragment implements OnI
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String tag = ((TextView) view).getText().toString();
-        if (tag.equals(getResources().getString(R.string.custom))) {
+        TextView textView = (TextView) view;
+        if (textView != null && textView.getText().toString().equals(getResources().getString(R.string.custom))) {
             EditTextDialogFragment editTextDialogFragment =
             EditTextDialogFragment.newInstance("Custom label name");
             editTextDialogFragment.setOnEditTextDialogListener(this);
