@@ -33,7 +33,7 @@ public class SimpleSectionFragment extends Fragment {
     protected ViewGroup mViewGroup;
     protected LayoutInflater mLayoutInflater;
     protected LinearLayout mLnrLytContainer;
-    protected ImageView mImgVwAddNew;
+    protected TextView mAddNewTextView;
 
     protected Integer mCounterSectionItems = 0;
     protected Map<Integer, Map<Integer, View>> mSectionItems;
@@ -82,12 +82,12 @@ public class SimpleSectionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_section_contact, container, false);
 
         mLnrLytContainer = (LinearLayout) view.findViewById(R.id.m_lnr_lyt_container);
-        mImgVwAddNew = (ImageView) view.findViewById(R.id.m_img_vw_add_new);
-        ((TextView) view.findViewById(R.id.m_txt_vw_title)).setText(mTitle);
+        mAddNewTextView = (TextView) view.findViewById(R.id.txt_vw_add_new);
+        ((TextView) view.findViewById(R.id.txt_vw_title)).setText(mTitle);
 
         addContactItem();
 
-        mImgVwAddNew.setOnClickListener(new View.OnClickListener() {
+        mAddNewTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addContactItem();

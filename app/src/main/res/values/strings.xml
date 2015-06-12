@@ -85,6 +85,7 @@
     <string name="title">Title</string>
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
+    <string name="person">Person</string>
     <string-array name="other_fields_titles">
         <item>IM</item>
         <item>Notes</item>

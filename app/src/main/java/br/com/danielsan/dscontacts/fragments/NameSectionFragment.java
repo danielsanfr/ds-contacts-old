@@ -1,5 +1,6 @@
 package br.com.danielsan.dscontacts.fragments;
 
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -81,10 +82,24 @@ public class NameSectionFragment extends Fragment implements OnClickListener {
         mEdtTxtLastName.addTextChangedListener(mEdtTxtNamePartsTextWatcher);
 
         mImgVwExpandName.setOnClickListener(this);
+        mExpdbLytNameSection.setOnClickListener(null);
+        mExpdbLytNameSection.getHeaderLayout().setOnClickListener(null);
         mExpdbLytNameSection.getContentLayout().setOnClickListener(null);
 
         mImgBtnPhoto.setOnClickListener(mImgBtnPhotoOnClickListener);
         mBtnAddOrganization.setOnClickListener(mBtnAddOrganizationOnClickListener);
+
+        view.findViewById(R.id.m_img_btn_photo).setOnClickListener(new View.OnClickListener() {
+            private boolean test = true;
+            @Override
+            public void onClick(View v) {
+                if (test)
+                    mEdtTxtName.setVisibility(View.GONE);
+                else
+                    mEdtTxtName.setVisibility(View.VISIBLE);
+                test = !test;
+            }
+        });
 
         return view;
     }
@@ -131,13 +146,23 @@ public class NameSectionFragment extends Fragment implements OnClickListener {
     public void onClick(View view) {
         if (mExpdbLytNameSection.isOpened()) {
             mExpdbLytNameSection.hide();
-            mEdtTxtName.setVisibility(View.VISIBLE);
             mImgVwExpandName.setImageResource(R.drawable.ic_expand_more_grey600);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mEdtTxtName.setVisibility(View.VISIBLE);
+                }
+            }, 150);
             buildHeaderName();
         } else {
             mExpdbLytNameSection.show();
-            mEdtTxtName.setVisibility(View.INVISIBLE);
             mImgVwExpandName.setImageResource(R.drawable.ic_expand_less_grey600);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mEdtTxtName.setVisibility(View.GONE);
+                }
+            }, 100);
             buildContentNames();
         }
     }
