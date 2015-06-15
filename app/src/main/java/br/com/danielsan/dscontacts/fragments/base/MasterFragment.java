@@ -26,10 +26,10 @@ public class MasterFragment extends BFragment {
     }
 
     public static void setPaddingForTranslucent(BaseActivity baseActivity, View view) {
-        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.KITKAT)
-            return;
-        SystemBarTintManager.SystemBarConfig config = baseActivity.getSystemBarTintManager().getConfig();
-        view.setPadding(0, config.getPixelInsetTop(true) + 16, 0, config.getPixelInsetBottom());
+//        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.KITKAT)
+//            return;
+//        SystemBarTintManager.SystemBarConfig config = baseActivity.getSystemBarTintManager().getConfig();
+//        view.setPadding(0, config.getPixelInsetTop(true) + 16, 0, config.getPixelInsetBottom());
     }
 
 }
