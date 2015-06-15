@@ -19,7 +19,12 @@
         <activity
             android:name=".activities.AddContactActivity"
             android:label="New Contact"
-            android:theme="@style/AppAddContacTheme" >
+            android:theme="@style/AppAddContactTheme" >
+        </activity>
+        <activity
+            android:name=".activities.ContactInfoActivity"
+            android:label="New Contact"
+            android:theme="@style/ContactInfoTheme" >
         </activity>
     </application>
 

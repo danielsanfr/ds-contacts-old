@@ -25,8 +25,9 @@ import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog.OnOtherFi
 import br.com.danielsan.dscontacts.fragments.SectionWithTagFragment;
 
 public class AddContactActivity extends ActionBarActivity
-        implements OnSectionInteractionListener, OnOtherFieldsDialogInteractionListener,
-                   OnCancelDoneActionBarListener {
+        implements OnSectionInteractionListener,
+        OnOtherFieldsDialogInteractionListener,
+        OnCancelDoneActionBarListener {
 
     private Button mBtnAddField;
     private List<String> mOtherFieldsTitles;

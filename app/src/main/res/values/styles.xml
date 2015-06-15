@@ -6,7 +6,11 @@
         <!-- Customize your theme here. -->
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    <style name="AppAddContacTheme" parent="AppTheme">
+    <style name="AppAddContactTheme" parent="AppTheme">
+    </style>
+    <style name="ContactInfoTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
     <!--To use toolbar instead of the ActionBar-->
     <!--<style name="AppAddContacTheme" parent="Theme.AppCompat.NoActionBar">-->
