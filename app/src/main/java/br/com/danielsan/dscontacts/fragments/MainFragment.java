@@ -4,12 +4,11 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.astuetz.PagerSlidingTabStrip;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.activities.AddContactActivity;
@@ -30,8 +29,8 @@ public class MainFragment extends BFragment {
 
     @InjectView(R.id.vw_pgr_main)
     protected ViewPager mMainViewPager;
-    @InjectView(R.id.pg_sld_tab_stp_main)
-    protected PagerSlidingTabStrip mPagerSlidingTabStrip;
+    @InjectView(R.id.tab_lyt_main)
+    protected TabLayout mMainTabLayout;
     @InjectView(R.id.flt_act_btn_add_contact)
     protected FloatingActionButton mAddContactFltActBtn;
 
@@ -54,9 +53,10 @@ public class MainFragment extends BFragment {
         ButterKnife.inject(this, view);
 
 //        mFabHidden = new FabHidden(mFabAddContact, mLstVw);
-        mMainViewPager.setAdapter(new MainFragmentPagerAdapter(this));
-        mPagerSlidingTabStrip.setViewPager(mMainViewPager);
-        mPagerSlidingTabStrip.setOnPageChangeListener((MainFragmentPagerAdapter) mMainViewPager.getAdapter());
+        MainFragmentPagerAdapter mainFragmentPagerAdapter = new MainFragmentPagerAdapter(this);
+        mMainViewPager.addOnPageChangeListener(mainFragmentPagerAdapter);
+        mMainViewPager.setAdapter(mainFragmentPagerAdapter);
+        mMainTabLayout.setupWithViewPager(mMainViewPager);
 
         Bundle arguments = this.getArguments();
         if (arguments != null && arguments.containsKey(POSITION))
@@ -82,7 +82,7 @@ public class MainFragment extends BFragment {
     }
 
     public void changeColor(Integer newColor) {
-        mPagerSlidingTabStrip.setBackgroundColor(newColor);
+        mMainTabLayout.setBackgroundColor(newColor);
         ((MainActivity) mBaseActivity).changeColor(newColor);
         mAddContactFltActBtn.setBackgroundTintList(MainFragment.basicColorStateList(newColor));
     }

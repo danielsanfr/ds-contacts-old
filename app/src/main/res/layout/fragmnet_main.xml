@@ -17,17 +17,28 @@
             android:layout_height="fill_parent"
             android:background="@android:drawable/dialog_holo_light_frame" />
 
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/pg_sld_tab_stp_main"
-            android:layout_height="48dp"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_lyt_main"
             android:layout_width="match_parent"
-            android:background="@color/orange_500"
-            android:textColor="#96FFFFFF"
-            app:pstsShouldExpand="true"
-            app:pstsIndicatorHeight="3dp"
-            app:pstsTabTextAllCaps="false"
-            app:pstsIndicatorColor="@android:color/white"
-            app:pstsTabTextColor="@drawable/selector_p_s_t_s_title" />
+            android:layout_height="wrap_content"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            app:tabTextColor="#90FFFFFF"
+            app:tabIndicatorColor="@android:color/white"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextAppearance="@style/tab_layout_title_style" />
+
+        <!--<com.astuetz.PagerSlidingTabStrip-->
+            <!--android:id="@+id/pg_sld_tab_stp_main"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:background="@color/orange_500"-->
+            <!--android:textColor="#96FFFFFF"-->
+            <!--app:pstsShouldExpand="true"-->
+            <!--app:pstsIndicatorHeight="3dp"-->
+            <!--app:pstsTabTextAllCaps="false"-->
+            <!--app:pstsIndicatorColor="@android:color/white"-->
+            <!--app:pstsTabTextColor="@drawable/selector_p_s_t_s_title" />-->
 
     </FrameLayout>
 
