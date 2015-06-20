@@ -10,8 +10,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.AbsListView;
 
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
-
 import br.com.danielsan.dscontacts.R;
 
 /**
@@ -97,9 +95,6 @@ public class FabHidden implements AbsListView.OnScrollListener, ScrollDirectionL
                     return;
                 }
             }
-
-            if (mViewToHide instanceof FloatingActionsMenu)
-                ((FloatingActionsMenu) mViewToHide).collapse();
 
             int translationY = visible ? 0 : height + this.getMarginBottom();
             if (animate) {
