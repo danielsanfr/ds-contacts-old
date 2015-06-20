@@ -35,7 +35,7 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" >
 
                 <com.andexert.expandablelayout.library.ExpandableLayout
                     android:id="@+id/m_expdb_lyt_name_section"
@@ -72,26 +72,37 @@
 
             </LinearLayout>
 
-
             <Button
                 android:id="@+id/m_btn_add_organization"
                 android:text="@string/add_organization"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
 
-            <EditText
-                android:id="@+id/m_edt_txt_organization"
-                android:inputType="text"
-                android:hint="@string/organization"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/m_edt_txt_title"
-                android:inputType="text"
-                android:hint="@string/title"
+                <EditText
+                    android:id="@+id/m_edt_txt_organization"
+                    android:inputType="text"
+                    android:hint="@string/organization"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" >
+
+                <EditText
+                    android:id="@+id/m_edt_txt_title"
+                    android:inputType="text"
+                    android:hint="@string/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
