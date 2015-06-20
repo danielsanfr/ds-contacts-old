@@ -86,6 +86,7 @@
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
     <string name="person">Person</string>
+    <string name="search">Search</string>
     <string-array name="other_fields_titles">
         <item>IM</item>
         <item>Notes</item>
