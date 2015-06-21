@@ -30,7 +30,7 @@
                 app:tabTextColor="#90FFFFFF"
                 app:tabIndicatorColor="@android:color/white"
                 app:tabSelectedTextColor="@android:color/white"
-                app:tabTextAppearance="@style/tab_layout_title_style" />
+                app:tabTextAppearance="@style/TabLayoutTitleStyle" />
 
         </FrameLayout>
 

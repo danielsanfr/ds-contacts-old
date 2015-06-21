@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:windowContentOverlay">@null</item>
+    <style name="MainTheme.Translucent" parent="MainThemeBase">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
+    <style name="MainTheme" parent="MainTheme.Translucent" />
+    <style name="AuxTheme.Translucent" parent="AuxThemeBase">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+    <style name="AuxTheme" parent="AuxTheme.Translucent" />
 </resources>

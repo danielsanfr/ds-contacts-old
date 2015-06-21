@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/MainTheme" >
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name" >
@@ -19,7 +19,7 @@
         <activity
             android:name=".activities.AddContactActivity"
             android:label="New Contact"
-            android:theme="@style/AppAddContactTheme" >
+            android:theme="@style/AddContactTheme" >
         </activity>
         <activity
             android:name=".activities.ContactInfoActivity"
