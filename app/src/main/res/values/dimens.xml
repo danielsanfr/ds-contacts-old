@@ -8,5 +8,6 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
 
     <dimen name="fab_scroll_threshold">4dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>
