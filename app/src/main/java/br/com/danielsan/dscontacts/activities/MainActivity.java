@@ -5,12 +5,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -127,6 +126,7 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
+        Snackbar.make(mMainFragment.getView(), "Your message", Snackbar.LENGTH_SHORT).show();
         switch (item.getItemId()) {
             //noinspection SimplifiableIfStatement
             case R.id.mn_create_group:
