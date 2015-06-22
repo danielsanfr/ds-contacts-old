@@ -58,10 +58,10 @@ public class NameSectionFragment extends Fragment implements OnClickListener {
 
         mExpdbLytNameSection = (ExpandableLayout) view.findViewById(R.id.m_expdb_lyt_name_section);
         mImgVwExpandName     = (ImageView) view.findViewById(R.id.m_img_vw_expand_name);
-        mEdtTxtName          = (EditText) view.findViewById(R.id.m_edt_txt_name);
-        mEdtTxtFirstName     = (EditText) view.findViewById(R.id.m_edt_txt_first_name);
-        mEdtTxtMiddleName    = (EditText) view.findViewById(R.id.m_edt_txt_middle_name);
-        mEdtTxtLastName      = (EditText) view.findViewById(R.id.m_edt_txt_last_name);
+        mEdtTxtName          = (EditText) view.findViewById(R.id.edt_txt_name);
+        mEdtTxtFirstName     = (EditText) view.findViewById(R.id.edt_txt_first_name);
+        mEdtTxtMiddleName    = (EditText) view.findViewById(R.id.edt_txt_middle_name);
+        mEdtTxtLastName      = (EditText) view.findViewById(R.id.edt_txt_last_name);
         mEdtTxtOrganization  = (EditText) view.findViewById(R.id.m_edt_txt_organization);
         mEdtTxtTitle         = (EditText) view.findViewById(R.id.m_edt_txt_title);
 

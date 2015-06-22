@@ -7,7 +7,7 @@
     app:hintTextAppearance="@style/NameHintTextAppearance" >
 
     <EditText
-        android:id="@+id/m_edt_txt_name"
+        android:id="@+id/edt_txt_name"
         android:hint="@string/name"
         android:inputType="textPersonName"
         android:layout_width="match_parent"

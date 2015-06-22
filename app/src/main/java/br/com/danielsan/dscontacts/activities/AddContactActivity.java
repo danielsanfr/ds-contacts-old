@@ -33,6 +33,9 @@ import br.com.danielsan.dscontacts.fragments.OnSectionInteractionListener;
 import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog.OnOtherFieldsDialogInteractionListener;
 import br.com.danielsan.dscontacts.fragments.SectionWithTagFragment;
 import br.com.danielsan.dscontacts.util.Metrics;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class AddContactActivity extends AppCompatActivity
         implements OnSectionInteractionListener,
@@ -42,89 +45,53 @@ public class AddContactActivity extends AppCompatActivity
     private Button mBtnAddField;
     private List<String> mOtherFieldsTitles;
     private List<Integer> mOtherFieldsTagsId;
+    final private RotateAnimation mRotateAnimationLeft = new RotateAnimation(0f, -180f,
+                                                                             RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                                                                             RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+    final private RotateAnimation mRotateAnimationRight = new RotateAnimation(-180f, 0f,
+                                                                              RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+                                                                              RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+
+    @InjectView(R.id.edt_txt_name)
+    protected EditText mNameEdtTxt;
+    @InjectView(R.id.edt_txt_first_name)
+    protected EditText mFirstNameEdtTxt;
+    @InjectView(R.id.edt_txt_middle_name)
+    protected EditText mMiddleNameEdtTxt;
+    @InjectView(R.id.edt_txt_last_name)
+    protected EditText mLastNameEdtTxt;
+    @InjectView(R.id.img_vw_expand_name)
+    protected ImageView mExpandNameImgVw;
+    @InjectView(R.id.expdb_lyt_name_info)
+    protected ExpandableLayout mNameInfoExpdbLyt;
+    @InjectView(R.id.clpsng_tlbr_lyt)
+    protected CollapsingToolbarLayout mClpsngTlbrLyt;
+    @InjectView(R.id.app_bar_lyt)
+    protected AppBarLayout mAppBarLyt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
+        ButterKnife.inject(this);
         Slidr.attach(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mRotateAnimationLeft.setDuration(200);
+        mRotateAnimationRight.setDuration(200);
+        mRotateAnimationLeft.setFillAfter(true);
+        mRotateAnimationRight.setFillAfter(true);
 
-        setSupportActionBar(toolbar);
+        this.setSupportActionBar((Toolbar) this.findViewById(R.id.toolbar));
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mNameInfoExpdbLyt.setOnClickListener(null);
+        mClpsngTlbrLyt.setTitle(this.getString(R.string.title_activity_add_contact));
+        mClpsngTlbrLyt.setBackgroundColor(this.getResources().getColor(R.color.orange_500));
+        mClpsngTlbrLyt.setContentScrimColor(this.getResources().getColor(R.color.orange_500));
 
-        final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        final CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
-        collapsingToolbar.setTitle(this.getString(R.string.title_activity_add_contact));
-        collapsingToolbar.setBackgroundColor(this.getResources().getColor(R.color.orange_500));
-        collapsingToolbar.setContentScrimColor(this.getResources().getColor(R.color.orange_500));
-
-//        getSupportActionBar().setTitle(this.getString(R.string.title_activity_add_contact));
-
-
-        {
-            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-            layoutParams.height = Metrics.pxToDp(AddContactActivity.this, 260);
-            appBarLayout.setLayoutParams(layoutParams);
-        }
-
-        final ExpandableLayout expandableLayout = (ExpandableLayout) findViewById(R.id.m_expdb_lyt_name_section);
-        final ImageView imageView = (ImageView) findViewById(R.id.m_img_vw_expand_name);
-        final EditText editText = (EditText) findViewById(R.id.m_edt_txt_name);
-
-        expandableLayout.setOnClickListener(null);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final RotateAnimation rotateAnim;
-                CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-
-                if (expandableLayout.isOpened()) {
-                    rotateAnim = new RotateAnimation(-180f, 0f, RotateAnimation.RELATIVE_TO_SELF,
-                                                     0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-
-                    layoutParams.height = Metrics.pxToDp(AddContactActivity.this, 260);
-                    expandableLayout.hide();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            editText.setVisibility(View.VISIBLE);
-                        }
-                    }, 150);
-//                    buildHeaderName();
-                } else {
-                    rotateAnim = new RotateAnimation(0f, -180f, RotateAnimation.RELATIVE_TO_SELF,
-                                                     0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-
-                    layoutParams.height = Metrics.pxToDp(AddContactActivity.this, 530);
-                    expandableLayout.show();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            editText.setVisibility(View.GONE);
-                        }
-                    }, 100);
-//                    buildContentNames();
-                }
-                rotateAnim.setDuration(200);
-                rotateAnim.setFillAfter(true);
-                imageView.startAnimation(rotateAnim);
-                appBarLayout.setLayoutParams(layoutParams);
-            }
-        });
-
-
-
-//
-//        ((AppBarLayout) findViewById(R.id.appbar)).addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-//                Log.d("=========", String.valueOf(i) + " <=> " + String.valueOf(dpToPx(200)));
-//                expandableLayout.setAlpha((float) 1.0 - Math.abs((float) i/(float) dpToPx(200)));
-//            }
-//        });
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLyt.getLayoutParams();
+        layoutParams.height = Metrics.pxToDp(AddContactActivity.this, 260);
+        mAppBarLyt.setLayoutParams(layoutParams);
 
         // To use toolbar instead of the ActionBar
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.m_action_bar);
@@ -166,6 +133,38 @@ public class AddContactActivity extends AppCompatActivity
 
     private void addFragment(int id, Fragment fragment) {
         getSupportFragmentManager().beginTransaction().add(id, fragment).commit();
+    }
+
+    @OnClick(R.id.img_vw_expand_name)
+    protected void expandNameImgVwOnClick(View view) {
+        RotateAnimation rotateAnimation;
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLyt.getLayoutParams();
+
+        if (mNameInfoExpdbLyt.isOpened()) {
+            rotateAnimation = mRotateAnimationRight;
+            layoutParams.height = Metrics.pxToDp(AddContactActivity.this, 260);
+            mNameInfoExpdbLyt.hide();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mNameEdtTxt.setVisibility(View.VISIBLE);
+                }
+            }, 150);
+//                    buildHeaderName();
+        } else {
+            rotateAnimation = mRotateAnimationLeft;
+            layoutParams.height = Metrics.pxToDp(AddContactActivity.this, 530);
+            mNameInfoExpdbLyt.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mNameEdtTxt.setVisibility(View.GONE);
+                }
+            }, 100);
+//                    buildContentNames();
+        }
+        mExpandNameImgVw.startAnimation(rotateAnimation);
+        mAppBarLyt.setLayoutParams(layoutParams);
     }
 
     @Override
