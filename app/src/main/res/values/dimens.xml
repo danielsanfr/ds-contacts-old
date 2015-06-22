@@ -12,4 +12,7 @@
     <dimen name="detail_backdrop_height">256dp</dimen>
     <dimen name="card_margin">@dimen/fab_margin</dimen>
 
+    <dimen name="name_info_expanded">256dp</dimen>
+    <dimen name="name_info_collapsing">120dp</dimen>
+
 </resources>

@@ -87,7 +87,7 @@ public class AddContactActivity extends BaseActivity
         mClpsngTlbrLyt.setContentScrimColor(this.getResources().getColor(R.color.orange_500));
 
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLyt.getLayoutParams();
-        layoutParams.height = Metrics.pxToDp(AddContactActivity.this, 260);
+        layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_collapsing);
         mAppBarLyt.setLayoutParams(layoutParams);
 
         // To use toolbar instead of the ActionBar
@@ -136,7 +136,7 @@ public class AddContactActivity extends BaseActivity
 
         if (mNameInfoExpdbLyt.isOpened()) {
             rotateAnimation = mRotateAnimationRight;
-            layoutParams.height = Metrics.pxToDp(AddContactActivity.this, 260);
+            layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_collapsing);
             mNameInfoExpdbLyt.hide();
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -147,7 +147,7 @@ public class AddContactActivity extends BaseActivity
 //                    buildHeaderName();
         } else {
             rotateAnimation = mRotateAnimationLeft;
-            layoutParams.height = Metrics.pxToDp(AddContactActivity.this, 530);
+            layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_expanded);
             mNameInfoExpdbLyt.show();
             new Handler().postDelayed(new Runnable() {
                 @Override
