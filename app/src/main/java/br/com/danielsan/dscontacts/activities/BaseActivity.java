@@ -3,14 +3,17 @@ package br.com.danielsan.dscontacts.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.util.FragmentsTransaction;
 
 /**
@@ -22,17 +25,23 @@ public abstract class BaseActivity extends AppCompatActivity {
     private SystemBarTintManager mSystemBarTintManager;
     private FragmentsTransaction mFragmentsTransaction;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState, @LayoutRes int layoutResID) {
         super.onCreate(savedInstanceState);
+        this.setContentView(layoutResID);
 
         mSystemBarTintManager = new SystemBarTintManager(this);
         mFragmentsTransaction = new FragmentsTransaction(this, this.getMasterContainer());
 
-        if (this.getSupportActionBar() != null) {
-            mActionBar = this.getSupportActionBar();
-            mActionBar.setElevation(0);
-        }
+        if (this.getSupportActionBar() == null)
+            this.setSupportActionBar((Toolbar) this.findViewById(R.id.toolbar));
+
+        mActionBar = this.getSupportActionBar();
+        mActionBar.setElevation(0);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        throw new RuntimeException("You should use the method \"onCreate(Bundle savedInstanceState, @LayoutRes int layoutResID)\" instead of \"onCreate(Bundle savedInstanceState)\"");
     }
 
     @IdRes

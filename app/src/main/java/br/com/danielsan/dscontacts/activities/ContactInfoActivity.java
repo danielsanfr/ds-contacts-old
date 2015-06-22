@@ -13,25 +13,23 @@ import br.com.danielsan.dscontacts.R;
 /**
  * Created by daniel on 15/06/15.
  */
-public class ContactInfoActivity extends AppCompatActivity {
+public class ContactInfoActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_contact_info);
+        super.onCreate(savedInstanceState, R.layout.activity_contact_info);
         Slidr.attach(this);
 
-        Intent intent = getIntent();
-        final String cheeseName = "Daniel San";
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        toolbar.setPadding(0, this.getStatusBarHeight(), 0, 0);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(cheeseName);
+        collapsingToolbar.setTitle("Daniel San");
+    }
+
+    @Override
+    protected int getMasterContainer() {
+        return 0;
     }
 
     // A method to find height of the status bar

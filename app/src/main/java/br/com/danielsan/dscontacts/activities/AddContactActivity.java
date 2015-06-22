@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class AddContactActivity extends AppCompatActivity
+public class AddContactActivity extends BaseActivity
         implements OnSectionInteractionListener,
         OnOtherFieldsDialogInteractionListener,
         OnCancelDoneActionBarListener {
@@ -71,8 +71,7 @@ public class AddContactActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_contact);
+        super.onCreate(savedInstanceState, R.layout.activity_add_contact);
         ButterKnife.inject(this);
         Slidr.attach(this);
 
@@ -80,9 +79,7 @@ public class AddContactActivity extends AppCompatActivity
         mRotateAnimationRight.setDuration(200);
         mRotateAnimationLeft.setFillAfter(true);
         mRotateAnimationRight.setFillAfter(true);
-
-        this.setSupportActionBar((Toolbar) this.findViewById(R.id.toolbar));
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
 
         mNameInfoExpdbLyt.setOnClickListener(null);
         mClpsngTlbrLyt.setTitle(this.getString(R.string.title_activity_add_contact));
@@ -127,12 +124,9 @@ public class AddContactActivity extends AppCompatActivity
 //                                                       resources.getStringArray(R.array.field_address_and_email)));
     }
 
-    private void addFragment(Fragment fragment) {
-//        this.addFragment(R.id.m_lnr_lyt_sections, fragment);
-    }
-
-    private void addFragment(int id, Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().add(id, fragment).commit();
+    @Override
+    protected int getMasterContainer() {
+        return 0;
     }
 
     @OnClick(R.id.img_vw_expand_name)
