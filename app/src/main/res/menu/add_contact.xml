@@ -1,0 +1,17 @@
+<menu
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context="br.com.danielsan.dscontacts.activities.MainActivity" >
+    <item
+        android:id="@+id/menu_favorite"
+        android:icon="@drawable/ic_favorite_border_white"
+        android:title="@string/favorite"
+        android:checkable="true"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_confirm"
+        android:icon="@drawable/ic_check_white"
+        android:title="@string/confirm"
+        app:showAsAction="ifRoom" />
+</menu>

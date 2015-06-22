@@ -146,7 +146,7 @@ public class NameSectionFragment extends Fragment implements OnClickListener {
     public void onClick(View view) {
         if (mExpdbLytNameSection.isOpened()) {
             mExpdbLytNameSection.hide();
-            mImgVwExpandName.setImageResource(R.drawable.ic_expand_more_grey600);
+//            mImgVwExpandName.setImageResource(R.drawable.ic_expand_more_grey600);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -156,7 +156,7 @@ public class NameSectionFragment extends Fragment implements OnClickListener {
             buildHeaderName();
         } else {
             mExpdbLytNameSection.show();
-            mImgVwExpandName.setImageResource(R.drawable.ic_expand_less_grey600);
+//            mImgVwExpandName.setImageResource(R.drawable.ic_expand_less_grey600);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

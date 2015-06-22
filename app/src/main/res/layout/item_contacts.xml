@@ -28,7 +28,7 @@
             android:visibility="gone"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/check_sm" />
+            android:src="@drawable/ic_check_white" />
 
     </FrameLayout>
 
