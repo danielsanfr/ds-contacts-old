@@ -7,9 +7,11 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +27,7 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
 
     private CharSequence mTitle;
     private MainFragment mMainFragment;
+    private SearchViewController mSrcVwCltl;
     private ActionBarDrawerToggle mDrawerToggle;
 
     @InjectView(R.id.drw_lyt_main)
@@ -44,6 +47,7 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
         ButterKnife.inject(this);
 
         mTitle = this.getTitle();
+        mSrcVwCltl = new SearchViewController();
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                                                   R.string.navigation_drawer_open,
                                                   R.string.navigation_drawer_close) {
@@ -118,6 +122,8 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
         else
             this.getMenuInflater().inflate(R.menu.main, menu);
 
+        mSrcVwCltl.setSearchViewMenu(menu);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -125,10 +131,10 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
-        Snackbar.make(mMainFragment.getView(), "Your message", Snackbar.LENGTH_SHORT).show();
+
         switch (item.getItemId()) {
-            //noinspection SimplifiableIfStatement
-            case R.id.mn_create_group:
+            case R.id.menu_create_group:
+                Snackbar.make(mMainFragment.getView(), "Your message", Snackbar.LENGTH_SHORT).show();
                 return true;
         }
 
@@ -139,4 +145,54 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
         this.getSystemBarTintManager().setTintColor(newColor);
         mActionBar.setBackgroundDrawable(new ColorDrawable(newColor));
     }
+
+    private class SearchViewController
+            implements MenuItemCompat.OnActionExpandListener,
+            SearchView.OnQueryTextListener,
+            SearchView.OnSuggestionListener {
+
+        public void setSearchViewMenu(Menu menu) {
+            MenuItem menuItem = menu.findItem(R.id.menu_search);
+            if (menuItem != null) {
+                SearchView searchView = (SearchView) menuItem.getActionView();
+                searchView.setQueryHint(getString(R.string.find_contacts) + "...");
+                searchView.setOnQueryTextListener(this);
+                searchView.setOnSuggestionListener(this);
+                MenuItemCompat.setOnActionExpandListener(menuItem, this);
+            }
+        }
+
+        @Override
+        public boolean onMenuItemActionExpand(MenuItem menuItem) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            return true;
+        }
+
+        @Override
+        public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            return true;
+        }
+
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            return false;
+        }
+
+        @Override
+        public boolean onSuggestionSelect(int position) {
+            return false;
+        }
+
+        @Override
+        public boolean onSuggestionClick(int position) {
+            return false;
+        }
+    }
+
 }

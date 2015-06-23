@@ -89,6 +89,7 @@
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
     <string name="confirm">Confirm</string>
+    <string name="find_contacts">Find contacts</string>
     <string-array name="other_fields_titles">
         <item>IM</item>
         <item>Notes</item>

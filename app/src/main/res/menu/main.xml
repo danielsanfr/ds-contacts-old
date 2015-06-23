@@ -4,11 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context="br.com.danielsan.dscontacts.activities.MainActivity" >
     <item
-        android:icon="@drawable/ic_search_white"
+        android:id="@+id/menu_search"
         android:title="@string/search"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_search_white"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
     <item
-        android:id="@+id/mn_create_group"
+        android:id="@+id/menu_create_group"
         android:icon="@drawable/ic_group_add_white"
         android:title="@string/create_new_group"
         app:showAsAction="ifRoom" />
