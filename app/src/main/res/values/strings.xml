@@ -90,6 +90,10 @@
     <string name="favorite">Favorite</string>
     <string name="confirm">Confirm</string>
     <string name="find_contacts">Find contacts</string>
+    <string name="call">Call</string>
+    <string name="chat">Chat</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     <string-array name="other_fields_titles">
         <item>IM</item>
         <item>Notes</item>

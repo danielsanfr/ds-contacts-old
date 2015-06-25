@@ -2,7 +2,10 @@ package br.com.danielsan.dscontacts.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -18,7 +21,7 @@ import butterknife.OnItemClick;
 /**
  * Created by daniel on 07/06/15.
  */
-public class FavoritesGridFragment extends BFragment {
+public class FavoritesGridFragment extends BFragment implements FavoritesAdapter.Listener {
 
     @InjectView(R.id.grd_vw_favorites)
     protected GridView mFavoritesGridView;
@@ -35,7 +38,7 @@ public class FavoritesGridFragment extends BFragment {
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         ButterKnife.inject(this, view);
 
-        mFavoritesGridView.setAdapter(new FavoritesAdapter());
+        mFavoritesGridView.setAdapter(new FavoritesAdapter(this));
 
         return view;
     }
@@ -45,4 +48,8 @@ public class FavoritesGridFragment extends BFragment {
         mBaseActivity.addActivity(ContactInfoActivity.class);
     }
 
+    @Override
+    public void onItemClick(int position, FavoritesAdapter.Item item) {
+        Log.d("========", String.valueOf(position) + " <=> " + String.valueOf(item));
+    }
 }

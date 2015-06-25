@@ -13,6 +13,36 @@ import br.com.danielsan.dscontacts.adapters.holder.FavoritesViewHolder;
  */
 public class FavoritesAdapter extends BaseAdapter {
 
+    public enum Item {
+        Call(0),
+        Chat(1),
+        Edit(R.id.menu_edit),
+        Delete(R.id.menu_delete);
+        public int mItem;
+        Item(int item) {
+            mItem = item;
+        }
+        public static Item fromInteger(int item) {
+        switch(item) {
+        case 0:
+            return Call;
+        case 1:
+            return Chat;
+        case R.id.menu_edit:
+            return Edit;
+        case R.id.menu_delete:
+            return Delete;
+        }
+        return null;
+    }
+    }
+
+    private Listener mListener;
+
+    public FavoritesAdapter(Listener listener) {
+        mListener = listener;
+    }
+
     @Override
     public int getCount() {
         return 20;
@@ -33,13 +63,19 @@ public class FavoritesAdapter extends BaseAdapter {
         FavoritesViewHolder favoritesViewHolder;
         if (convertView == null) {
             convertView = View.inflate(parent.getContext(), R.layout.item_favorites, null);
-            favoritesViewHolder = new FavoritesViewHolder(convertView);
+            favoritesViewHolder = new FavoritesViewHolder(convertView, mListener);
         } else
             favoritesViewHolder = (FavoritesViewHolder) convertView.getTag();
 
-        favoritesViewHolder.updateView();
+        favoritesViewHolder.updateView(position);
 
         return convertView;
+    }
+
+    public interface Listener {
+
+        void onItemClick(int position, Item item);
+
     }
 
 }
