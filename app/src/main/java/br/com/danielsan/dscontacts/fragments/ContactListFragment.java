@@ -5,10 +5,12 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.ContactsAdapter;
 
 /**
@@ -23,12 +25,9 @@ public class ContactListFragment extends ListFragment {
     public ContactListFragment() {}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         this.setListAdapter(new ContactsAdapter(this.getActivity()));
-
-        return view;
+        this.getListView().setBackgroundColor(this.getResources().getColor(R.color.window_background));
     }
-
 }

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import br.com.danielsan.dscontacts.fragments.ContactListFragment;
 import br.com.danielsan.dscontacts.fragments.MainFragment;
 import br.com.danielsan.dscontacts.R;
 import butterknife.ButterKnife;
@@ -164,12 +165,14 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
 
         @Override
         public boolean onMenuItemActionExpand(MenuItem menuItem) {
+            addFragment(new ContactListFragment());
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             return true;
         }
 
         @Override
         public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+            removeFragment();
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             return true;
         }

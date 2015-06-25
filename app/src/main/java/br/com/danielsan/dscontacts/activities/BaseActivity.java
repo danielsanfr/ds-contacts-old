@@ -60,6 +60,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         mFragmentsTransaction.add(fragment);
     }
 
+    public void removeFragment() {
+        mFragmentsTransaction.remove();
+    }
+
     public void replaceFragment(Fragment fragment) {
         mFragmentsTransaction.replace(fragment);
     }
