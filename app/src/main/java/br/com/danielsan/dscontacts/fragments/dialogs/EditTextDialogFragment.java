@@ -15,7 +15,7 @@ import br.com.danielsan.dscontacts.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link EditTextDialogFragment.OnEditTextDialogListener} interface
+ * {@link EditTextDialogFragment.Listener} interface
  * to handle interaction events.
  * Use the {@link EditTextDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -25,7 +25,7 @@ public class EditTextDialogFragment extends DialogFragment implements OnClickLis
 
     private String mTitle;
     private EditText mEditText;
-    private OnEditTextDialogListener mListener;
+    private Listener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -46,7 +46,7 @@ public class EditTextDialogFragment extends DialogFragment implements OnClickLis
         // Required empty public constructor
     }
 
-    public void setOnEditTextDialogListener(OnEditTextDialogListener listener) {
+    public void setOnEditTextDialogListener(Listener listener) {
         mListener = listener;
     }
 
@@ -81,19 +81,17 @@ public class EditTextDialogFragment extends DialogFragment implements OnClickLis
 
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
-        if (mListener != null) {
-            mListener.onEditTextListenerInteraction(mEditText.getText().toString());
-        }
+        if (mListener != null)
+            mListener.onInputText(mEditText.getText());
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (mListener != null) {
+        if (mListener != null)
             return;
-        }
         try {
-            mListener = (OnEditTextDialogListener) activity;
+            mListener = (Listener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -116,8 +114,8 @@ public class EditTextDialogFragment extends DialogFragment implements OnClickLis
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnEditTextDialogListener {
-        public void onEditTextListenerInteraction(String text);
+    public interface Listener {
+        void onInputText(CharSequence text);
     }
 
 }

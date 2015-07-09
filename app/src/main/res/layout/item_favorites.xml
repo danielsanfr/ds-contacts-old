@@ -67,7 +67,7 @@
 
             <ImageView
                 android:id="@+id/img_vw_call_favorite"
-                android:src="@drawable/ic_call_black"
+                android:src="@drawable/ic_phone_grey"
                 android:scaleType="fitCenter"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -75,7 +75,7 @@
 
             <ImageView
                 android:id="@+id/img_vw_chat_favorite"
-                android:src="@drawable/ic_chat_black"
+                android:src="@drawable/ic_chat_grey"
                 android:scaleType="fitCenter"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -83,7 +83,7 @@
 
             <ImageView
                 android:id="@+id/img_vw_more_favorite"
-                android:src="@drawable/ic_more_vert_black"
+                android:src="@drawable/ic_more_vert_grey"
                 android:scaleType="fitCenter"
                 android:layout_weight="1"
                 android:layout_width="0dp"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">DS Contacts</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -75,6 +74,13 @@
     </string-array>
     <string name="phone">Phone</string>
     <string name="email">E-mail</string>
+    <string name="im">IM</string>
+    <string name="notes">Notes</string>
+    <string name="nickname">Nickname</string>
+    <string name="web_site">Web site</string>
+    <string name="events">Events</string>
+    <string name="address">Address</string>
+    <string name="relationship">Relationship</string>
     <string name="groups">Groups</string>
     <string name="name">Name</string>
     <string name="first_name">First name</string>
@@ -84,7 +90,7 @@
     <string name="add_organization">Add organization</string>
     <string name="title">Title</string>
     <string name="cancel">Cancel</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="person">Person</string>
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
@@ -94,14 +100,11 @@
     <string name="chat">Chat</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string-array name="other_fields_titles">
-        <item>IM</item>
-        <item>Notes</item>
-        <item>Nickname</item>
-        <item>Web site</item>
-        <item>Events</item>
-        <item>Address</item>
-        <item>Relationship</item>
-    </string-array>
+    <string name="photo">Photo</string>
+    <string name="change_photo">Change photo</string>
+    <string name="change_color">Change color</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -8,7 +8,7 @@
     android:background="@color/window_background" >
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
+        android:id="@+id/codnt_lyt_main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -28,13 +28,18 @@
 
                 <LinearLayout
                     android:paddingTop="60dp"
-                    android:paddingLeft="72dp"
-                    android:paddingStart="72dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.6" >
+
+                    <ImageView
+                        android:src="@drawable/ic_person_white"
+                        android:layout_marginTop="20dp"
+                        android:scaleType="fitCenter"
+                        android:layout_width="72dp"
+                        android:layout_height="32dp" />
 
                     <com.andexert.expandablelayout.library.ExpandableLayout
                         android:id="@+id/expdb_lyt_name_info"
@@ -70,174 +75,74 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingTop="24dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-                <android.support.v7.widget.CardView
+                <Button
+                    android:id="@+id/btn_add_organization"
+                    android:text="@string/add_organization"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:id="@+id/frm_lyt_field_work"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_margin">
+                    android:layout_height="wrap_content" />
 
-                    <LinearLayout
-                        style="@style/Widget.CardContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Info"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="asjhdkjash jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd asjhdkjash jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd" />
-
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
+                <LinearLayout
+                    android:id="@+id/lnr_lyt_fields"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/card_margin"
-                    android:layout_marginLeft="@dimen/card_margin"
-                    android:layout_marginRight="@dimen/card_margin">
+                    android:layout_height="wrap_content" >
 
-                    <LinearLayout
-                        style="@style/Widget.CardContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <!--<android.support.v7.widget.CardView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_margin="@dimen/card_margin">-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Friends"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    <!--<LinearLayout-->
+                    <!--style="@style/Widget.CardContent"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="asjhdkjash jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd asjhdkjash jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd" />
+                    <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Info"-->
+                    <!--android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
 
-                    </LinearLayout>
+                    <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="asjhdkjash jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd asjhdkjash jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd" />-->
 
-                </android.support.v7.widget.CardView>
+                    <!--</LinearLayout>-->
 
-                <android.support.v7.widget.CardView
+                    <!--</android.support.v7.widget.CardView>-->
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/frm_lyt_field_group"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/card_margin"
-                    android:layout_marginLeft="@dimen/card_margin"
-                    android:layout_marginRight="@dimen/card_margin">
-
-                    <LinearLayout
-                        style="@style/Widget.CardContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Related"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="asjhdkjash asjhdkjash jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd" />
-
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/card_margin"
-                    android:layout_marginLeft="@dimen/card_margin"
-                    android:layout_marginRight="@dimen/card_margin">
-
-                    <LinearLayout
-                        style="@style/Widget.CardContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Related"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="asjhdkjash asjhdkjash jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd jasjh djashjdh ajsh djhasjhdjaskdhjk ashdhj ashdjkh asjkhdj kashjd hasjh jhdjkasdhjksahjd" />
-
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
 
-        <!--<android.support.design.widget.FloatingActionButton-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/ic_person_add_white"-->
-            <!--android:layout_margin="16dp"-->
-            <!--app:borderWidth="0dp"-->
-            <!--app:layout_anchor="@id/appbar"-->
-            <!--app:layout_anchorGravity="right|bottom" />-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/flt_act_btn_add_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_add_white"
+        app:borderWidth="0dp"
+        app:fabSize="normal"
+        app:layout_behavior="br.com.danielsan.dscontacts.widgets.util.ScrollAwareFABBehavior" />
 
     </android.support.design.widget.CoordinatorLayout>
 
 </FrameLayout>
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="fill_parent"-->
-    <!--android:fitsSystemWindows="true"-->
-    <!--tools:context="br.com.danielsan.dscontacts.activities.AddContactActivity"-->
-    <!--tools:ignore="MergeRootFrame"-->
-    <!--android:background="#FFE0E0E0">-->
-
-    <!--&lt;!&ndash;To use toolbar instead of the ActionBar&ndash;&gt;-->
-    <!--&lt;!&ndash;<include layout="@layout/custom_action_bar" />&ndash;&gt;-->
-
-    <!--<ScrollView-->
-        <!--android:id="@+id/scrollView"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="fill_parent" >-->
-
-        <!--<LinearLayout-->
-            <!--android:orientation="vertical"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_width="fill_parent" >-->
-
-            <!--<LinearLayout-->
-                <!--android:id="@+id/m_lnr_lyt_sections"-->
-                <!--android:orientation="vertical"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_width="fill_parent" />-->
-
-            <!--<FrameLayout-->
-                <!--android:id="@+id/frm_lyt_group_section"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content" />-->
-
-            <!--<Button-->
-                <!--android:id="@+id/m_btn_add_field"-->
-                <!--android:text="@string/add_another_field"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content" />-->
-
-        <!--</LinearLayout>-->
-
-    <!--</ScrollView>-->
-
-<!--</RelativeLayout>-->

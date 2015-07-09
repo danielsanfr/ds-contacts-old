@@ -1,21 +1,19 @@
 package br.com.danielsan.dscontacts.activities;
 
-import android.net.Uri;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.os.Handler;
+import android.support.annotation.ArrayRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.util.Log;
+import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,31 +22,30 @@ import android.widget.ImageView;
 import com.andexert.expandablelayout.library.ExpandableLayout;
 import com.r0adkll.slidr.Slidr;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.danielsan.dscontacts.R;
-import br.com.danielsan.dscontacts.custom.CancelDoneActionBar.OnCancelDoneActionBarListener;
-import br.com.danielsan.dscontacts.fragments.NameSectionFragment;
-import br.com.danielsan.dscontacts.fragments.OnSectionInteractionListener;
-import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog.OnOtherFieldsDialogInteractionListener;
-import br.com.danielsan.dscontacts.fragments.SectionWithTagFragment;
-import br.com.danielsan.dscontacts.util.Metrics;
+import br.com.danielsan.dscontacts.fragments.add.contacts.fields.CommonFieldFragment;
+import br.com.danielsan.dscontacts.fragments.add.contacts.fields.GroupFieldFragment;
+import br.com.danielsan.dscontacts.fragments.add.contacts.fields.PhotoFieldFragment;
+import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WithTagsFieldFragment;
+import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WorkFieldFragment;
+import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
+import br.com.danielsan.dscontacts.util.FragmentsTransaction;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class AddContactActivity extends BaseActivity
-        implements OnSectionInteractionListener,
-        OnOtherFieldsDialogInteractionListener,
-        OnCancelDoneActionBarListener {
+        implements OtherFieldsDialog.Listener {
 
-    private Button mBtnAddField;
-    private List<String> mOtherFieldsTitles;
-    private List<Integer> mOtherFieldsTagsId;
-    final private RotateAnimation mRotateAnimationLeft = new RotateAnimation(0f, -180f,
+    private List<Trio> mFields;
+    private ArrayList<String> mFieldTitles;
+    private final RotateAnimation mRotateAnimationLeft = new RotateAnimation(0f, -180f,
                                                                              RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                                                                              RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-    final private RotateAnimation mRotateAnimationRight = new RotateAnimation(-180f, 0f,
+    private final RotateAnimation mRotateAnimationRight = new RotateAnimation(-180f, 0f,
                                                                               RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                                                                               RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
@@ -68,6 +65,8 @@ public class AddContactActivity extends BaseActivity
     protected CollapsingToolbarLayout mClpsngTlbrLyt;
     @InjectView(R.id.app_bar_lyt)
     protected AppBarLayout mAppBarLyt;
+    @InjectView(R.id.flt_act_btn_add_field)
+    protected FloatingActionButton mAddFieldFltActBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,48 +84,46 @@ public class AddContactActivity extends BaseActivity
         mClpsngTlbrLyt.setTitle(this.getString(R.string.title_activity_add_contact));
         mClpsngTlbrLyt.setBackgroundColor(this.getResources().getColor(R.color.orange_500));
         mClpsngTlbrLyt.setContentScrimColor(this.getResources().getColor(R.color.orange_500));
+        mAddFieldFltActBtn.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.orange_500)));
 
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLyt.getLayoutParams();
         layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_collapsing);
         mAppBarLyt.setLayoutParams(layoutParams);
 
-        // To use toolbar instead of the ActionBar
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.m_action_bar);
-//        setSupportActionBar(toolbar);
+        mFields = new ArrayList<>(9);
+        mFieldTitles = new ArrayList<>(9);
+        TypedArray typedArray = this.getResources().obtainTypedArray(R.array.fields);
+        for (int i = 0, length = typedArray.length(); i < length; i+=3) {
+            Trio trio = new Trio();
+            trio.title = typedArray.getResourceId(i, -1);
+            trio.imageTitle = typedArray.getResourceId(i + 1, -1);
+            trio.tags = typedArray.getResourceId(i + 2, -1);
+            mFields.add(trio);
+            mFieldTitles.add(this.getString(trio.title));
+        }
+        typedArray.recycle();
 
-//        new CancelDoneActionBar(this);
-//
-//        mBtnAddField = (Button) findViewById(R.id.m_btn_add_field);
-//        mBtnAddField.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                OtherFieldsDialog.newInstance((ArrayList<String>) mOtherFieldsTitles).show(getSupportFragmentManager(), "");
-//            }
-//        });
-//
-//        Resources resources = getResources();
-//
-//        TypedArray typedArray = resources.obtainTypedArray(R.array.other_fields_tags);
-//        mOtherFieldsTitles = new ArrayList<>(Arrays.asList(resources.getStringArray(R.array.other_fields_titles)));
-//        mOtherFieldsTagsId = new ArrayList<>();
-//        int length = typedArray.length();
-//        for (int i = 0; i < length; i++) {
-//            mOtherFieldsTagsId.add(typedArray.getResourceId(i, -1));
-//        }
-//        typedArray.recycle();
-//
-//        addFragment(R.id.frm_lyt_group_section, GroupSectionFragment.newInstance());
-//
-//        addFragment(R.id.frm_lyt_name, NameSectionFragment.newInstance());
-//        addFragment(SectionWithTagFragment.newInstance(getResources().getString(R.string.phone),
-//                                                       resources.getStringArray(R.array.field_phone)));
-//        addFragment(SectionWithTagFragment.newInstance(getResources().getString(R.string.email),
-//                                                       resources.getStringArray(R.array.field_address_and_email)));
+        this.addFragment(new PhotoFieldFragment());
+        this.addField(0);
+        this.addField(0);
+        FragmentsTransaction.add(this, R.id.frm_lyt_field_group, new GroupFieldFragment());
+        ((Button) this.findViewById(R.id.btn_add_organization)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setVisibility(View.GONE);
+                FragmentsTransaction.add(AddContactActivity.this, R.id.frm_lyt_field_work, new WorkFieldFragment());
+            }
+        });
     }
 
     @Override
     protected int getMasterContainer() {
-        return 0;
+        return R.id.lnr_lyt_fields;
+    }
+
+    @OnClick(R.id.flt_act_btn_add_field)
+    protected void addFieldFltActBtnOnClick(View view) {
+        OtherFieldsDialog.newInstance(mFieldTitles).show(getSupportFragmentManager(), "");
     }
 
     @OnClick(R.id.img_vw_expand_name)
@@ -170,40 +167,45 @@ public class AddContactActivity extends BaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_confirm:
+                break;
             case R.id.menu_favorite:
                 item.setChecked(!item.isChecked());
                 item.setIcon((item.isChecked()) ? R.drawable.ic_favorite_white : R.drawable.ic_favorite_border_white);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onSectionInteractionListener(Uri uri) {
+    public void onSelection(OtherFieldsDialog dialog, View view, int position, CharSequence text) {
+        this.addField(position);
     }
 
-    @Override
-    public void onOtherFieldsDialogInteraction(String type, int position) {
-        mOtherFieldsTitles.remove(position);
-        int tagId = mOtherFieldsTagsId.remove(position);
-        if (tagId == -1) {
-            addFragment(SectionWithTagFragment.newInstance(type));
+    private void addField(int index) {
+        Trio trio = mFields.get(index);
+        if (trio.tags == -1) {
+            this.addFragment(CommonFieldFragment.newInstance(trio.title, trio.imageTitle));
         } else {
-            addFragment(SectionWithTagFragment.newInstance(type, getResources()
-                                                                 .getStringArray(tagId)));
+            this.addFragment(WithTagsFieldFragment.newInstance(trio.title, trio.imageTitle, trio.tags));
         }
-        if (mOtherFieldsTagsId.size() == 0) {
-            mBtnAddField.setVisibility(View.GONE);
+        mFields.remove(index);
+        mFieldTitles.remove(index);
+        if (mFields.size() == 0) {
+            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAddFieldFltActBtn.getLayoutParams();
+            layoutParams.setBehavior(null);
+            mAddFieldFltActBtn.setLayoutParams(layoutParams);
+            mAddFieldFltActBtn.setVisibility(View.GONE);
         }
     }
 
-    @Override
-    public void onDoneActionBarClicked() {
-        onCancelActionBarClicked();
-    }
-
-    @Override
-    public void onCancelActionBarClicked() {
-        this.finish();
+    private static class Trio {
+        @StringRes
+        public int title;
+        @DrawableRes
+        public int imageTitle;
+        @ArrayRes
+        public int tags;
     }
 
 }

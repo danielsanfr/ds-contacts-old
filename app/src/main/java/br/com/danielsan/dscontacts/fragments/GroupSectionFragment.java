@@ -16,9 +16,9 @@ import java.util.Arrays;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment;
-import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment.OnEditTextDialogListener;
+import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment.Listener;
 
-public class GroupSectionFragment extends Fragment implements OnItemSelectedListener, OnEditTextDialogListener {
+public class GroupSectionFragment extends Fragment implements OnItemSelectedListener, Listener {
 
     private Spinner mSpnrGroup;
     private ArrayList<String> mGroups;
@@ -40,7 +40,7 @@ public class GroupSectionFragment extends Fragment implements OnItemSelectedList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_group_section, container, false);
+        View view = inflater.inflate(R.layout.fragment_field_group, container, false);
 
         mGroups = new ArrayList<>();
         mGroups.addAll(Arrays.asList(getResources().getStringArray(R.array.field_group)));
@@ -56,12 +56,6 @@ public class GroupSectionFragment extends Fragment implements OnItemSelectedList
     }
 
     @Override
-    public void onEditTextListenerInteraction(String text) {
-        mSpnrGroupAdapter.insert(text, mSpnrGroupAdapter.getCount() - 1);
-        mSpnrGroup.setSelection(mSpnrGroupAdapter.getCount() - 2, true);
-    }
-
-    @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         TextView textView = (TextView) view;
         if (textView != null && textView.getText().toString().equals(getResources().getString(R.string.create_new_group))) {
@@ -74,4 +68,10 @@ public class GroupSectionFragment extends Fragment implements OnItemSelectedList
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) { }
+
+    @Override
+    public void onInputText(CharSequence text) {
+        mSpnrGroupAdapter.insert(text.toString(), mSpnrGroupAdapter.getCount() - 1);
+        mSpnrGroup.setSelection(mSpnrGroupAdapter.getCount() - 2, true);
+    }
 }

@@ -1,12 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="other_fields_tags">
-        <item>@array/field_im</item>
-        <item>-1</item>
-        <item>-1</item>
-        <item>-1</item>
-        <item>@array/field_events</item>
+    <array name="fields">
+        <item>@string/phone</item>
+        <item>@drawable/ic_phone_grey</item>
+        <item>@array/field_phone</item>
+        
+        <item>@string/email</item>
+        <item>@drawable/ic_email_grey</item>
         <item>@array/field_address_and_email</item>
+        
+        <item>@string/im</item>
+        <item>@drawable/ic_chat_grey</item>
+        <item>@array/field_im</item>
+
+        <item>@string/notes</item>
+        <item>@drawable/ic_note_grey</item>
+        <item>-1</item>
+
+        <item>@string/nickname</item>
+        <item>@drawable/ic_person_grey</item>
+        <item>-1</item>
+
+        <item>@string/web_site</item>
+        <item>@drawable/ic_web_grey</item>
+        <item>-1</item>
+
+        <item>@string/events</item>
+        <item>@drawable/ic_event_grey</item>
+        <item>@array/field_events</item>
+
+        <item>@string/address</item>
+        <item>@drawable/ic_place_grey</item>
+        <item>@array/field_address_and_email</item>
+
+        <item>@string/relationship</item>
+        <item>@drawable/ic_group_grey</item>
         <item>@array/field_relationship</item>
     </array>
 </resources>

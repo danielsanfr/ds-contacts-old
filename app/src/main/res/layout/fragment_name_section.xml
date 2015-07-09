@@ -65,8 +65,7 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:scaleType="fitCenter"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_tag_faces_black" />
+                        android:layout_gravity="center_vertical" />
 
                 </LinearLayout>
 

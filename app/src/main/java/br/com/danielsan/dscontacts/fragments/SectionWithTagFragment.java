@@ -14,9 +14,9 @@ import java.util.Map;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment;
-import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment.OnEditTextDialogListener;
+import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment.Listener;
 
-public class SectionWithTagFragment extends SimpleSectionFragment implements OnItemSelectedListener, OnEditTextDialogListener {
+public class SectionWithTagFragment extends SimpleSectionFragment implements OnItemSelectedListener, Listener {
     protected static final String ARG_TAGS = "tags";
 
     private int mTagsSize;
@@ -88,11 +88,11 @@ public class SectionWithTagFragment extends SimpleSectionFragment implements OnI
     public void onNothingSelected(AdapterView<?> adapterView) { }
 
     @Override
-    public void onEditTextListenerInteraction(String text) {
+    public void onInputText(CharSequence text) {
         if (mTagsSize != mTags.size()) {
             mSpnrTagAdapter.remove(mSpnrTagAdapter.getItem(0));
         }
-        mSpnrTagAdapter.insert(text, 0);
+        mSpnrTagAdapter.insert(text.toString(), 0);
         mSpnrTag.setSelection(0, true);
     }
 }
