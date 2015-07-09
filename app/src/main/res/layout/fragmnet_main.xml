@@ -9,6 +9,13 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vw_pgr_main"
+            android:layout_marginTop="-7dp"
+            android:layout_below="@+id/frm_lyt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <FrameLayout
             android:id="@+id/frm_lyt"
             android:layout_height="54dp"
@@ -33,12 +40,6 @@
                 app:tabTextAppearance="@style/TabLayoutTitleStyle" />
 
         </FrameLayout>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vw_pgr_main"
-            android:layout_below="@+id/frm_lyt"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </RelativeLayout>
 
