@@ -33,6 +33,7 @@ import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WithTagsFieldFr
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WorkFieldFragment;
 import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
 import br.com.danielsan.dscontacts.util.FragmentsTransaction;
+import br.com.danielsan.dscontacts.widgets.util.SimpleTextWatcher;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -41,6 +42,7 @@ public class AddContactActivity extends BaseActivity
         implements OtherFieldsDialog.Listener {
 
     private List<Trio> mFields;
+    private boolean mNameChanged = false;
     private ArrayList<String> mFieldTitles;
     private final RotateAnimation mRotateAnimationLeft = new RotateAnimation(0f, -180f,
                                                                              RotateAnimation.RELATIVE_TO_SELF, 0.5f,
@@ -85,6 +87,29 @@ public class AddContactActivity extends BaseActivity
         mClpsngTlbrLyt.setBackgroundColor(this.getResources().getColor(R.color.orange_500));
         mClpsngTlbrLyt.setContentScrimColor(this.getResources().getColor(R.color.orange_500));
         mAddFieldFltActBtn.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.orange_500)));
+
+        SimpleTextWatcher namePartsTextWatcher = new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mNameChanged = false;
+
+                String contactName = buildHeaderName();
+                if (contactName.isEmpty())
+                    contactName = getString(R.string.title_activity_add_contact);
+                mClpsngTlbrLyt.setTitle(contactName);
+            }
+        };
+        mFirstNameEdtTxt.addTextChangedListener(namePartsTextWatcher);
+        mMiddleNameEdtTxt.addTextChangedListener(namePartsTextWatcher);
+        mLastNameEdtTxt.addTextChangedListener(namePartsTextWatcher);
+
+        mNameEdtTxt.addTextChangedListener(new SimpleTextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mNameChanged = true;
+                mClpsngTlbrLyt.setTitle(mNameEdtTxt.getText().toString());
+            }
+        });
 
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAppBarLyt.getLayoutParams();
         layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_collapsing);
@@ -141,7 +166,7 @@ public class AddContactActivity extends BaseActivity
                     mNameEdtTxt.setVisibility(View.VISIBLE);
                 }
             }, 150);
-//                    buildHeaderName();
+            mNameEdtTxt.setText(this.buildHeaderName());
         } else {
             rotateAnimation = mRotateAnimationLeft;
             layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_expanded);
@@ -152,7 +177,7 @@ public class AddContactActivity extends BaseActivity
                     mNameEdtTxt.setVisibility(View.GONE);
                 }
             }, 100);
-//                    buildContentNames();
+            this.buildContentNames();
         }
         mExpandNameImgVw.startAnimation(rotateAnimation);
         mAppBarLyt.setLayoutParams(layoutParams);
@@ -196,6 +221,48 @@ public class AddContactActivity extends BaseActivity
             layoutParams.setBehavior(null);
             mAddFieldFltActBtn.setLayoutParams(layoutParams);
             mAddFieldFltActBtn.setVisibility(View.GONE);
+        }
+    }
+
+    private String buildHeaderName() {
+        String headerName = mFirstNameEdtTxt.getText().toString().trim();
+        headerName += " " + mMiddleNameEdtTxt.getText().toString().trim();
+        headerName = headerName.trim();
+        headerName += " " +  mLastNameEdtTxt.getText().toString().trim();
+
+        mNameChanged = false;
+        return headerName.trim();
+    }
+
+    private void buildContentNames() {
+        if (!mNameChanged)
+            return;
+
+        mFirstNameEdtTxt.setText("");
+        mMiddleNameEdtTxt.setText("");
+        mLastNameEdtTxt.setText("");
+
+        String[] contentNames = mNameEdtTxt.getText().toString().split(" ");
+        int length = contentNames.length;
+        switch (length) {
+            case 0:
+                break;
+            case 1:
+                mFirstNameEdtTxt.setText(contentNames[0]);
+                break;
+            case 2:
+                mFirstNameEdtTxt.setText(contentNames[0]);
+                mMiddleNameEdtTxt.setText(contentNames[1]);
+                break;
+            default: {
+                mFirstNameEdtTxt.setText(contentNames[0]);
+                mLastNameEdtTxt.setText(contentNames[length - 1]);
+                String middleName = "";
+                for (int i = 1; i < length - 1; i++) {
+                    middleName += contentNames[i] + " ";
+                }
+                mMiddleNameEdtTxt.setText(middleName.trim());
+            }
         }
     }
 
