@@ -5,7 +5,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +57,7 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
 
     @LayoutRes
     protected int getSubFieldLayoutRes() {
-        return R.layout.component_section_contact_item;
+        return R.layout.component_contact_subfield;
     }
 
     @Override

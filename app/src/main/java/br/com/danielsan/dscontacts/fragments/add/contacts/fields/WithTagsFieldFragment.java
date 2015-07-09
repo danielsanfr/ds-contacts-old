@@ -1,17 +1,14 @@
 package br.com.danielsan.dscontacts.fragments.add.contacts.fields;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -48,7 +45,7 @@ public class WithTagsFieldFragment extends CommonFieldFragment
 
     @Override
     protected int getSubFieldLayoutRes() {
-        return R.layout.component_section_contact_item_with_tag;
+        return R.layout.component_contact_subfield_with_tag;
     }
 
     @Override
