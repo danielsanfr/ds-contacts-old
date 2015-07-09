@@ -13,25 +13,25 @@ import android.widget.TextView;
 
 import br.com.danielsan.dscontacts.R;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by daniel on 28/06/15.
  */
 public abstract class FieldFragment extends Fragment {
 
-    @InjectView(R.id.txt_vw_field_title)
+    @Bind(R.id.txt_vw_field_title)
     protected TextView pTitleTxtVw;
-    @InjectView(R.id.img_vw_field_title)
+    @Bind(R.id.img_vw_field_title)
     protected ImageView pTitleImgVw;
-    @InjectView(R.id.cd_vw_field_content)
+    @Bind(R.id.cd_vw_field_content)
     protected CardView pContentCdVw;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_field, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         View.inflate(pContentCdVw.getContext(), this.contentResId(), pContentCdVw);
 

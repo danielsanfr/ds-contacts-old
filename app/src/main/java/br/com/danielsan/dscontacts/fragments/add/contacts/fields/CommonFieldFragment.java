@@ -15,9 +15,8 @@ import android.widget.LinearLayout;
 
 import br.com.danielsan.dscontacts.R;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 /**
  * Created by daniel on 28/06/15.
@@ -36,8 +35,8 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     @DrawableRes
     protected int pImageTitleRes;
 
-    @Optional
-    @InjectView(R.id.lnr_lyt_fields_container)
+    @Nullable
+    @Bind(R.id.lnr_lyt_fields_container)
     protected LinearLayout pFieldsContainerLnrLyt;
 
     public static CommonFieldFragment newInstance(@StringRes int titleRes, @DrawableRes int imageTitleRes) {
@@ -87,13 +86,12 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         this.addSubFieldOnClick(view.findViewById(R.id.btn_add_sub_field));
         pTitleTxtVw.setText(pTitleRes);
         pTitleImgVw.setImageResource(pImageTitleRes);
     }
 
-    @Optional
     @Nullable
     @OnClick(R.id.btn_add_sub_field)
     protected void addSubFieldOnClick(View view) {

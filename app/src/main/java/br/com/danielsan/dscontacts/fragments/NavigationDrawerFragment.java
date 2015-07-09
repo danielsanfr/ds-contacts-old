@@ -24,7 +24,7 @@ import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.DrawerAdapter;
 import br.com.danielsan.dscontacts.fragments.base.BFragment;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnItemClick;
 
 /**
@@ -55,13 +55,13 @@ public class NavigationDrawerFragment extends BFragment {
      */
     private ActionBarDrawerToggle mDrawerToggle;
 
-    @InjectView(R.id.lst_vw_drawer)
+    @Bind(R.id.lst_vw_drawer)
     protected ListView mDrawerListView;
-    @InjectView(R.id.txt_vw_user_name)
+    @Bind(R.id.txt_vw_user_name)
     protected TextView mUserNameTextView;
-    @InjectView(R.id.txt_vw_user_email)
+    @Bind(R.id.txt_vw_user_email)
     protected TextView mUserEmailTextView;
-    @InjectView(R.id.img_vw_avatar)
+    @Bind(R.id.img_vw_avatar)
     protected ImageView mAvatarImageView;
 
     private DrawerLayout mDrawerLayout;
@@ -99,7 +99,7 @@ public class NavigationDrawerFragment extends BFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mFragmentContainerView = inflater.inflate(R.layout.fragment_navigation_drawer, null);
-        ButterKnife.inject(this, mFragmentContainerView);
+        ButterKnife.bind(this, mFragmentContainerView);
 
         mUserNameTextView.setText("Daniel San");
         mUserEmailTextView.setText("daniel.samrocha@gmail.com");

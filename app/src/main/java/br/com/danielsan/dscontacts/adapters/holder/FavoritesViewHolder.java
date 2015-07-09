@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.FavoritesAdapter;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -20,15 +20,15 @@ public class FavoritesViewHolder  implements PopupMenu.OnMenuItemClickListener {
     private PopupMenu mMorePopupMenu;
     private FavoritesAdapter.Listener mListener;
 
-    @InjectView(R.id.img_vw_call_favorite)
+    @Bind(R.id.img_vw_call_favorite)
     protected ImageView mCallFavoriteImgVw;
-    @InjectView(R.id.img_vw_chat_favorite)
+    @Bind(R.id.img_vw_chat_favorite)
     protected ImageView mChatFavoriteImgVw;
-    @InjectView(R.id.img_vw_more_favorite)
+    @Bind(R.id.img_vw_more_favorite)
     protected ImageView mMoreFavoriteImgVw;
 
     public FavoritesViewHolder(View view, FavoritesAdapter.Listener listener) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         mListener      = listener;
         mMorePopupMenu = new PopupMenu(view.getContext(), mMoreFavoriteImgVw);

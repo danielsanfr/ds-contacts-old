@@ -11,7 +11,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.ContactsAdapter;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by daniel on 10/06/15.
@@ -21,13 +21,13 @@ public class ContactsViewHolder {
     private static final int HIGHLIGHT_COLOR = 0x999be6ff;
 
     protected View mView;
-    @InjectView(R.id.txt_vw_name)
+    @Bind(R.id.txt_vw_name)
     protected TextView mNameTextView;
-    @InjectView(R.id.txt_vw_number)
+    @Bind(R.id.txt_vw_number)
     protected TextView mNumberTextView;
-    @InjectView(R.id.img_vw_check)
+    @Bind(R.id.img_vw_check)
     protected ImageView mCheckImageView;
-    @InjectView(R.id.img_vw_fist_latter)
+    @Bind(R.id.img_vw_fist_latter)
     protected ImageView mFirstLatterImageView;
 
     // declare the color generator and drawable builder
@@ -37,7 +37,7 @@ public class ContactsViewHolder {
     public ContactsViewHolder(View view) {
         mView = view;
         mView.setTag(this);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         mNumberTextView.setText("(82)8711-3754");
         mDrawableBuilder = TextDrawable.builder().round();
     }

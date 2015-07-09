@@ -17,7 +17,7 @@ import br.com.danielsan.dscontacts.adapters.MainFragmentPagerAdapter;
 import br.com.danielsan.dscontacts.fragments.base.BFragment;
 import br.com.danielsan.dscontacts.misc.fab.FabHidden;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
@@ -27,11 +27,11 @@ public class MainFragment extends BFragment {
 
     public static final String POSITION = "position";
 
-    @InjectView(R.id.vw_pgr_main)
+    @Bind(R.id.vw_pgr_main)
     protected ViewPager mMainViewPager;
-    @InjectView(R.id.tab_lyt_main)
+    @Bind(R.id.tab_lyt_main)
     protected TabLayout mMainTabLayout;
-    @InjectView(R.id.flt_act_btn_add_contact)
+    @Bind(R.id.flt_act_btn_add_contact)
     protected FloatingActionButton mAddContactFltActBtn;
 
     private FabHidden mFabHidden;
@@ -50,7 +50,7 @@ public class MainFragment extends BFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragmnet_main, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
 //        mFabHidden = new FabHidden(mFabAddContact, mLstVw);
         MainFragmentPagerAdapter mainFragmentPagerAdapter = new MainFragmentPagerAdapter(this);

@@ -35,7 +35,7 @@ import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
 import br.com.danielsan.dscontacts.util.FragmentsTransaction;
 import br.com.danielsan.dscontacts.widgets.util.SimpleTextWatcher;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnClick;
 
 public class AddContactActivity extends BaseActivity
@@ -51,29 +51,29 @@ public class AddContactActivity extends BaseActivity
                                                                               RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                                                                               RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
-    @InjectView(R.id.edt_txt_name)
+    @Bind(R.id.edt_txt_name)
     protected EditText mNameEdtTxt;
-    @InjectView(R.id.edt_txt_first_name)
+    @Bind(R.id.edt_txt_first_name)
     protected EditText mFirstNameEdtTxt;
-    @InjectView(R.id.edt_txt_middle_name)
+    @Bind(R.id.edt_txt_middle_name)
     protected EditText mMiddleNameEdtTxt;
-    @InjectView(R.id.edt_txt_last_name)
+    @Bind(R.id.edt_txt_last_name)
     protected EditText mLastNameEdtTxt;
-    @InjectView(R.id.img_vw_expand_name)
+    @Bind(R.id.img_vw_expand_name)
     protected ImageView mExpandNameImgVw;
-    @InjectView(R.id.expdb_lyt_name_info)
+    @Bind(R.id.expdb_lyt_name_info)
     protected ExpandableLayout mNameInfoExpdbLyt;
-    @InjectView(R.id.clpsng_tlbr_lyt)
+    @Bind(R.id.clpsng_tlbr_lyt)
     protected CollapsingToolbarLayout mClpsngTlbrLyt;
-    @InjectView(R.id.app_bar_lyt)
+    @Bind(R.id.app_bar_lyt)
     protected AppBarLayout mAppBarLyt;
-    @InjectView(R.id.flt_act_btn_add_field)
+    @Bind(R.id.flt_act_btn_add_field)
     protected FloatingActionButton mAddFieldFltActBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_add_contact);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         Slidr.attach(this);
 
         mRotateAnimationLeft.setDuration(200);

@@ -22,7 +22,7 @@ import br.com.danielsan.dscontacts.fragments.ContactListFragment;
 import br.com.danielsan.dscontacts.fragments.MainFragment;
 import br.com.danielsan.dscontacts.R;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 public class MainActivity extends BaseActivity implements OnNavigationItemSelectedListener {
 
@@ -31,21 +31,21 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
     private SearchViewController mSrcVwCltl;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    @InjectView(R.id.drw_lyt_main)
+    @Bind(R.id.drw_lyt_main)
     protected DrawerLayout mDrawerLayout;
-    @InjectView(R.id.nvgt_vw)
+    @Bind(R.id.nvgt_vw)
     protected NavigationView mNavigationView;
-    @InjectView(R.id.txt_vw_user_name)
+    @Bind(R.id.txt_vw_user_name)
     protected TextView mUserNameTextView;
-    @InjectView(R.id.txt_vw_user_email)
+    @Bind(R.id.txt_vw_user_email)
     protected TextView mUserEmailTextView;
-    @InjectView(R.id.img_vw_avatar)
+    @Bind(R.id.img_vw_avatar)
     protected ImageView mAvatarImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState, R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         mTitle = this.getTitle();
         mSrcVwCltl = new SearchViewController();

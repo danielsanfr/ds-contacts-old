@@ -15,7 +15,7 @@ import br.com.danielsan.dscontacts.activities.ContactInfoActivity;
 import br.com.danielsan.dscontacts.adapters.FavoritesAdapter;
 import br.com.danielsan.dscontacts.fragments.base.BFragment;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 import butterknife.OnItemClick;
 
 /**
@@ -23,7 +23,7 @@ import butterknife.OnItemClick;
  */
 public class FavoritesGridFragment extends BFragment implements FavoritesAdapter.Listener {
 
-    @InjectView(R.id.grd_vw_favorites)
+    @Bind(R.id.grd_vw_favorites)
     protected GridView mFavoritesGridView;
 
     public static FavoritesGridFragment newInstance() {
@@ -36,7 +36,7 @@ public class FavoritesGridFragment extends BFragment implements FavoritesAdapter
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         mFavoritesGridView.setAdapter(new FavoritesAdapter(this));
 
