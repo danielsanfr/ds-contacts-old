@@ -19,13 +19,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <android.support.design.widget.NavigationView
-            android:id="@+id/nvgt_vw"
+        <FrameLayout
+            android:id="@+id/frm_lyt_drawer"
+            android:layout_gravity="start"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:menu="@menu/drawer"
-            app:headerLayout="@layout/drawer_header" />
+            android:background="@color/accent" >
+
+            <android.support.design.widget.NavigationView
+                android:id="@+id/nvgt_vw"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:menu="@menu/drawer"
+                app:headerLayout="@layout/drawer_header" />
+
+            <ImageView
+                android:layout_marginTop="-40dp"
+                android:layout_marginLeft="-30dp"
+                android:layout_marginRight="-30dp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@android:drawable/dialog_holo_light_frame" />
+
+        </FrameLayout>
 
     </android.support.v4.widget.DrawerLayout>
 

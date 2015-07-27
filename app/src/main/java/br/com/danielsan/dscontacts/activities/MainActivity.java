@@ -15,6 +15,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
     protected DrawerLayout mDrawerLayout;
     @Bind(R.id.nvgt_vw)
     protected NavigationView mNavigationView;
+    @Bind(R.id.frm_lyt_drawer)
+    protected FrameLayout mDrawerFrmLyt;
     @Bind(R.id.txt_vw_user_name)
     protected TextView mUserNameTextView;
     @Bind(R.id.txt_vw_user_email)
@@ -99,7 +102,7 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         menuItem.setChecked(true);
-        mDrawerLayout.closeDrawer(mNavigationView);
+        mDrawerLayout.closeDrawer(mDrawerFrmLyt);
         return true;
     }
 
@@ -118,7 +121,7 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mDrawerLayout.isDrawerOpen(mNavigationView))
+        if (mDrawerLayout.isDrawerOpen(mDrawerFrmLyt))
             this.getMenuInflater().inflate(R.menu.global, menu);
         else
             this.getMenuInflater().inflate(R.menu.main, menu);
