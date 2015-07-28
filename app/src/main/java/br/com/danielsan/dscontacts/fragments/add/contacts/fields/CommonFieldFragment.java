@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import br.com.danielsan.dscontacts.R;
+import br.com.danielsan.dscontacts.model.base.Field;
 import butterknife.ButterKnife;
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -29,6 +30,7 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     private ViewGroup mViewGroup;
     private LayoutInflater mLayoutInflater;
     protected SparseArray<View> pSubFieldViews;
+    protected Class<? extends Field> mFieldClass;
 
     @StringRes
     protected int pTitleRes;
@@ -39,9 +41,10 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     @Bind(R.id.lnr_lyt_fields_container)
     protected LinearLayout pFieldsContainerLnrLyt;
 
-    public static CommonFieldFragment newInstance(@StringRes int titleRes, @DrawableRes int imageTitleRes) {
+    public static CommonFieldFragment newInstance(Field field) {
         CommonFieldFragment fragment = new CommonFieldFragment();
-        fragment.setArguments(CommonFieldFragment.buildBundle(titleRes, imageTitleRes));
+        fragment.setFieldClass(field.getClass());
+        fragment.setArguments(CommonFieldFragment.buildBundle(field.getTitleRes(), field.getImageTitleRes()));
         return fragment;
     }
 
@@ -53,6 +56,10 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     }
 
     public CommonFieldFragment() {}
+
+    public void setFieldClass(Class<? extends Field> fieldClass) {
+        mFieldClass = fieldClass;
+    }
 
     @LayoutRes
     protected int getSubFieldLayoutRes() {
@@ -117,4 +124,5 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
             pFieldsContainerLnrLyt.removeView((View) view.getParent());
         }
     }
+
 }

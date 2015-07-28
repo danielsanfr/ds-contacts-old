@@ -17,6 +17,7 @@ import java.util.List;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment;
+import br.com.danielsan.dscontacts.model.base.Field;
 
 /**
  * Created by daniel on 28/06/15.
@@ -33,11 +34,12 @@ public class WithTagsFieldFragment extends CommonFieldFragment
     @ArrayRes
     protected int pTagsRes;
 
-    public static WithTagsFieldFragment newInstance(@StringRes int titleRes, @DrawableRes int imageTitleRes, @ArrayRes int tagsRes) {
+    public static WithTagsFieldFragment newInstance(Field field) {
         WithTagsFieldFragment fragment = new WithTagsFieldFragment();
-        Bundle bundle = CommonFieldFragment.buildBundle(titleRes, imageTitleRes);
-        bundle.putInt(TAGS, tagsRes);
+        Bundle bundle = CommonFieldFragment.buildBundle(field.getTitleRes(), field.getImageTitleRes());
+        bundle.putInt(TAGS, field.getTagsRes());
         fragment.setArguments(bundle);
+        fragment.setFieldClass(field.getClass());
         return fragment;
     }
 

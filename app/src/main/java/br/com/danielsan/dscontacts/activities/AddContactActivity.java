@@ -1,7 +1,6 @@
 package br.com.danielsan.dscontacts.activities;
 
 import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
 import android.os.Handler;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.DrawableRes;
@@ -21,6 +20,7 @@ import android.widget.ImageView;
 import com.andexert.expandablelayout.library.ExpandableLayout;
 import com.r0adkll.slidr.Slidr;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,10 @@ import br.com.danielsan.dscontacts.fragments.add.contacts.fields.PhotoFieldFragm
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WithTagsFieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WorkFieldFragment;
 import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
+import br.com.danielsan.dscontacts.model.Contact;
 import br.com.danielsan.dscontacts.model.Name;
+import br.com.danielsan.dscontacts.model.Phone;
+import br.com.danielsan.dscontacts.model.base.Field;
 import br.com.danielsan.dscontacts.model.serializer.NameSerializer;
 import br.com.danielsan.dscontacts.util.FragmentsTransaction;
 import br.com.danielsan.dscontacts.widgets.util.SimpleTextWatcher;
@@ -42,7 +45,7 @@ import butterknife.OnClick;
 public class AddContactActivity extends BaseActivity
         implements OtherFieldsDialog.Listener {
 
-    private List<Trio> mFields;
+    private List<Field> mFields;
     private String mDefaultTitle;
     private boolean mNameChanged = false;
     private ArrayList<String> mFieldTitles;
@@ -131,16 +134,26 @@ public class AddContactActivity extends BaseActivity
 
         mFields = new ArrayList<>(9);
         mFieldTitles = new ArrayList<>(9);
-        TypedArray typedArray = this.getResources().obtainTypedArray(R.array.fields);
-        for (int i = 0, length = typedArray.length(); i < length; i+=3) {
-            Trio trio = new Trio();
-            trio.title = typedArray.getResourceId(i, -1);
-            trio.imageTitle = typedArray.getResourceId(i + 1, -1);
-            trio.tags = typedArray.getResourceId(i + 2, -1);
-            mFields.add(trio);
-            mFieldTitles.add(this.getString(trio.title));
+        Contact nullContact = new Contact();
+        String modelPackage = this.getString(R.string.model_package);
+        String[] fieldsNames = this.getResources().getStringArray(R.array.fields);
+        for (String fieldName : fieldsNames) {
+            try {
+                Field field = (Field) Class.forName(modelPackage + fieldName).getDeclaredConstructor(Contact.class).newInstance(nullContact);
+                mFieldTitles.add(this.getString(field.getTitleRes()));
+                mFields.add(field);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-        typedArray.recycle();
 
         this.addFragment(new PhotoFieldFragment());
         this.addField(0);
@@ -212,11 +225,14 @@ public class AddContactActivity extends BaseActivity
     }
 
     private void addField(int index) {
-        Trio trio = mFields.get(index);
-        if (trio.tags == -1) {
-            this.addFragment(CommonFieldFragment.newInstance(trio.title, trio.imageTitle));
+        if (mFields.size() == 0)
+            return;
+
+        Field field = mFields.get(index);
+        if (field.getTagsRes() == -1) {
+            this.addFragment(CommonFieldFragment.newInstance(field));
         } else {
-            this.addFragment(WithTagsFieldFragment.newInstance(trio.title, trio.imageTitle, trio.tags));
+            this.addFragment(WithTagsFieldFragment.newInstance(field));
         }
         mFields.remove(index);
         mFieldTitles.remove(index);
@@ -257,7 +273,6 @@ public class AddContactActivity extends BaseActivity
         mLastNameEdtTxt.setText(name.getLastName());
     }
 
-
     private static class NameEdtTxtDelayRunnable implements Runnable {
         private View mView;
         private int mVisibility = View.VISIBLE;
@@ -271,15 +286,6 @@ public class AddContactActivity extends BaseActivity
         public void run() {
             mView.setVisibility(mVisibility);
         }
-    }
-
-    private static class Trio {
-        @StringRes
-        public int title;
-        @DrawableRes
-        public int imageTitle;
-        @ArrayRes
-        public int tags;
     }
 
 }
