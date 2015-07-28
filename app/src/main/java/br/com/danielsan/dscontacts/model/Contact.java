@@ -131,6 +131,9 @@ public class Contact { //extends Model {
         return this.getMany(Relationship.class, "relationship");
     }
 
+    public void addField(Field field) {
+    }
+
     public void addPhone(String phone, String tag) {
         this.saveContentAndTag(new Phone(this), phone, tag);
     }

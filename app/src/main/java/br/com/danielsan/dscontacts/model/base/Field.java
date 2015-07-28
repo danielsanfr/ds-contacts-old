@@ -33,6 +33,10 @@ public abstract class Field /*extends Model*/ implements Comparable<Object> {
     @ArrayRes
     public abstract int getTagsRes();
 
+    public Contact getContact() {
+        return mContact;
+    }
+
     public String getContent() {
         return mContent;
     }

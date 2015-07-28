@@ -13,9 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.lang.reflect.InvocationTargetException;
+
 import br.com.danielsan.dscontacts.R;
+import br.com.danielsan.dscontacts.model.Contact;
 import br.com.danielsan.dscontacts.model.base.Field;
-import butterknife.ButterKnife;
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -72,6 +74,31 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     }
 
     @Override
+    protected void updatedContact(Contact contact) {
+        for (int index = 0, size = pSubFieldViews.size(); index < size ; ++index) {
+            try {
+                Field field = mFieldClass.getDeclaredConstructor(Contact.class).newInstance(contact);
+                this.updateField(field, pSubFieldViews.get(pSubFieldViews.keyAt(index)));
+                contact.addField(field);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void updateField(Field field, View view) {
+        field.setContent(((EditText) view.findViewById(R.id.edt_txt_item)).getText().toString());
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pSubFieldViews = new SparseArray<>();
@@ -93,7 +120,6 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
         this.addSubFieldOnClick(view.findViewById(R.id.btn_add_sub_field));
         pTitleTxtVw.setText(pTitleRes);
         pTitleImgVw.setImageResource(pImageTitleRes);
@@ -107,19 +133,19 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
         EditText edtTxtItem = (EditText) subView.findViewById(R.id.edt_txt_item);
         ImageView imgVwRemove = (ImageView) subView.findViewById(R.id.img_vw_remove);
 
+        edtTxtItem.setHint(pTitleRes);
         imgVwRemove.setTag(pSubFieldViews.size());
         imgVwRemove.setOnClickListener(this);
 
-        edtTxtItem.setHint(pTitleRes);
-
         pSubFieldViews.append(pSubFieldViews.size(), subView);
 
-        pFieldsContainerLnrLyt.addView(subView);
+        if (pFieldsContainerLnrLyt != null)
+            pFieldsContainerLnrLyt.addView(subView);
     }
 
     @Override
     public void onClick(View view) {
-        if (pSubFieldViews.size() > 1) {
+        if (pSubFieldViews.size() > 1 && pFieldsContainerLnrLyt != null) {
             pSubFieldViews.delete((int) view.getTag());
             pFieldsContainerLnrLyt.removeView((View) view.getParent());
         }

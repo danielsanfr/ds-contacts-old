@@ -2,9 +2,7 @@ package br.com.danielsan.dscontacts.fragments.add.contacts.fields;
 
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +16,7 @@ import java.util.List;
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment;
 import br.com.danielsan.dscontacts.model.base.Field;
+import br.com.danielsan.dscontacts.model.base.FieldWithTag;
 
 /**
  * Created by daniel on 28/06/15.
@@ -51,6 +50,15 @@ public class WithTagsFieldFragment extends CommonFieldFragment
     }
 
     @Override
+    protected void updateField(Field field, View view) {
+        super.updateField(field, view);
+        if (field instanceof FieldWithTag) {
+            FieldWithTag fieldWithTag = (FieldWithTag) field;
+            fieldWithTag.setTag((String) ((Spinner) view.findViewById(R.id.spnr_tag)).getSelectedItem());
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -62,11 +70,6 @@ public class WithTagsFieldFragment extends CommonFieldFragment
             pTagsRes = bundle.getInt(TAGS);
             pTags = this.getResources().getStringArray(pTagsRes);
         }
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
