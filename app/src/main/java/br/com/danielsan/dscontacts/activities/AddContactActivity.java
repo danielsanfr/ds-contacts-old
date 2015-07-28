@@ -46,6 +46,8 @@ public class AddContactActivity extends BaseActivity
     private String mDefaultTitle;
     private boolean mNameChanged = false;
     private ArrayList<String> mFieldTitles;
+    private NameEdtTxtDelayRunnable mNameEdtTxtDelayRunnable;
+    private final Handler mNameEdtTxtDelayHandler = new Handler();
     private final RotateAnimation mRotateAnimationLeft = new RotateAnimation(0f, -180f,
                                                                              RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                                                                              RotateAnimation.RELATIVE_TO_SELF, 0.5f);
@@ -91,6 +93,8 @@ public class AddContactActivity extends BaseActivity
         mClpsngTlbrLyt.setBackgroundColor(this.getResources().getColor(R.color.orange_500));
         mClpsngTlbrLyt.setContentScrimColor(this.getResources().getColor(R.color.orange_500));
         mAddFieldFltActBtn.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.orange_500)));
+
+        mNameEdtTxtDelayRunnable = new NameEdtTxtDelayRunnable(mNameEdtTxt);
 
         SimpleTextWatcher namePartsTextWatcher = new SimpleTextWatcher() {
             @Override
@@ -170,23 +174,13 @@ public class AddContactActivity extends BaseActivity
             rotateAnimation = mRotateAnimationRight;
             layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_collapsing);
             mNameInfoExpdbLyt.hide();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mNameEdtTxt.setVisibility(View.VISIBLE);
-                }
-            }, 150);
+            this.nameEdtTxtChangeVisibility(View.VISIBLE, 150);
             mNameEdtTxt.setText(this.buildHeaderName());
         } else {
             rotateAnimation = mRotateAnimationLeft;
             layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_expanded);
             mNameInfoExpdbLyt.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mNameEdtTxt.setVisibility(View.GONE);
-                }
-            }, 100);
+            this.nameEdtTxtChangeVisibility(View.GONE, 100);
             this.buildContentNames();
         }
         mExpandNameImgVw.startAnimation(rotateAnimation);
@@ -234,6 +228,11 @@ public class AddContactActivity extends BaseActivity
         }
     }
 
+    private void nameEdtTxtChangeVisibility(int visibility, int delay) {
+        mNameEdtTxtDelayRunnable.setVisibility(visibility);
+        mNameEdtTxtDelayHandler.postDelayed(mNameEdtTxtDelayRunnable, delay);
+    }
+
     private String buildHeaderName() {
         String headerName = (new NameSerializer()).serialize(mFirstNameEdtTxt.getText().toString().trim(),
                                                              mMiddleNameEdtTxt.getText().toString().trim(),
@@ -256,6 +255,22 @@ public class AddContactActivity extends BaseActivity
         mFirstNameEdtTxt.setText(name.getName());
         mMiddleNameEdtTxt.setText(name.getMiddleName());
         mLastNameEdtTxt.setText(name.getLastName());
+    }
+
+
+    private static class NameEdtTxtDelayRunnable implements Runnable {
+        private View mView;
+        private int mVisibility = View.VISIBLE;
+        public NameEdtTxtDelayRunnable(View view) {
+            mView = view;
+        }
+        public void setVisibility(int visibility) {
+            mVisibility = visibility;
+        }
+        @Override
+        public void run() {
+            mView.setVisibility(mVisibility);
+        }
     }
 
     private static class Trio {
