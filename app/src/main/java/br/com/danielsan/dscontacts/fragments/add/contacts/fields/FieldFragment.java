@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.com.danielsan.dscontacts.R;
+import br.com.danielsan.dscontacts.model.Contact;
 import butterknife.ButterKnife;
 import butterknife.Bind;
 
@@ -31,14 +32,18 @@ public abstract class FieldFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_field, container, false);
-        ButterKnife.bind(this, view);
 
+        pContentCdVw = ButterKnife.findById(view, R.id.cd_vw_field_content);
         View.inflate(pContentCdVw.getContext(), this.contentResId(), pContentCdVw);
+
+        ButterKnife.bind(this, view);
 
         return view;
     }
 
     @LayoutRes
     protected abstract int contentResId();
+
+    protected abstract void updatedContact(Contact contact);
 
 }
