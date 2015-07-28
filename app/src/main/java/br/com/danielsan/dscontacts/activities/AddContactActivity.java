@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.RotateAnimation;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -44,6 +43,7 @@ public class AddContactActivity extends BaseActivity
         implements OtherFieldsDialog.Listener {
 
     private List<Trio> mFields;
+    private String mDefaultTitle;
     private boolean mNameChanged = false;
     private ArrayList<String> mFieldTitles;
     private final RotateAnimation mRotateAnimationLeft = new RotateAnimation(0f, -180f,
@@ -78,6 +78,8 @@ public class AddContactActivity extends BaseActivity
         ButterKnife.bind(this);
         Slidr.attach(this);
 
+        mDefaultTitle = this.getString(R.string.title_activity_add_contact);
+
         mRotateAnimationLeft.setDuration(200);
         mRotateAnimationRight.setDuration(200);
         mRotateAnimationLeft.setFillAfter(true);
@@ -85,7 +87,7 @@ public class AddContactActivity extends BaseActivity
         mActionBar.setDisplayHomeAsUpEnabled(true);
 
         mNameInfoExpdbLyt.setOnClickListener(null);
-        mClpsngTlbrLyt.setTitle(this.getString(R.string.title_activity_add_contact));
+        mClpsngTlbrLyt.setTitle(mDefaultTitle);
         mClpsngTlbrLyt.setBackgroundColor(this.getResources().getColor(R.color.orange_500));
         mClpsngTlbrLyt.setContentScrimColor(this.getResources().getColor(R.color.orange_500));
         mAddFieldFltActBtn.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.orange_500)));
@@ -97,7 +99,8 @@ public class AddContactActivity extends BaseActivity
 
                 String contactName = buildHeaderName();
                 if (contactName.isEmpty())
-                    contactName = getString(R.string.title_activity_add_contact);
+                    contactName = mDefaultTitle;
+
                 mClpsngTlbrLyt.setTitle(contactName);
             }
         };
@@ -109,7 +112,12 @@ public class AddContactActivity extends BaseActivity
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mNameChanged = true;
-                mClpsngTlbrLyt.setTitle(mNameEdtTxt.getText().toString());
+
+                String name = String.valueOf(s);
+                if (name.isEmpty())
+                    name = mDefaultTitle;
+
+                mClpsngTlbrLyt.setTitle(name);
             }
         });
 
@@ -134,7 +142,7 @@ public class AddContactActivity extends BaseActivity
         this.addField(0);
         this.addField(0);
         FragmentsTransaction.add(this, R.id.frm_lyt_field_group, new GroupFieldFragment());
-        ((Button) this.findViewById(R.id.btn_add_organization)).setOnClickListener(new View.OnClickListener() {
+        this.findViewById(R.id.btn_add_organization).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 view.setVisibility(View.GONE);
