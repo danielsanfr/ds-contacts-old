@@ -4,6 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.danielsan.dscontacts.model.base.Field;
@@ -13,7 +14,7 @@ import br.com.danielsan.dscontacts.model.base.FieldWithTag;
  * Created by daniel on 14/02/15.
  */
 @Table(name = "contact")
-public class Contact extends Model {
+public class Contact { //extends Model {
 
     @Column(name = "name")
     private Name mName;
@@ -88,6 +89,10 @@ public class Contact extends Model {
 
     public void setColor(Integer color) {
         mColor = color;
+    }
+
+	private  <T extends Field> List<T> getMany(Class<T> type, String foreignKey) {
+        return new ArrayList<T>();
     }
 
     public List<Phone> phones() {
@@ -169,7 +174,7 @@ public class Contact extends Model {
 
     private void saveContent(Field field, String content) {
         field.setContent(content);
-        field.save();
+//        field.save();
     }
 
 }

@@ -1,40 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="fields">
-        <item>@string/phone</item>
-        <item>@drawable/ic_phone_grey</item>
-        <item>@array/field_phone</item>
-        
-        <item>@string/email</item>
-        <item>@drawable/ic_email_grey</item>
-        <item>@array/field_address_and_email</item>
-        
-        <item>@string/im</item>
-        <item>@drawable/ic_chat_grey</item>
-        <item>@array/field_im</item>
-
-        <item>@string/notes</item>
-        <item>@drawable/ic_note_grey</item>
-        <item>-1</item>
-
-        <item>@string/nickname</item>
-        <item>@drawable/ic_person_grey</item>
-        <item>-1</item>
-
-        <item>@string/website</item>
-        <item>@drawable/ic_web_grey</item>
-        <item>-1</item>
-
-        <item>@string/events</item>
-        <item>@drawable/ic_event_grey</item>
-        <item>@array/field_events</item>
-
-        <item>@string/address</item>
-        <item>@drawable/ic_place_grey</item>
-        <item>@array/field_address_and_email</item>
-
-        <item>@string/relationship</item>
-        <item>@drawable/ic_group_grey</item>
-        <item>@array/field_relationship</item>
-    </array>
+    <string name="model_package" translatable="false">br.com.danielsan.dscontacts.model.</string>
+    <string-array name="fields" translatable="false">
+        <item>Phone</item>
+        <item>Email</item>
+        <item>IM</item>
+        <item>Note</item>
+        <item>Nickname</item>
+        <item>Website</item>
+        <item>Event</item>
+        <item>Address</item>
+        <item>Relationship</item>
+    </string-array>
 </resources>
