@@ -79,7 +79,7 @@ public class Contact { //extends Model {
         return mPhoto;
     }
 
-    public void setmPhoto(String photo) {
+    public void setPhoto(String photo) {
         mPhoto = photo;
     }
 
