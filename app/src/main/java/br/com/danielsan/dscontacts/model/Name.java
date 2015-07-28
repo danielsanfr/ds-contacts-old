@@ -4,6 +4,7 @@ package br.com.danielsan.dscontacts.model;
  * Created by daniel on 14/02/15.
  */
 public class Name {
+
     private String mName;
     private String mNamePrefix;
     private String mMiddleName;
@@ -49,4 +50,5 @@ public class Name {
     public void setNameSuffix(String nameSuffix) {
         mNameSuffix = nameSuffix;
     }
+
 }
