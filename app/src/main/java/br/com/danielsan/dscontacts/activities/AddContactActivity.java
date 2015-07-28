@@ -32,6 +32,8 @@ import br.com.danielsan.dscontacts.fragments.add.contacts.fields.PhotoFieldFragm
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WithTagsFieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WorkFieldFragment;
 import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
+import br.com.danielsan.dscontacts.model.Name;
+import br.com.danielsan.dscontacts.model.serializer.NameSerializer;
 import br.com.danielsan.dscontacts.util.FragmentsTransaction;
 import br.com.danielsan.dscontacts.widgets.util.SimpleTextWatcher;
 import butterknife.ButterKnife;
@@ -225,13 +227,12 @@ public class AddContactActivity extends BaseActivity
     }
 
     private String buildHeaderName() {
-        String headerName = mFirstNameEdtTxt.getText().toString().trim();
-        headerName += " " + mMiddleNameEdtTxt.getText().toString().trim();
-        headerName = headerName.trim();
-        headerName += " " +  mLastNameEdtTxt.getText().toString().trim();
+        String headerName = (new NameSerializer()).serialize(mFirstNameEdtTxt.getText().toString().trim(),
+                                                             mMiddleNameEdtTxt.getText().toString().trim(),
+                                                             mLastNameEdtTxt.getText().toString().trim());
 
         mNameChanged = false;
-        return headerName.trim();
+        return headerName;
     }
 
     private void buildContentNames() {
@@ -242,28 +243,11 @@ public class AddContactActivity extends BaseActivity
         mMiddleNameEdtTxt.setText("");
         mLastNameEdtTxt.setText("");
 
-        String[] contentNames = mNameEdtTxt.getText().toString().split(" ");
-        int length = contentNames.length;
-        switch (length) {
-            case 0:
-                break;
-            case 1:
-                mFirstNameEdtTxt.setText(contentNames[0]);
-                break;
-            case 2:
-                mFirstNameEdtTxt.setText(contentNames[0]);
-                mMiddleNameEdtTxt.setText(contentNames[1]);
-                break;
-            default: {
-                mFirstNameEdtTxt.setText(contentNames[0]);
-                mLastNameEdtTxt.setText(contentNames[length - 1]);
-                String middleName = "";
-                for (int i = 1; i < length - 1; i++) {
-                    middleName += contentNames[i] + " ";
-                }
-                mMiddleNameEdtTxt.setText(middleName.trim());
-            }
-        }
+        Name name = (new NameSerializer()).deserialize(mNameEdtTxt.getText().toString());
+
+        mFirstNameEdtTxt.setText(name.getName());
+        mMiddleNameEdtTxt.setText(name.getMiddleName());
+        mLastNameEdtTxt.setText(name.getLastName());
     }
 
     private static class Trio {
