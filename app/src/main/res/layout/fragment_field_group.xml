@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Spinner
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/m_spnr_group"
+    android:id="@+id/spnr_group"
     android:layout_margin="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />

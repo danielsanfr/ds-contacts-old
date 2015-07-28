@@ -8,6 +8,7 @@
     android:layout_height="wrap_content" >
 
     <ImageView
+        android:id="@+id/img_vw_avatar"
         android:src="@drawable/ic_person_white"
         android:background="#757575"
         android:scaleType="fitCenter"
@@ -23,11 +24,13 @@
         android:layout_height="wrap_content" >
 
         <Button
+            android:id="@+id/btn_change_photo"
             android:text="@string/change_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/btn_change_color"
             android:text="@string/change_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
