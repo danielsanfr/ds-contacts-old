@@ -13,18 +13,14 @@ import br.com.danielsan.dscontacts.model.Contact;
 /**
  * Created by daniel on 27/07/15.
  */
-@Table(name = "field")
+@Table(name = "field", id = "_id")
 public abstract class Field /*extends Model*/ implements Comparable<Object> {
 
     @Column(name = "contact")
     protected Contact mContact;
+
     @Column(name = "content")
     protected String mContent;
-
-    public Field(Contact contact) {
-        super();
-        mContact = contact;
-    }
 
     @StringRes
     public abstract int getTitleRes();
@@ -35,6 +31,10 @@ public abstract class Field /*extends Model*/ implements Comparable<Object> {
 
     public Contact getContact() {
         return mContact;
+    }
+
+    public void setContact(Contact contact) {
+        mContact = contact;
     }
 
     public String getContent() {

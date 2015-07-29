@@ -12,12 +12,8 @@ import br.com.danielsan.dscontacts.model.base.FieldWithTag;
 /**
  * Created by daniel on 27/07/15.
  */
-@Table(name = "phone")
+@Table(name = "phone", id = "_id")
 public class Phone extends FieldWithTag {
-
-    public Phone(Contact contact) {
-        super(contact);
-    }
 
     @StringRes
     @Override

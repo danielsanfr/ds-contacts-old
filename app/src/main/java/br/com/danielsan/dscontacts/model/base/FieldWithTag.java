@@ -8,7 +8,7 @@ import br.com.danielsan.dscontacts.model.Contact;
 /**
  * Created by daniel on 27/07/15.
  */
-@Table(name = "fieldWithTag")
+@Table(name = "fieldWithTag", id = "_id")
 public abstract class FieldWithTag extends Field {
 
     public enum SortBy {
@@ -20,11 +20,6 @@ public abstract class FieldWithTag extends Field {
 
     @Column(name = "tag")
     protected String mTag;
-
-    public FieldWithTag(Contact contact) {
-        super(contact);
-        mSortBy = SortBy.Content;
-    }
 
     public void setSortBy(SortBy sortBy) {
         mSortBy = sortBy;
