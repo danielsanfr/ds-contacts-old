@@ -135,39 +135,39 @@ public class Contact { //extends Model {
     }
 
     public void addPhone(String phone, String tag) {
-        this.saveContentAndTag(new Phone(this), phone, tag);
+        this.saveContentAndTag(new Phone(), phone, tag);
     }
 
     public void addEmail(String email, String tag) {
-        this.saveContentAndTag(new Email(this), email, tag);
+        this.saveContentAndTag(new Email(), email, tag);
     }
 
     public void addIM(String im, String tag) {
-        this.saveContentAndTag(new IM(this), im, tag);
+        this.saveContentAndTag(new IM(), im, tag);
     }
 
     public void addNote(String note) {
-        this.saveContent(new Note(this), note);
+        this.saveContent(new Note(), note);
     }
 
     public void addNickname(String nickname) {
-        this.saveContent(new Nickname(this), nickname);
+        this.saveContent(new Nickname(), nickname);
     }
 
     public void addWebsite(String website) {
-        this.saveContent(new Website(this), website);
+        this.saveContent(new Website(), website);
     }
 
     public void addEvent(String event, String tag) {
-        this.saveContentAndTag(new Event(this), event, tag);
+        this.saveContentAndTag(new Event(), event, tag);
     }
 
     public void addAddress(String address, String tag) {
-        this.saveContentAndTag(new Address(this), address, tag);
+        this.saveContentAndTag(new Address(), address, tag);
     }
 
     public void addRelationship(String relationship, String tag) {
-        this.saveContentAndTag(new Relationship(this), relationship, tag);
+        this.saveContentAndTag(new Relationship(), relationship, tag);
     }
 
     private void saveContentAndTag(FieldWithTag fieldWithTag, String content, String tag) {
