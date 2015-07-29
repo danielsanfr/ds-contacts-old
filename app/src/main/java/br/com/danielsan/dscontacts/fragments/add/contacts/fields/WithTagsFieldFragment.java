@@ -4,23 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.FieldSpinnerAdapter;
-import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment;
 import br.com.danielsan.dscontacts.model.base.Field;
 import br.com.danielsan.dscontacts.model.base.FieldWithTag;
 
 /**
  * Created by daniel on 28/06/15.
  */
-public class WithTagsFieldFragment extends CommonFieldFragment
-        implements AdapterView.OnItemSelectedListener,
-        EditTextDialogFragment.Listener {
+public class WithTagsFieldFragment extends CommonFieldFragment {
 
     protected static final String TAGS = "tags";
 
@@ -76,37 +70,6 @@ public class WithTagsFieldFragment extends CommonFieldFragment
         FieldSpinnerAdapter.configureAdapter(this.getActivity(),
                                              (Spinner) pSubFieldViews.get(pSubFieldCounter - 1).findViewById(R.id.spnr_tag),
                                              pTagsRes);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (view instanceof TextView
-            && ((TextView) view).getText().toString().equals(this.getResources().getString(R.string.custom))) {
-            if (adapterView instanceof Spinner)
-                pCurrentSpinner = (Spinner) adapterView;
-            EditTextDialogFragment editTextDialogFragment =
-            EditTextDialogFragment.newInstance("Custom label name");
-            editTextDialogFragment.setOnEditTextDialogListener(this);
-            editTextDialogFragment.show(getFragmentManager(), "");
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {}
-
-    @Override
-    public void onInputText(CharSequence text) {
-        if (pCurrentSpinner == null)
-            return;
-
-        ArrayAdapter<String> adapter = (ArrayAdapter<String>) pCurrentSpinner.getAdapter();
-        if (pTags.length < adapter.getCount())
-            adapter.remove(adapter.getItem(0));
-
-        adapter.insert(text.toString(), 0);
-        pCurrentSpinner.setSelection(0);
-
-        pCurrentSpinner = null;
     }
 
 }
