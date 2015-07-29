@@ -2,9 +2,6 @@ package br.com.danielsan.dscontacts.activities;
 
 import android.content.res.ColorStateList;
 import android.os.Handler;
-import android.support.annotation.ArrayRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -20,7 +17,6 @@ import android.widget.ImageView;
 import com.andexert.expandablelayout.library.ExpandableLayout;
 import com.r0adkll.slidr.Slidr;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +27,7 @@ import br.com.danielsan.dscontacts.fragments.add.contacts.fields.PhotoFieldFragm
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WithTagsFieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WorkFieldFragment;
 import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
-import br.com.danielsan.dscontacts.model.Contact;
 import br.com.danielsan.dscontacts.model.Name;
-import br.com.danielsan.dscontacts.model.Phone;
 import br.com.danielsan.dscontacts.model.base.Field;
 import br.com.danielsan.dscontacts.model.serializer.NameSerializer;
 import br.com.danielsan.dscontacts.util.FragmentsTransaction;
@@ -134,21 +128,16 @@ public class AddContactActivity extends BaseActivity
 
         mFields = new ArrayList<>(9);
         mFieldTitles = new ArrayList<>(9);
-        Contact nullContact = new Contact();
         String modelPackage = this.getString(R.string.model_package);
         String[] fieldsNames = this.getResources().getStringArray(R.array.fields);
         for (String fieldName : fieldsNames) {
             try {
-                Field field = (Field) Class.forName(modelPackage + fieldName).getDeclaredConstructor(Contact.class).newInstance(nullContact);
+                Field field = (Field) Class.forName(modelPackage + fieldName).newInstance();
                 mFieldTitles.add(this.getString(field.getTitleRes()));
                 mFields.add(field);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();

@@ -55,4 +55,7 @@ public abstract class Field /*extends Model*/ implements Comparable<Object> {
         return -1;
     }
 
+    public long getId() { return -1; }
+    public void save() { }
+
 }

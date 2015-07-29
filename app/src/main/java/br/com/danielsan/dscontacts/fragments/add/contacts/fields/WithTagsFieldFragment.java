@@ -9,11 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import br.com.danielsan.dscontacts.R;
+import br.com.danielsan.dscontacts.adapters.FieldSpinnerAdapter;
 import br.com.danielsan.dscontacts.fragments.dialogs.EditTextDialogFragment;
 import br.com.danielsan.dscontacts.model.base.Field;
 import br.com.danielsan.dscontacts.model.base.FieldWithTag;
@@ -76,14 +73,9 @@ public class WithTagsFieldFragment extends CommonFieldFragment
     protected void addSubFieldOnClick(View view) {
         super.addSubFieldOnClick(view);
 
-        List<String> tags = new ArrayList<>();
-        tags.addAll(Arrays.asList(this.getResources().getStringArray(pTagsRes)));
-
-        Spinner spinner = (Spinner) pSubFieldViews.get(pSubFieldViews.size() - 1).findViewById(R.id.spnr_tag);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item, tags);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setOnItemSelectedListener(this);
-        spinner.setAdapter(adapter);
+        FieldSpinnerAdapter.configureAdapter(this.getActivity(),
+                                             (Spinner) pSubFieldViews.get(pSubFieldCounter - 1).findViewById(R.id.spnr_tag),
+                                             pTagsRes);
     }
 
     @Override

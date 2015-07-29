@@ -13,7 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.model.Contact;
@@ -29,10 +30,12 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     protected static final String TITLE = "title";
     protected static final String IMAGE_TITLE = "image_title";
 
+    protected int pSubFieldCounter;
     private ViewGroup mViewGroup;
     private LayoutInflater mLayoutInflater;
+    protected List<Field> pDeleteFields;
     protected SparseArray<View> pSubFieldViews;
-    protected Class<? extends Field> mFieldClass;
+    protected Class<? extends Field> pFieldClass;
 
     @StringRes
     protected int pTitleRes;
@@ -60,7 +63,7 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     public CommonFieldFragment() {}
 
     public void setFieldClass(Class<? extends Field> fieldClass) {
-        mFieldClass = fieldClass;
+        pFieldClass = fieldClass;
     }
 
     @LayoutRes
@@ -77,16 +80,12 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     protected void updatedContact(Contact contact) {
         for (int index = 0, size = pSubFieldViews.size(); index < size ; ++index) {
             try {
-                Field field = mFieldClass.getDeclaredConstructor(Contact.class).newInstance(contact);
+                Field field = pFieldClass.newInstance();
                 this.updateField(field, pSubFieldViews.get(pSubFieldViews.keyAt(index)));
-                contact.addField(field);
+                field.save();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (java.lang.InstantiationException e) {
                 e.printStackTrace();
@@ -101,6 +100,8 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pSubFieldCounter = 0;
+        pDeleteFields = new ArrayList<>();
         pSubFieldViews = new SparseArray<>();
         Bundle bundle = this.getArguments();
         if (bundle != null && bundle.containsKey(TITLE)) {
@@ -130,14 +131,22 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     protected void addSubFieldOnClick(View view) {
         View subView = mLayoutInflater.inflate(this.getSubFieldLayoutRes(), mViewGroup, false);
 
+        try {
+            subView.setTag(pFieldClass.newInstance());
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         EditText edtTxtItem = (EditText) subView.findViewById(R.id.edt_txt_item);
         ImageView imgVwRemove = (ImageView) subView.findViewById(R.id.img_vw_remove);
 
         edtTxtItem.setHint(pTitleRes);
-        imgVwRemove.setTag(pSubFieldViews.size());
+        imgVwRemove.setTag(pSubFieldCounter);
         imgVwRemove.setOnClickListener(this);
 
-        pSubFieldViews.append(pSubFieldViews.size(), subView);
+        pSubFieldViews.append(pSubFieldCounter++, subView);
 
         if (pFieldsContainerLnrLyt != null)
             pFieldsContainerLnrLyt.addView(subView);
@@ -146,8 +155,13 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (pSubFieldViews.size() > 1 && pFieldsContainerLnrLyt != null) {
-            pSubFieldViews.delete((int) view.getTag());
-            pFieldsContainerLnrLyt.removeView((View) view.getParent());
+            int key = (int) view.getTag();
+            View viewToDelete = pSubFieldViews.get(key);
+            Field fieldToDelete = (Field) viewToDelete.getTag();
+            if (fieldToDelete != null && fieldToDelete.getId() >= 0)
+                pDeleteFields.add(fieldToDelete);
+            pSubFieldViews.delete(key);
+            pFieldsContainerLnrLyt.removeView(viewToDelete);
         }
     }
 
