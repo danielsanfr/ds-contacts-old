@@ -6,15 +6,15 @@ import android.support.annotation.StringRes;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 
 import br.com.danielsan.dscontacts.model.Contact;
 
 /**
  * Created by daniel on 27/07/15.
  */
-@Table(name = "field", id = "_id")
 public abstract class Field extends Model implements Comparable<Object> {
+
+    public static final String BASE_TABLE_NAME = "field_";
 
     @Column(name = "contact")
     protected Contact mContact;

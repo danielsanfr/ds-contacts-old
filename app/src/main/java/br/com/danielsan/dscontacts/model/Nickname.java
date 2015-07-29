@@ -12,8 +12,10 @@ import br.com.danielsan.dscontacts.model.base.Field;
 /**
  * Created by daniel on 27/07/15.
  */
-@Table(name = "nickname", id = "_id")
+@Table(name = Nickname.TABLE_NAME, id = "_id")
 public class Nickname extends Field {
+
+    public static final String TABLE_NAME = BASE_TABLE_NAME + "nickname";
 
     @StringRes
     @Override

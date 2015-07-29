@@ -13,8 +13,10 @@ import br.com.danielsan.dscontacts.model.base.FieldWithTag;
 /**
  * Created by daniel on 14/02/15.
  */
-@Table(name = "contact", id = "_id")
+@Table(name = Contact.TABLE_NAME, id = "_id")
 public class Contact extends Model {
+
+    public static final String TABLE_NAME = "contact";
 
     @Column(name = "name")
     private Name mName;
@@ -92,39 +94,39 @@ public class Contact extends Model {
     }
 
     public List<Phone> phones() {
-        return this.getMany(Phone.class, "phone");
+        return this.getMany(Phone.class, TABLE_NAME);
     }
 
     public List<Email> emails() {
-        return this.getMany(Email.class, "email");
+        return this.getMany(Email.class, TABLE_NAME);
     }
 
     public List<IM> ims() {
-        return this.getMany(IM.class, "im");
+        return this.getMany(IM.class, TABLE_NAME);
     }
 
     public List<Note> notes() {
-        return this.getMany(Note.class, "note");
+        return this.getMany(Note.class, TABLE_NAME);
     }
 
     public List<Nickname> nicknames() {
-        return this.getMany(Nickname.class, "nickname");
+        return this.getMany(Nickname.class, TABLE_NAME);
     }
 
     public List<Website> webSites() {
-        return this.getMany(Website.class, "website");
+        return this.getMany(Website.class, TABLE_NAME);
     }
 
     public List<Event> events() {
-        return this.getMany(Event.class, "event");
+        return this.getMany(Event.class, TABLE_NAME);
     }
 
     public List<Address> addresses() {
-        return this.getMany(Address.class, "address");
+        return this.getMany(Address.class, TABLE_NAME);
     }
 
     public List<Relationship> relationships() {
-        return this.getMany(Relationship.class, "relationship");
+        return this.getMany(Relationship.class, TABLE_NAME);
     }
 
     public void addField(Field field) {

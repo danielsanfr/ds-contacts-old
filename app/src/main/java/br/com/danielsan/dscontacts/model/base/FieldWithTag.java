@@ -1,14 +1,10 @@
 package br.com.danielsan.dscontacts.model.base;
 
 import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-
-import br.com.danielsan.dscontacts.model.Contact;
 
 /**
  * Created by daniel on 27/07/15.
  */
-@Table(name = "fieldWithTag", id = "_id")
 public abstract class FieldWithTag extends Field {
 
     public enum SortBy {

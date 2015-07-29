@@ -28,9 +28,7 @@
              br.com.danielsan.dscontacts.model.Note,
              br.com.danielsan.dscontacts.model.Phone,
              br.com.danielsan.dscontacts.model.Relationship,
-             br.com.danielsan.dscontacts.model.Website,
-             br.com.danielsan.dscontacts.model.base.Field,
-             br.com.danielsan.dscontacts.model.base.FieldWithTag" />
+             br.com.danielsan.dscontacts.model.Website" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name" >

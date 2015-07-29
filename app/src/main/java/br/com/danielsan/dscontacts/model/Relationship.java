@@ -12,8 +12,10 @@ import br.com.danielsan.dscontacts.model.base.FieldWithTag;
 /**
  * Created by daniel on 27/07/15.
  */
-@Table(name = "relationship", id = "_id")
+@Table(name = Relationship.TABLE_NAME, id = "_id")
 public class Relationship extends FieldWithTag {
+
+    public static final String TABLE_NAME = BASE_TABLE_NAME + "relationship";
 
     @StringRes
     @Override
