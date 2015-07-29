@@ -14,7 +14,7 @@ import br.com.danielsan.dscontacts.model.Contact;
  * Created by daniel on 27/07/15.
  */
 @Table(name = "field", id = "_id")
-public abstract class Field /*extends Model*/ implements Comparable<Object> {
+public abstract class Field extends Model implements Comparable<Object> {
 
     @Column(name = "contact")
     protected Contact mContact;
@@ -54,8 +54,5 @@ public abstract class Field /*extends Model*/ implements Comparable<Object> {
 
         return -1;
     }
-
-    public long getId() { return -1; }
-    public void save() { }
 
 }

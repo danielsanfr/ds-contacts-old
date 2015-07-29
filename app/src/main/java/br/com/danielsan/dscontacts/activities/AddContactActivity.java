@@ -22,11 +22,13 @@ import java.util.List;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.CommonFieldFragment;
+import br.com.danielsan.dscontacts.fragments.add.contacts.fields.FieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.GroupFieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.PhotoFieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WithTagsFieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WorkFieldFragment;
 import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
+import br.com.danielsan.dscontacts.model.Contact;
 import br.com.danielsan.dscontacts.model.Name;
 import br.com.danielsan.dscontacts.model.base.Field;
 import br.com.danielsan.dscontacts.model.serializer.NameSerializer;
@@ -39,10 +41,12 @@ import butterknife.OnClick;
 public class AddContactActivity extends BaseActivity
         implements OtherFieldsDialog.Listener {
 
+    private Menu mMenu;
     private List<Field> mFields;
     private String mDefaultTitle;
     private boolean mNameChanged = false;
     private ArrayList<String> mFieldTitles;
+    private ArrayList<FieldFragment> mFieldFragments;
     private NameEdtTxtDelayRunnable mNameEdtTxtDelayRunnable;
     private final Handler mNameEdtTxtDelayHandler = new Handler();
     private final RotateAnimation mRotateAnimationLeft = new RotateAnimation(0f, -180f,
@@ -78,6 +82,7 @@ public class AddContactActivity extends BaseActivity
         Slidr.attach(this);
 
         mDefaultTitle = this.getString(R.string.title_activity_add_contact);
+        mFieldFragments = new ArrayList<>();
 
         mRotateAnimationLeft.setDuration(200);
         mRotateAnimationRight.setDuration(200);
@@ -144,15 +149,22 @@ public class AddContactActivity extends BaseActivity
             }
         }
 
-        this.addFragment(new PhotoFieldFragment());
+        FieldFragment photoFieldFragment = new PhotoFieldFragment();
+        FieldFragment groupFieldFragment = new GroupFieldFragment();
+        mFieldFragments.add(photoFieldFragment);
+        mFieldFragments.add(groupFieldFragment);
+
+        this.addFragment(photoFieldFragment);
         this.addField(0);
         this.addField(0);
-        FragmentsTransaction.add(this, R.id.frm_lyt_field_group, new GroupFieldFragment());
+        FragmentsTransaction.add(this, R.id.frm_lyt_field_group, groupFieldFragment);
         this.findViewById(R.id.btn_add_organization).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 view.setVisibility(View.GONE);
-                FragmentsTransaction.add(AddContactActivity.this, R.id.frm_lyt_field_work, new WorkFieldFragment());
+                FieldFragment workFieldFragment = new WorkFieldFragment();
+                mFieldFragments.add(workFieldFragment);
+                FragmentsTransaction.add(AddContactActivity.this, R.id.frm_lyt_field_work, workFieldFragment);
             }
         });
     }
@@ -192,13 +204,25 @@ public class AddContactActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.add_contact, menu);
+        mMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
             case R.id.menu_confirm:
+                Contact contact = new Contact();
+                contact.save();
+                for (FieldFragment fieldFragment : mFieldFragments)
+                    fieldFragment.updatedContact(contact);
+                if (mMenu != null && mMenu.findItem(R.id.menu_favorite) != null)
+                    contact.setFavorite(mMenu.findItem(R.id.menu_favorite).isChecked());
+                contact.setName((new NameSerializer()).deserialize(mNameEdtTxt.getText().toString()));
+                contact.save();
+                this.finish();
                 break;
             case R.id.menu_favorite:
                 item.setChecked(!item.isChecked());
@@ -218,13 +242,16 @@ public class AddContactActivity extends BaseActivity
             return;
 
         Field field = mFields.get(index);
+        FieldFragment fieldFragment;
         if (field.getTagsRes() == -1) {
-            this.addFragment(CommonFieldFragment.newInstance(field));
+            fieldFragment = CommonFieldFragment.newInstance(field);
         } else {
-            this.addFragment(WithTagsFieldFragment.newInstance(field));
+            fieldFragment = WithTagsFieldFragment.newInstance(field);
         }
+        this.addFragment(fieldFragment);
         mFields.remove(index);
         mFieldTitles.remove(index);
+        mFieldFragments.add(fieldFragment);
         if (mFields.size() == 0) {
             CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAddFieldFltActBtn.getLayoutParams();
             layoutParams.setBehavior(null);

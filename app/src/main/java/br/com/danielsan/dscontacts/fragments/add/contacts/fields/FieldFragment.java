@@ -44,6 +44,6 @@ public abstract class FieldFragment extends Fragment {
     @LayoutRes
     protected abstract int contentResId();
 
-    protected abstract void updatedContact(Contact contact);
+    public abstract void updatedContact(Contact contact);
 
 }

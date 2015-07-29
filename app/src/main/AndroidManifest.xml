@@ -4,9 +4,33 @@
 
     <application
         android:allowBackup="true"
+        android:name="com.activeandroid.app.Application"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/MainTheme" >
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="contacts.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="AA_SERIALIZERS"
+            android:value="br.com.danielsan.dscontacts.model.serializer.NameSerializer" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="br.com.danielsan.dscontacts.model.Contact,
+             br.com.danielsan.dscontacts.model.Address,
+             br.com.danielsan.dscontacts.model.Email,
+             br.com.danielsan.dscontacts.model.Event,
+             br.com.danielsan.dscontacts.model.IM,
+             br.com.danielsan.dscontacts.model.Nickname,
+             br.com.danielsan.dscontacts.model.Note,
+             br.com.danielsan.dscontacts.model.Phone,
+             br.com.danielsan.dscontacts.model.Relationship,
+             br.com.danielsan.dscontacts.model.Website,
+             br.com.danielsan.dscontacts.model.base.Field,
+             br.com.danielsan.dscontacts.model.base.FieldWithTag" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name" >

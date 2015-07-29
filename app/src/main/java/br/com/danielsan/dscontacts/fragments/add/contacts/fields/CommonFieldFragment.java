@@ -77,19 +77,17 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     }
 
     @Override
-    protected void updatedContact(Contact contact) {
+    public void updatedContact(Contact contact) {
+        for (Field field : pDeleteFields)
+            field.delete();
+
+        View subView;
         for (int index = 0, size = pSubFieldViews.size(); index < size ; ++index) {
-            try {
-                Field field = pFieldClass.newInstance();
-                this.updateField(field, pSubFieldViews.get(pSubFieldViews.keyAt(index)));
-                field.save();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (java.lang.InstantiationException e) {
-                e.printStackTrace();
-            }
+            subView = pSubFieldViews.get(pSubFieldViews.keyAt(index));
+            Field field = (Field) subView.getTag();
+            this.updateField(field, subView);
+            field.setContact(contact);
+            field.save();
         }
     }
 

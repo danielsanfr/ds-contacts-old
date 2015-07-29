@@ -13,14 +13,14 @@ import br.com.danielsan.dscontacts.model.base.FieldWithTag;
 /**
  * Created by daniel on 14/02/15.
  */
-@Table(name = "contact")
-public class Contact { //extends Model {
+@Table(name = "contact", id = "_id")
+public class Contact extends Model {
 
     @Column(name = "name")
     private Name mName;
     @Column(name = "favorite")
     private boolean mFavorite;
-    @Column(name = "group")
+    @Column(name = "my_group")
     private String mGroup;
     @Column(name = "company")
     private String mCompany;
@@ -89,10 +89,6 @@ public class Contact { //extends Model {
 
     public void setColor(Integer color) {
         mColor = color;
-    }
-
-	private  <T extends Field> List<T> getMany(Class<T> type, String foreignKey) {
-        return new ArrayList<T>();
     }
 
     public List<Phone> phones() {

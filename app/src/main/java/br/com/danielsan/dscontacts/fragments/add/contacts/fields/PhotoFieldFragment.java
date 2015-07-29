@@ -46,9 +46,9 @@ public class PhotoFieldFragment extends FieldFragment {
 
 
     @Override
-    protected void updatedContact(Contact contact) {
-        contact.setPhoto((String) mChangePhotoBtn.getTag());
-        contact.setColor((Integer) mChangeColorBtn.getTag());
+    public void updatedContact(Contact contact) {
+        contact.setPhoto("/a/b/c/d");//(String) mChangePhotoBtn.getTag());
+        contact.setColor(123);//(Integer) mChangeColorBtn.getTag());
     }
 
 }

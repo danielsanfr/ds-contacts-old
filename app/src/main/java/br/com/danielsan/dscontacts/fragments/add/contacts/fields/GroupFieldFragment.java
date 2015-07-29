@@ -35,7 +35,7 @@ public class GroupFieldFragment extends FieldFragment implements AdapterView.OnI
     }
 
     @Override
-    protected void updatedContact(Contact contact) {
+    public void updatedContact(Contact contact) {
         contact.setGroup((String) mGroupSpnr.getSelectedItem());
     }
 
