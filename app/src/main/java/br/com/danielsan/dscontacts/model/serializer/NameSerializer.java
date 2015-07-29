@@ -25,7 +25,7 @@ public class NameSerializer extends TypeSerializer {
             return null;
 
         Name name = (Name) data;
-        return name.getName() + " "  + name.getMiddleName() + " " + name.getLastName();
+        return this.serialize(name.getName(), name.getMiddleName(), name.getLastName());
     }
 
     @Override
@@ -59,8 +59,12 @@ public class NameSerializer extends TypeSerializer {
     }
 
     public String serialize(String firstName, String middleName, String lastName) {
-        if (firstName == null || middleName == null || lastName == null)
-            return null;
+        if (firstName == null)
+            firstName = "";
+        if (middleName == null)
+            middleName = "";
+        if (lastName == null)
+            lastName = "";
 
         String name = firstName.trim();
         name += " " + middleName.trim();
