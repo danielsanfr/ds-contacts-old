@@ -26,10 +26,9 @@ public class WithTagsFieldFragment extends CommonFieldFragment {
 
     public static WithTagsFieldFragment newInstance(Field field) {
         WithTagsFieldFragment fragment = new WithTagsFieldFragment();
-        Bundle bundle = CommonFieldFragment.buildBundle(field.getTitleRes(), field.getImageTitleRes());
+        Bundle bundle = CommonFieldFragment.buildBundle(field);
         bundle.putInt(TAGS, field.getTagsRes());
         fragment.setArguments(bundle);
-        fragment.setFieldClass(field.getClass());
         return fragment;
     }
 

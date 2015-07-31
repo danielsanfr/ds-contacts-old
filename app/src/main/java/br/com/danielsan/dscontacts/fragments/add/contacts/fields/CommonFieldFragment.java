@@ -27,6 +27,7 @@ import butterknife.OnClick;
  */
 public class CommonFieldFragment extends FieldFragment implements View.OnClickListener {
 
+    protected static final String CLASS = "class";
     protected static final String TITLE = "title";
     protected static final String IMAGE_TITLE = "image_title";
 
@@ -48,23 +49,19 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
 
     public static CommonFieldFragment newInstance(Field field) {
         CommonFieldFragment fragment = new CommonFieldFragment();
-        fragment.setFieldClass(field.getClass());
-        fragment.setArguments(CommonFieldFragment.buildBundle(field.getTitleRes(), field.getImageTitleRes()));
+        fragment.setArguments(CommonFieldFragment.buildBundle(field));
         return fragment;
     }
 
-    protected static Bundle buildBundle(@StringRes int titleRes, @DrawableRes int imageTitleRes) {
+    protected static Bundle buildBundle(Field field) {
         Bundle bundle = new Bundle();
-        bundle.putInt(TITLE, titleRes);
-        bundle.putInt(IMAGE_TITLE, imageTitleRes);
+        bundle.putInt(TITLE, field.getTitleRes());
+        bundle.putInt(IMAGE_TITLE, field.getImageTitleRes());
+        bundle.putSerializable(CLASS, field.getClass());
         return bundle;
     }
 
     public CommonFieldFragment() {}
-
-    public void setFieldClass(Class<? extends Field> fieldClass) {
-        pFieldClass = fieldClass;
-    }
 
     @LayoutRes
     protected int getSubFieldLayoutRes() {
@@ -95,6 +92,7 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
         field.setContent(((EditText) view.findViewById(R.id.edt_txt_item)).getText().toString());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +102,7 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
         Bundle bundle = this.getArguments();
         if (bundle != null && bundle.containsKey(TITLE)) {
             pTitleRes = bundle.getInt(TITLE);
+            pFieldClass = (Class<? extends Field>) bundle.getSerializable(CLASS);
             pImageTitleRes = bundle.getInt(IMAGE_TITLE);
         }
     }
