@@ -156,7 +156,7 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
             int key = (int) view.getTag();
             View viewToDelete = pSubFieldViews.get(key);
             Field fieldToDelete = (Field) viewToDelete.getTag();
-            if (fieldToDelete != null && fieldToDelete.getId() >= 0)
+            if (fieldToDelete != null && fieldToDelete.getId() != null)
                 pDeleteFields.add(fieldToDelete);
             pSubFieldViews.delete(key);
             pFieldsContainerLnrLyt.removeView(viewToDelete);
