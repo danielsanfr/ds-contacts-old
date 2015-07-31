@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import br.com.danielsan.dscontacts.R;
+import br.com.danielsan.dscontacts.fragments.dialogs.ColorPickerDialogFragment;
 import br.com.danielsan.dscontacts.model.Contact;
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -14,7 +15,9 @@ import butterknife.OnClick;
 /**
  * Created by daniel on 28/06/15.
  */
-public class PhotoFieldFragment extends FieldFragment {
+public class PhotoFieldFragment extends FieldFragment implements ColorPickerDialogFragment.Listener {
+
+    private int mContactColor;
 
     @Bind(R.id.img_vw_avatar)
     protected ImageView mAvatarImgVw;
@@ -25,10 +28,10 @@ public class PhotoFieldFragment extends FieldFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         pTitleTxtVw.setText("Photo");
         pTitleImgVw.setImageResource(R.drawable.ic_photo_camera_grey);
-
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -42,13 +45,20 @@ public class PhotoFieldFragment extends FieldFragment {
 
     @OnClick(R.id.btn_change_color)
     protected void changeColorBtnOnClick(View view) {
+        ColorPickerDialogFragment.newInstance("Contact color")
+                                 .setListener(this)
+                                 .show(this.getFragmentManager(), "");
     }
-
 
     @Override
     public void updatedContact(Contact contact) {
-        contact.setPhoto("/a/b/c/d");//(String) mChangePhotoBtn.getTag());
-        contact.setColor(123);//(Integer) mChangeColorBtn.getTag());
+        contact.setPhoto("/a/b/c/d");
+        contact.setColor(mContactColor);
+    }
+
+    @Override
+    public void onInputColor(Integer color) {
+        mContactColor = color;
     }
 
 }
