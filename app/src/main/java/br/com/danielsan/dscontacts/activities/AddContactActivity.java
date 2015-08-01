@@ -56,6 +56,8 @@ public class AddContactActivity extends BaseActivity
                                                                               RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                                                                               RotateAnimation.RELATIVE_TO_SELF, 0.5f);
 
+    @Bind(R.id.vw_bg_tl_bar)
+    protected View mBgTlBarVw;
     @Bind(R.id.edt_txt_name)
     protected EditText mNameEdtTxt;
     @Bind(R.id.edt_txt_first_name)
@@ -92,7 +94,7 @@ public class AddContactActivity extends BaseActivity
 
         mNameInfoExpdbLyt.setOnClickListener(null);
         mClpsngTlbrLyt.setTitle(mDefaultTitle);
-        mClpsngTlbrLyt.setBackgroundColor(this.getResources().getColor(R.color.orange_500));
+        mBgTlBarVw.setBackgroundColor(this.getResources().getColor(R.color.orange_500));
         mClpsngTlbrLyt.setContentScrimColor(this.getResources().getColor(R.color.orange_500));
         mAddFieldFltActBtn.setBackgroundTintList(ColorStateList.valueOf(this.getResources().getColor(R.color.orange_500)));
 

@@ -26,6 +26,12 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:expandedTitleTextAppearance="@style/ContactInfoToolbarExpandedTextAppearance" >
 
+                <View
+                    android:id="@+id/vw_bg_tl_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_collapseMode="parallax" />
+
                 <LinearLayout
                     android:paddingTop="60dp"
                     android:orientation="horizontal"
