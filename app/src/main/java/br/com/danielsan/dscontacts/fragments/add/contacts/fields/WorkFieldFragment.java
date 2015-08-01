@@ -34,8 +34,8 @@ public class WorkFieldFragment extends FieldFragment {
 
     @Override
     public void updatedContact(Contact contact) {
-        contact.setCompany(mOrganizationEdtTxt.getText().toString());
-        contact.setJobTitle(mTitleEdtTxt.getText().toString());
+        contact.setOrganization(mOrganizationEdtTxt.getText().toString());
+        contact.setTitle(mTitleEdtTxt.getText().toString());
     }
 
 }

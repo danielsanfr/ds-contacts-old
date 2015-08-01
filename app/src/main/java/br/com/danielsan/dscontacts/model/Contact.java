@@ -4,7 +4,6 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.danielsan.dscontacts.model.base.Field;
@@ -24,12 +23,12 @@ public class Contact extends Model {
     private boolean mFavorite;
     @Column(name = "my_group")
     private String mGroup;
-    @Column(name = "company")
-    private String mCompany;
-    @Column(name = "job_title")
-    private String mJobTitle;
-    @Column(name = "photo")
-    private String mPhoto;
+    @Column(name = "organization")
+    private String mOrganization;
+    @Column(name = "title")
+    private String mTitle;
+    @Column(name = "picture")
+    private String mPicture;
     @Column(name = "color")
     private Integer mColor;
 
@@ -61,28 +60,28 @@ public class Contact extends Model {
         mGroup = group;
     }
 
-    public String getCompany() {
-        return mCompany;
+    public String getOrganization() {
+        return mOrganization;
     }
 
-    public void setCompany(String company) {
-        mCompany = company;
+    public void setOrganization(String organization) {
+        mOrganization = organization;
     }
 
-    public String getJobTitle() {
-        return mJobTitle;
+    public String getTitle() {
+        return mTitle;
     }
 
-    public void setJobTitle(String jobTitle) {
-        mJobTitle = jobTitle;
+    public void setTitle(String title) {
+        mTitle = title;
     }
 
-    public String getPhoto() {
-        return mPhoto;
+    public String getPicture() {
+        return mPicture;
     }
 
-    public void setPhoto(String photo) {
-        mPhoto = photo;
+    public void setPicture(String picture) {
+        mPicture = picture;
     }
 
     public Integer getColor() {
@@ -129,9 +128,6 @@ public class Contact extends Model {
         return this.getMany(Relationship.class, TABLE_NAME);
     }
 
-    public void addField(Field field) {
-    }
-
     public void addPhone(String phone, String tag) {
         this.saveContentAndTag(new Phone(), phone, tag);
     }
@@ -175,7 +171,8 @@ public class Contact extends Model {
 
     private void saveContent(Field field, String content) {
         field.setContent(content);
-//        field.save();
+        field.setContact(this);
+        field.save();
     }
 
 }

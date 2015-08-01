@@ -105,7 +105,7 @@ public class PhotoFieldFragment extends FieldFragment implements ColorPickerDial
 
     @Override
     public void updatedContact(Contact contact) {
-        contact.setPhoto(mDeleteAvatarFile ? "" : mPhotoPath);
+        contact.setPicture(mDeleteAvatarFile ? "" : mPhotoPath);
         contact.setColor(mContactColor);
     }
 
