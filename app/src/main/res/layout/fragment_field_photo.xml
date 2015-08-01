@@ -7,13 +7,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
-    <ImageView
-        android:id="@+id/img_vw_avatar"
-        android:src="@drawable/ic_person_white"
-        android:background="#757575"
-        android:scaleType="fitCenter"
+    <RelativeLayout
         android:layout_width="88dp"
-        android:layout_height="88dp" />
+        android:layout_height="88dp">
+
+        <ImageView
+            android:id="@+id/img_vw_avatar"
+            android:src="@drawable/ic_person_white"
+            android:background="#757575"
+            android:scaleType="fitCenter"
+            android:layout_width="88dp"
+            android:layout_height="88dp" />
+
+        <ImageView
+            android:id="@+id/img_vw_clear_photo"
+            android:visibility="invisible"
+            android:src="@drawable/ic_delete_black"
+            android:scaleType="fitCenter"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:orientation="vertical"

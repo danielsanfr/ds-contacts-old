@@ -2,25 +2,19 @@ package br.com.danielsan.dscontacts.fragments.add.contacts.fields;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
+import com.soundcloud.android.crop.Crop;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.dialogs.ColorPickerDialogFragment;
@@ -34,21 +28,19 @@ import butterknife.OnClick;
 public class PhotoFieldFragment extends FieldFragment implements ColorPickerDialogFragment.Listener {
 
     private static final int PICK_PHOTO_FOR_AVATAR = 1;
-    private static final String BASE_FILENAME = "avatar_%s";
+    private static final String BASE_FILENAME = "%savatar";
     private static final String IMAGE_FORMAT = ".jpg";
 
     private File mAvatarFile;
+    private File mAvatarTempFile;
     private String mPhotoPath;
     private int mContactColor;
-    private Bitmap mAvatarBitmap;
     private boolean mDeleteAvatarFile;
 
     @Bind(R.id.img_vw_avatar)
     protected ImageView mAvatarImgVw;
-    @Bind(R.id.btn_change_photo)
-    protected Button mChangePhotoBtn;
-    @Bind(R.id.btn_change_color)
-    protected Button mChangeColorBtn;
+    @Bind(R.id.img_vw_clear_photo)
+    protected ImageView mClearPhotoImgVw;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -57,12 +49,13 @@ public class PhotoFieldFragment extends FieldFragment implements ColorPickerDial
         mDeleteAvatarFile = true;
         try {
             mAvatarFile = this.createImageFile();
+            mAvatarTempFile = this.createImageFile("temp_");
         } catch (IOException e) {
 //            e.printStackTrace();
             return;
         }
 
-        pTitleTxtVw.setText("Photo");
+        pTitleTxtVw.setText(R.string.photo);
         pTitleImgVw.setImageResource(R.drawable.ic_photo_camera_grey);
     }
 
@@ -71,9 +64,16 @@ public class PhotoFieldFragment extends FieldFragment implements ColorPickerDial
         return R.layout.fragment_field_photo;
     }
 
+    @OnClick(R.id.img_vw_clear_photo)
+    protected void clearPhotoImgVwOnClick(View view) {
+        mDeleteAvatarFile = true;
+        mAvatarImgVw.setImageResource(R.drawable.ic_person_white);
+        mClearPhotoImgVw.setVisibility(View.INVISIBLE);
+    }
+
     @OnClick(R.id.btn_change_photo)
     protected void changePhotoBtnOnClick(View view) {
-        if (mAvatarFile == null)
+        if (mAvatarFile == null || mAvatarTempFile == null)
             return;
 
         // Galley app
@@ -86,7 +86,7 @@ public class PhotoFieldFragment extends FieldFragment implements ColorPickerDial
 
         // Camera app
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mAvatarFile));
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mAvatarTempFile));
 
         // Join all intents
         Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
@@ -98,96 +98,69 @@ public class PhotoFieldFragment extends FieldFragment implements ColorPickerDial
 
     @OnClick(R.id.btn_change_color)
     protected void changeColorBtnOnClick(View view) {
-        ColorPickerDialogFragment.newInstance("Contact color")
+        ColorPickerDialogFragment.newInstance(R.string.contact_color)
                                  .setListener(this)
                                  .show(this.getFragmentManager(), "");
     }
 
     @Override
     public void updatedContact(Contact contact) {
-        this.saveAvatarBitmap();
-        contact.setPhoto(mPhotoPath);
+        contact.setPhoto(mDeleteAvatarFile ? "" : mPhotoPath);
         contact.setColor(mContactColor);
-        mDeleteAvatarFile = false;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//            Log.d("========", String.valueOf(requestCode) + " - " + String.valueOf(resultCode) + "===================");
-            Log.d("========", String.valueOf(requestCode) + " - " + String.valueOf(resultCode) + " - " + String.valueOf(data)+ " - " + String.valueOf(mAvatarFile));
-        if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
-            if (data == null) {
-                mAvatarBitmap = BitmapFactory.decodeFile(mPhotoPath);
-            } else {
-                InputStream inputStream;
-                try {
-                    inputStream = this.getActivity()
-                                      .getContentResolver()
-                                      .openInputStream(data.getData());
-                    mAvatarBitmap = BitmapFactory.decodeStream(inputStream);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PICK_PHOTO_FOR_AVATAR) {
+                beginCrop(data);
+            } else if (requestCode == Crop.REQUEST_CROP) {
+                handleCrop(data);
             }
-
-            if (mAvatarBitmap != null)
-                mAvatarImgVw.setImageBitmap(mAvatarBitmap);
-
-
-
-
-
-//            try {
-//            Log.d("========", String.valueOf(requestCode) + " - " + String.valueOf(resultCode) + " - " + String.valueOf(data.getData()));
-//            if (data.getExtras() != null)
-//                Log.d("========", String.valueOf(requestCode) + " - " + String.valueOf(resultCode) + " - " + String.valueOf(data.getExtras()));
-//                mAvatarImgVw.setImageURI(data.getData());
-//                InputStream inputStream = this.getActivity().getContentResolver().openInputStream(data.getData());
-//                mAvatarImgVw.setImageBitmap(BitmapFactory.decodeStream(inputStream));
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
         }
+    }
+
+    private void beginCrop(Intent data) {
+        Uri source;
+        Uri destination = Uri.fromFile(mAvatarFile);
+        if (data == null)
+            source = Uri.fromFile(mAvatarTempFile);
+        else
+            source = data.getData();
+
+        this.startActivityForResult(Crop.of(source, destination).asSquare().getIntent(this.getActivity()), Crop.REQUEST_CROP);
+    }
+
+    private void handleCrop(Intent data) {
+        if (!mDeleteAvatarFile)
+            mAvatarImgVw.setImageURI(null);
+        mDeleteAvatarFile = false;
+        mAvatarImgVw.setImageURI(Crop.getOutput(data));
+        mClearPhotoImgVw.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+            mAvatarTempFile.delete();
         if (mAvatarFile != null && mDeleteAvatarFile)
             mAvatarFile.delete();
     }
+    private File createImageFile() throws IOException {
+        return this.createImageFile("");
+    }
 
     // http://developer.android.com/training/camera/photobasics.html
-    private File createImageFile() throws IOException {
+    private File createImageFile(@NonNull String complement) throws IOException {
         File storageDir = this.getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        String imageFileName = String.format(BASE_FILENAME, new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()));
+        String imageFileName = String.format(BASE_FILENAME, complement);
         File image = File.createTempFile(imageFileName, IMAGE_FORMAT, storageDir);
 
         mPhotoPath = image.getAbsolutePath();
 
         return image;
-    }
-
-    private void saveAvatarBitmap() {
-        if (mAvatarBitmap == null || mAvatarFile == null)
-            return;
-
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(mAvatarFile);
-            mAvatarBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fileOutputStream != null) {
-                    fileOutputStream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
