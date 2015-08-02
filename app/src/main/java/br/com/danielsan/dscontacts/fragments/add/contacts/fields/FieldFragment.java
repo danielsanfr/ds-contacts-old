@@ -1,8 +1,11 @@
 package br.com.danielsan.dscontacts.fragments.add.contacts.fields;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -21,12 +24,48 @@ import butterknife.Bind;
  */
 public abstract class FieldFragment extends Fragment {
 
+    protected static final String TITLE_RES = "title_res";
+    protected static final String TITLE_IMAGE_RES = "title_image_res";
+
     @Bind(R.id.txt_vw_field_title)
     protected TextView pTitleTxtVw;
     @Bind(R.id.img_vw_field_title)
     protected ImageView pTitleImgVw;
     @Bind(R.id.cd_vw_field_content)
     protected CardView pContentCdVw;
+
+    @StringRes
+    protected int pTitleRes;
+    @DrawableRes
+    protected int pTitleImageRes;
+
+    protected static Bundle makeBaseBundle(@StringRes int titleRes, @DrawableRes int imageTitleRes) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(TITLE_RES, titleRes);
+        bundle.putInt(TITLE_IMAGE_RES, imageTitleRes);
+        return bundle;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (!(activity instanceof NotifyCreation))
+            throw new ClassCastException(activity.toString() + " must implement FieldFragment.NotifyCreation");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle arguments = this.getArguments();
+        if (arguments == null || !arguments.containsKey(TITLE_RES) || !arguments.containsKey(TITLE_IMAGE_RES))
+            throw new RuntimeException(this.toString() + " must use the bundle made by the method FieldFragment.makeBaseBundle");
+
+        pTitleRes = arguments.getInt(TITLE_RES);
+        pTitleImageRes = arguments.getInt(TITLE_IMAGE_RES);
+
+        ((NotifyCreation) this.getActivity()).notify(this);
+    }
 
     @Nullable
     @Override
@@ -38,12 +77,29 @@ public abstract class FieldFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        pTitleTxtVw.setText(pTitleRes);
+        pTitleImgVw.setImageResource(pTitleImageRes);
+
         return view;
+    }
+
+    @StringRes
+    public int getTitleRes() {
+        return pTitleRes;
+    }
+
+    @DrawableRes
+    public int getTitleImageRes() {
+        return pTitleImageRes;
     }
 
     @LayoutRes
     protected abstract int contentResId();
 
     public abstract void updatedContact(Contact contact);
+
+    public interface NotifyCreation {
+        void notify(FieldFragment fieldFragment);
+    }
 
 }

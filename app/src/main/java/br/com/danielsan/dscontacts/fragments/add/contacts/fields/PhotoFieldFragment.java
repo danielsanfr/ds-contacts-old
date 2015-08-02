@@ -42,6 +42,12 @@ public class PhotoFieldFragment extends FieldFragment implements ColorPickerDial
     @Bind(R.id.img_vw_clear_photo)
     protected ImageView mClearPhotoImgVw;
 
+    public static PhotoFieldFragment newInstance() {
+        PhotoFieldFragment fragment = new PhotoFieldFragment();
+        fragment.setArguments(FieldFragment.makeBaseBundle(R.string.photo, R.drawable.ic_photo_camera_grey));
+        return fragment;
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -51,12 +57,8 @@ public class PhotoFieldFragment extends FieldFragment implements ColorPickerDial
             mAvatarFile = this.createImageFile();
             mAvatarTempFile = this.createImageFile("temp_");
         } catch (IOException e) {
-//            e.printStackTrace();
-            return;
+            e.printStackTrace();
         }
-
-        pTitleTxtVw.setText(R.string.photo);
-        pTitleImgVw.setImageResource(R.drawable.ic_photo_camera_grey);
     }
 
     @Override

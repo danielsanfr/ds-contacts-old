@@ -1,8 +1,5 @@
 package br.com.danielsan.dscontacts.fragments.add.contacts.fields;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.EditText;
 
 import br.com.danielsan.dscontacts.R;
@@ -19,12 +16,10 @@ public class WorkFieldFragment extends FieldFragment {
     @Bind(R.id.edt_txt_title)
     protected EditText mTitleEdtTxt;
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        pTitleTxtVw.setText("Work");
-        pTitleImgVw.setImageResource(R.drawable.ic_work_grey);
-
-        super.onViewCreated(view, savedInstanceState);
+    public static WorkFieldFragment newInstance() {
+        WorkFieldFragment fragment = new WorkFieldFragment();
+        fragment.setArguments(FieldFragment.makeBaseBundle(R.string.work, R.drawable.ic_work_grey));
+        return fragment;
     }
 
     @Override

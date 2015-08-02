@@ -1,10 +1,8 @@
 package br.com.danielsan.dscontacts.fragments.add.contacts.fields;
 
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +26,6 @@ import butterknife.OnClick;
 public class CommonFieldFragment extends FieldFragment implements View.OnClickListener {
 
     protected static final String CLASS = "class";
-    protected static final String TITLE = "title";
-    protected static final String IMAGE_TITLE = "image_title";
 
     protected int pSubFieldCounter;
     private ViewGroup mViewGroup;
@@ -37,11 +33,6 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     protected List<Field> pDeleteFields;
     protected SparseArray<View> pSubFieldViews;
     protected Class<? extends Field> pFieldClass;
-
-    @StringRes
-    protected int pTitleRes;
-    @DrawableRes
-    protected int pImageTitleRes;
 
     @Nullable
     @Bind(R.id.lnr_lyt_fields_container)
@@ -54,9 +45,7 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
     }
 
     protected static Bundle buildBundle(Field field) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(TITLE, field.getTitleRes());
-        bundle.putInt(IMAGE_TITLE, field.getImageTitleRes());
+        Bundle bundle = FieldFragment.makeBaseBundle(field.getTitleRes(), field.getImageTitleRes());
         bundle.putSerializable(CLASS, field.getClass());
         return bundle;
     }
@@ -100,11 +89,8 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
         pDeleteFields = new ArrayList<>();
         pSubFieldViews = new SparseArray<>();
         Bundle bundle = this.getArguments();
-        if (bundle != null && bundle.containsKey(TITLE)) {
-            pTitleRes = bundle.getInt(TITLE);
+        if (bundle != null && bundle.containsKey(CLASS))
             pFieldClass = (Class<? extends Field>) bundle.getSerializable(CLASS);
-            pImageTitleRes = bundle.getInt(IMAGE_TITLE);
-        }
     }
 
     @Nullable
@@ -120,7 +106,7 @@ public class CommonFieldFragment extends FieldFragment implements View.OnClickLi
         super.onViewCreated(view, savedInstanceState);
         this.addSubFieldOnClick(view.findViewById(R.id.btn_add_sub_field));
         pTitleTxtVw.setText(pTitleRes);
-        pTitleImgVw.setImageResource(pImageTitleRes);
+        pTitleImgVw.setImageResource(pTitleImageRes);
     }
 
     @Nullable

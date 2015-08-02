@@ -19,14 +19,17 @@ public class GroupFieldFragment extends FieldFragment implements AdapterView.OnI
     @Bind(R.id.spnr_group)
     protected Spinner mGroupSpnr;
 
+    public static GroupFieldFragment newInstance() {
+        GroupFieldFragment fragment = new GroupFieldFragment();
+        fragment.setArguments(FieldFragment.makeBaseBundle(R.string.group, R.drawable.ic_group_grey));
+        return fragment;
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        pTitleTxtVw.setText("Group");
-        pTitleImgVw.setImageResource(R.drawable.ic_group_grey);
+        super.onViewCreated(view, savedInstanceState);
 
         FieldSpinnerAdapter.configureAdapter(this.getActivity(), mGroupSpnr, R.array.field_group);
-
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -44,4 +47,5 @@ public class GroupFieldFragment extends FieldFragment implements AdapterView.OnI
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) { }
+
 }

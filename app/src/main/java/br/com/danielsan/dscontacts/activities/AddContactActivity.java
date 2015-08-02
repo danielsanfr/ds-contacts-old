@@ -39,7 +39,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 public class AddContactActivity extends BaseActivity
-        implements OtherFieldsDialog.Listener {
+        implements OtherFieldsDialog.Listener, FieldFragment.NotifyCreation {
 
     private Menu mMenu;
     private List<Field> mFields;
@@ -151,8 +151,8 @@ public class AddContactActivity extends BaseActivity
             }
         }
 
-        FieldFragment photoFieldFragment = new PhotoFieldFragment();
-        FieldFragment groupFieldFragment = new GroupFieldFragment();
+        FieldFragment photoFieldFragment = PhotoFieldFragment.newInstance();
+        FieldFragment groupFieldFragment = GroupFieldFragment.newInstance();
         mFieldFragments.add(photoFieldFragment);
         mFieldFragments.add(groupFieldFragment);
 
@@ -164,7 +164,7 @@ public class AddContactActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 view.setVisibility(View.GONE);
-                FieldFragment workFieldFragment = new WorkFieldFragment();
+                FieldFragment workFieldFragment = WorkFieldFragment.newInstance();
                 mFieldFragments.add(workFieldFragment);
                 FragmentsTransaction.add(AddContactActivity.this, R.id.frm_lyt_field_work, workFieldFragment);
             }
@@ -232,6 +232,10 @@ public class AddContactActivity extends BaseActivity
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void notify(FieldFragment fieldFragment) {
     }
 
     @Override
