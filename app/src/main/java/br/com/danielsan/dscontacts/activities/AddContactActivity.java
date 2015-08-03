@@ -78,13 +78,36 @@ public class AddContactActivity extends BaseActivity
     protected FloatingActionButton mAddFieldFltActBtn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_add_contact);
-        ButterKnife.bind(this);
-        Slidr.attach(this);
+    protected void onInitBaseAttributes() {
+        super.onInitBaseAttributes();
 
         mDefaultTitle = this.getString(R.string.title_activity_add_contact);
+        mFields = new ArrayList<>(9);
+        mFieldTitles = new ArrayList<>(9);
         mFieldFragments = new ArrayList<>();
+
+        String modelPackage = this.getString(R.string.model_package);
+        String[] fieldsNames = this.getResources().getStringArray(R.array.fields);
+        for (String fieldName : fieldsNames) {
+            try {
+                Field field = (Field) Class.forName(modelPackage + fieldName).newInstance();
+                mFieldTitles.add(this.getString(field.getTitleRes()));
+                mFields.add(field);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
+        Slidr.attach(this);
 
         mRotateAnimationLeft.setDuration(200);
         mRotateAnimationRight.setDuration(200);
@@ -133,28 +156,8 @@ public class AddContactActivity extends BaseActivity
         layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_collapsing);
         mAppBarLyt.setLayoutParams(layoutParams);
 
-        mFields = new ArrayList<>(9);
-        mFieldTitles = new ArrayList<>(9);
-        String modelPackage = this.getString(R.string.model_package);
-        String[] fieldsNames = this.getResources().getStringArray(R.array.fields);
-        for (String fieldName : fieldsNames) {
-            try {
-                Field field = (Field) Class.forName(modelPackage + fieldName).newInstance();
-                mFieldTitles.add(this.getString(field.getTitleRes()));
-                mFields.add(field);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-
-        FieldFragment photoFieldFragment = PhotoFieldFragment.newInstance();
-        FieldFragment groupFieldFragment = GroupFieldFragment.newInstance();
-        mFieldFragments.add(photoFieldFragment);
-        mFieldFragments.add(groupFieldFragment);
+        if (savedInstanceState != null)
+            return;
 
         this.addFragment(photoFieldFragment);
         this.addField(0);
@@ -172,7 +175,12 @@ public class AddContactActivity extends BaseActivity
     }
 
     @Override
-    protected int getMasterContainer() {
+    protected int getContentViewRes() {
+        return R.layout.activity_add_contact;
+    }
+
+    @Override
+    protected int getBaseContainerId() {
         return R.id.lnr_lyt_fields;
     }
 

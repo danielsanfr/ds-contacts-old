@@ -17,7 +17,7 @@ public class ContactInfoActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_contact_info);
+        super.onCreate(savedInstanceState);
         Slidr.attach(this);
 
         mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -28,7 +28,12 @@ public class ContactInfoActivity extends BaseActivity {
     }
 
     @Override
-    protected int getMasterContainer() {
+    protected int getContentViewRes() {
+        return R.layout.activity_contact_info;
+    }
+
+    @Override
+    protected int getBaseContainerId() {
         return 0;
     }
 

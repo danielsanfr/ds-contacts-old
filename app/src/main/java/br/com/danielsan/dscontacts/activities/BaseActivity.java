@@ -25,12 +25,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     private SystemBarTintManager mSystemBarTintManager;
     private FragmentsTransaction mFragmentsTransaction;
 
-    protected void onCreate(Bundle savedInstanceState, @LayoutRes int layoutResID) {
+    /**
+     * Perform initialization of all basic attributes.
+     * {@link #onCreate(Bundle)} will be called after this.
+     */
+    protected void onInitBaseAttributes() { }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        this.onInitBaseAttributes();
         super.onCreate(savedInstanceState);
-        this.setContentView(layoutResID);
+        this.setContentView(this.getContentViewRes());
 
         mSystemBarTintManager = new SystemBarTintManager(this);
-        mFragmentsTransaction = new FragmentsTransaction(this, this.getMasterContainer());
+        mFragmentsTransaction = new FragmentsTransaction(this, this.getBaseContainerId());
 
         if (this.getSupportActionBar() == null)
             this.setSupportActionBar((Toolbar) this.findViewById(R.id.toolbar));
@@ -39,13 +47,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         mActionBar.setElevation(0);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        throw new RuntimeException("You should use the method \"onCreate(Bundle savedInstanceState, @LayoutRes int layoutResID)\" instead of \"onCreate(Bundle savedInstanceState)\"");
-    }
+    @LayoutRes
+    protected abstract int getContentViewRes();
 
     @IdRes
-    protected abstract int getMasterContainer();
+    protected abstract int getBaseContainerId();
 
     public void addActivity(Class<? extends FragmentActivity> activityClass) {
         this.startActivity(new Intent(this, activityClass));

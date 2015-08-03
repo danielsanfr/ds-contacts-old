@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.activity_main);
+        super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
         mTitle = this.getTitle();
@@ -95,7 +95,12 @@ public class MainActivity extends BaseActivity implements OnNavigationItemSelect
     }
 
     @Override
-    protected int getMasterContainer() {
+    protected int getContentViewRes() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected int getBaseContainerId() {
         return R.id.container;
     }
 
