@@ -14,7 +14,7 @@ public abstract class FieldWithTag extends Field {
 
     private SortBy mSortBy;
 
-    @Column(name = "tag")
+    @Column(name = "tag", notNull = true)
     protected String mTag;
 
     public void setSortBy(SortBy sortBy) {

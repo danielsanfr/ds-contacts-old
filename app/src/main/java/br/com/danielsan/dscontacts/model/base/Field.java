@@ -16,10 +16,10 @@ public abstract class Field extends Model implements Comparable<Object> {
 
     public static final String BASE_TABLE_NAME = "field_";
 
-    @Column(name = "contact")
+    @Column(name = "contact", notNull = true)
     protected Contact mContact;
 
-    @Column(name = "content")
+    @Column(name = "content", notNull = true)
     protected String mContent;
 
     @StringRes

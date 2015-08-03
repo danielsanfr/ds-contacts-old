@@ -19,7 +19,7 @@ public class Contact extends Model {
 
     @Column(name = "name")
     private Name mName;
-    @Column(name = "favorite")
+    @Column(name = "favorite", notNull = true)
     private boolean mFavorite;
     @Column(name = "my_group")
     private String mGroup;
@@ -29,7 +29,7 @@ public class Contact extends Model {
     private String mTitle;
     @Column(name = "picture")
     private String mPicture;
-    @Column(name = "color")
+    @Column(name = "color", notNull = true)
     private Integer mColor;
 
     public Contact() {
