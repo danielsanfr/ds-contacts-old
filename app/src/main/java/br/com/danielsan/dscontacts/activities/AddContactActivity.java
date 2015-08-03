@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -18,7 +19,6 @@ import com.andexert.expandablelayout.library.ExpandableLayout;
 import com.r0adkll.slidr.Slidr;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.CommonFieldFragment;
@@ -27,6 +27,7 @@ import br.com.danielsan.dscontacts.fragments.add.contacts.fields.GroupFieldFragm
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.PhotoFieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WithTagsFieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WorkFieldFragment;
+import br.com.danielsan.dscontacts.fragments.base.BFragment;
 import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
 import br.com.danielsan.dscontacts.model.Contact;
 import br.com.danielsan.dscontacts.model.Name;
@@ -39,12 +40,12 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 public class AddContactActivity extends BaseActivity
-        implements OtherFieldsDialog.Listener, FieldFragment.NotifyCreation {
+        implements OtherFieldsDialog.Listener, BFragment.OnCreationCompleteListener {
 
     private Menu mMenu;
-    private List<Field> mFields;
     private String mDefaultTitle;
     private boolean mNameChanged = false;
+    private ArrayList<Field> mFields;
     private ArrayList<String> mFieldTitles;
     private ArrayList<FieldFragment> mFieldFragments;
     private NameEdtTxtDelayRunnable mNameEdtTxtDelayRunnable;
@@ -76,6 +77,8 @@ public class AddContactActivity extends BaseActivity
     protected AppBarLayout mAppBarLyt;
     @Bind(R.id.flt_act_btn_add_field)
     protected FloatingActionButton mAddFieldFltActBtn;
+    @Bind(R.id.btn_add_organization)
+    protected Button mAddOrganizationBtn;
 
     @Override
     protected void onInitBaseAttributes() {
@@ -156,22 +159,12 @@ public class AddContactActivity extends BaseActivity
         layoutParams.height = (int) this.getResources().getDimension(R.dimen.name_info_collapsing);
         mAppBarLyt.setLayoutParams(layoutParams);
 
-        if (savedInstanceState != null)
-            return;
-
-        this.addFragment(photoFieldFragment);
-        this.addField(0);
-        this.addField(0);
-        FragmentsTransaction.add(this, R.id.frm_lyt_field_group, groupFieldFragment);
-        this.findViewById(R.id.btn_add_organization).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.setVisibility(View.GONE);
-                FieldFragment workFieldFragment = WorkFieldFragment.newInstance();
-                mFieldFragments.add(workFieldFragment);
-                FragmentsTransaction.add(AddContactActivity.this, R.id.frm_lyt_field_work, workFieldFragment);
-            }
-        });
+        if (savedInstanceState == null) {
+            this.addFragment(PhotoFieldFragment.newInstance());
+            this.addField(0);
+            this.addField(1);
+            FragmentsTransaction.add(this, R.id.frm_lyt_field_group, GroupFieldFragment.newInstance());
+        }
     }
 
     @Override
@@ -182,6 +175,11 @@ public class AddContactActivity extends BaseActivity
     @Override
     protected int getBaseContainerId() {
         return R.id.lnr_lyt_fields;
+    }
+
+    @OnClick(R.id.btn_add_organization)
+    protected void addOrganizationBtnOnClick(View view) {
+        FragmentsTransaction.add(AddContactActivity.this, R.id.frm_lyt_field_work, WorkFieldFragment.newInstance());
     }
 
     @OnClick(R.id.flt_act_btn_add_field)
@@ -225,25 +223,56 @@ public class AddContactActivity extends BaseActivity
                 this.finish();
             case R.id.menu_confirm:
                 Contact contact = new Contact();
-                contact.save();
-                for (FieldFragment fieldFragment : mFieldFragments)
-                    fieldFragment.updatedContact(contact);
+                int i = 0, size = (mFieldFragments.size() > 3) ? 3 : mFieldFragments.size();
+                for (; i < size; ++i) {
+                    if (mFieldFragments.get(i) instanceof CommonFieldFragment)
+                        break;
+                    mFieldFragments.get(i).updatedContact(contact);
+                }
+
                 if (mMenu != null && mMenu.findItem(R.id.menu_favorite) != null)
                     contact.setFavorite(mMenu.findItem(R.id.menu_favorite).isChecked());
                 contact.setName((new NameSerializer()).deserialize(mNameEdtTxt.getText().toString()));
                 contact.save();
+
+                for (size = mFieldFragments.size(); i < size; ++i)
+                    mFieldFragments.get(i).updatedContact(contact);
                 this.finish();
                 break;
             case R.id.menu_favorite:
                 item.setChecked(!item.isChecked());
-                item.setIcon((item.isChecked()) ? R.drawable.ic_favorite_white : R.drawable.ic_favorite_border_white);
+                item.setIcon(item.isChecked() ? R.drawable.ic_favorite_white : R.drawable.ic_favorite_border_white);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void notify(FieldFragment fieldFragment) {
+    public void onComplete(BFragment fragment) {
+        if (!(fragment instanceof FieldFragment))
+            return;
+
+        FieldFragment fieldFragment = (FieldFragment) fragment;
+        if (fieldFragment instanceof CommonFieldFragment)
+            mFieldFragments.add(fieldFragment);
+        else
+            mFieldFragments.add(0, fieldFragment);
+
+        if (fieldFragment instanceof WorkFieldFragment)
+            mAddOrganizationBtn.setVisibility(View.GONE);
+
+        int index = mFieldTitles.indexOf(this.getString(fieldFragment.getTitleRes()));
+        if (index > -1) {
+            mFields.remove(index);
+            mFieldTitles.remove(index);
+        }
+
+        if (mFields.size() == 0) {
+            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAddFieldFltActBtn.getLayoutParams();
+            layoutParams.setBehavior(null);
+            mAddFieldFltActBtn.setLayoutParams(layoutParams);
+            mAddFieldFltActBtn.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -263,15 +292,6 @@ public class AddContactActivity extends BaseActivity
             fieldFragment = WithTagsFieldFragment.newInstance(field);
         }
         this.addFragment(fieldFragment);
-        mFields.remove(index);
-        mFieldTitles.remove(index);
-        mFieldFragments.add(fieldFragment);
-        if (mFields.size() == 0) {
-            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mAddFieldFltActBtn.getLayoutParams();
-            layoutParams.setBehavior(null);
-            mAddFieldFltActBtn.setLayoutParams(layoutParams);
-            mAddFieldFltActBtn.setVisibility(View.GONE);
-        }
     }
 
     private void nameEdtTxtChangeVisibility(int visibility, int delay) {
