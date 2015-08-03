@@ -1,12 +1,10 @@
 package br.com.danielsan.dscontacts.fragments.add.contacts.fields;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.com.danielsan.dscontacts.R;
+import br.com.danielsan.dscontacts.fragments.base.BFragment;
 import br.com.danielsan.dscontacts.model.Contact;
 import butterknife.ButterKnife;
 import butterknife.Bind;
@@ -22,7 +21,7 @@ import butterknife.Bind;
 /**
  * Created by daniel on 28/06/15.
  */
-public abstract class FieldFragment extends Fragment {
+public abstract class FieldFragment extends BFragment {
 
     protected static final String TITLE_RES = "title_res";
     protected static final String TITLE_IMAGE_RES = "title_image_res";
@@ -47,13 +46,6 @@ public abstract class FieldFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof NotifyCreation))
-            throw new ClassCastException(activity.toString() + " must implement FieldFragment.NotifyCreation");
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -63,8 +55,6 @@ public abstract class FieldFragment extends Fragment {
 
         pTitleRes = arguments.getInt(TITLE_RES);
         pTitleImageRes = arguments.getInt(TITLE_IMAGE_RES);
-
-        ((NotifyCreation) this.getActivity()).notify(this);
     }
 
     @Nullable
@@ -97,9 +87,5 @@ public abstract class FieldFragment extends Fragment {
     protected abstract int contentResId();
 
     public abstract void updatedContact(Contact contact);
-
-    public interface NotifyCreation {
-        void notify(FieldFragment fieldFragment);
-    }
 
 }
