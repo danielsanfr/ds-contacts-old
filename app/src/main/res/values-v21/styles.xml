@@ -9,4 +9,7 @@
         <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
         <!--<item name="android:navigationBarColor">@android:color/transparent</item>-->
     </style>
+    <style name="FieldButton" parent="Widget.AppCompat.Button">
+        <item name="android:colorButtonNormal">@color/white</item>
+    </style>
 </resources>

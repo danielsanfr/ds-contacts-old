@@ -43,12 +43,14 @@
         <Button
             android:id="@+id/btn_change_photo"
             android:text="@string/change_photo"
+            android:theme="@style/FieldButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/btn_change_color"
             android:text="@string/change_color"
+            android:theme="@style/FieldButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

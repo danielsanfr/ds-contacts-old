@@ -15,6 +15,7 @@
         android:text="@string/add_another_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:theme="@style/FieldButton"
         android:layout_below="@id/lnr_lyt_fields_container" />
 
 </RelativeLayout>
