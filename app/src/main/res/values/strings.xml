@@ -107,6 +107,7 @@
     <string name="contact_color">Contact color</string>
     <string name="group">Group</string>
     <string name="work">Work</string>
+    <string name="add_field">Add field</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

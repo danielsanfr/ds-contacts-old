@@ -1,5 +1,6 @@
 package br.com.danielsan.dscontacts.activities;
 
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -28,7 +29,7 @@ import br.com.danielsan.dscontacts.fragments.add.contacts.fields.PhotoFieldFragm
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WithTagsFieldFragment;
 import br.com.danielsan.dscontacts.fragments.add.contacts.fields.WorkFieldFragment;
 import br.com.danielsan.dscontacts.fragments.base.BFragment;
-import br.com.danielsan.dscontacts.fragments.dialogs.OtherFieldsDialog;
+import br.com.danielsan.dscontacts.fragments.dialogs.ListDialogFragment;
 import br.com.danielsan.dscontacts.model.Contact;
 import br.com.danielsan.dscontacts.model.Name;
 import br.com.danielsan.dscontacts.model.base.Field;
@@ -40,7 +41,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 public class AddContactActivity extends BaseActivity
-        implements OtherFieldsDialog.Listener, BFragment.OnCreationCompleteListener {
+        implements DialogInterface.OnClickListener, BFragment.OnCreationCompleteListener {
 
     private Menu mMenu;
     private String mDefaultTitle;
@@ -184,7 +185,7 @@ public class AddContactActivity extends BaseActivity
 
     @OnClick(R.id.flt_act_btn_add_field)
     protected void addFieldFltActBtnOnClick(View view) {
-        OtherFieldsDialog.newInstance(mFieldTitles).show(getSupportFragmentManager(), "");
+        ListDialogFragment.newInstance(R.string.add_field, mFieldTitles).show(getSupportFragmentManager(), "");
     }
 
     @OnClick(R.id.img_vw_expand_name)
@@ -276,8 +277,9 @@ public class AddContactActivity extends BaseActivity
     }
 
     @Override
-    public void onSelection(OtherFieldsDialog dialog, View view, int position, CharSequence text) {
-        this.addField(position);
+    public void onClick(DialogInterface dialogInterface, int which) {
+        if (which >= 0)
+            this.addField(which);
     }
 
     private void addField(int index) {
