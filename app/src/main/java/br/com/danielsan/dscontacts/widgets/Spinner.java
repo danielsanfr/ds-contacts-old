@@ -8,6 +8,7 @@ import android.support.v4.widget.PopupWindowCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,14 +26,16 @@ import java.util.List;
  */
 public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClickListener {
 
+    public static final String TAG_HEADER = "tag_header";
+    public static final String TAG_FOOTER = "tag_footer";
     private static final String ATTRIBUTE_SPINNER_MODE = "spinnerMode";
     private static final String ANDROID_NAMESPACE_ATTRIBUTES = "http://schemas.android.com/apk/res/android";
 
     private int mDividerHeight;
     private int mSpinnerMode;
     private boolean mCancelable;
-    private List<View> mHeaderViewList;
-    private List<View> mFooterViewList;
+    private List<Pair<View, Boolean>> mHeaderViewList;
+    private List<Pair<View, Boolean>> mFooterViewList;
     private Context mContext;
     private WrapperListAdapter mWrapperListAdapter;
 
@@ -85,9 +88,16 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
         if (mCancelable)
             this.dismiss();
 
-        int index = (mHeaderViewList == null) ? position : (position - mHeaderViewList.size());
-        if (index < mWrapperListAdapter.getCount())
+        int headerSize = (mHeaderViewList == null) ? 0 : mHeaderViewList.size();
+        int index = (position - headerSize);
+        if (index >= 0 && index < mWrapperListAdapter.getCount())
             this.setSelection(index, true);
+        else if (this.getOnItemSelectedListener() != null) {
+            if (index < 0)
+                this.getOnItemSelectedListener().onItemSelected(this, view, position, id);
+            else
+                this.getOnItemSelectedListener().onItemSelected(this, view, position - (mWrapperListAdapter.getCount() + headerSize), id);
+        }
     }
 
     @Override
@@ -118,12 +128,18 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
         ListView listView = new ListView(mContext);
 
         if (mHeaderViewList != null) {
-            for (View view : mHeaderViewList)
-                listView.addHeaderView(view);
+            for (Pair<View, Boolean> viewBooleanPair : mHeaderViewList) {
+                if (viewBooleanPair.second)
+                    viewBooleanPair.first.setTag(TAG_HEADER);
+                listView.addHeaderView(viewBooleanPair.first, null, viewBooleanPair.second);
+            }
         }
         if (mFooterViewList != null) {
-            for (View view : mFooterViewList)
-                listView.addFooterView(view);
+            for (Pair<View, Boolean> viewBooleanPair : mFooterViewList) {
+                if (viewBooleanPair.second)
+                    viewBooleanPair.first.setTag(TAG_FOOTER);
+                listView.addFooterView(viewBooleanPair.first, null, viewBooleanPair.second);
+            }
         }
 
         if (mWrapperListAdapter != null) {
@@ -208,10 +224,8 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
         private int dividerHeight;
         private boolean cancelable;
         private BaseAdapter baseAdapter;
-        private List<View> headerViewList;
-        private List<View> footerViewList;
-        private OnClickListener headerOnClickListener;
-        private OnClickListener footerOnClickListener;
+        private List<Pair<View, Boolean>> headerViewList;
+        private List<Pair<View, Boolean>> footerViewList;
         private Configurator(Spinner spinner) {
             mSpinner = spinner;
             dividerHeight = 0;
@@ -219,8 +233,6 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
             baseAdapter = null;
             headerViewList = new ArrayList<>();
             footerViewList = new ArrayList<>();
-            headerOnClickListener = null;
-            footerOnClickListener = null;
         }
         public Configurator setDividerHeight(int height) {
             this.dividerHeight = height;
@@ -231,23 +243,21 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
             return this;
         }
         public Configurator addHeaderView(@NonNull View view) {
-            headerViewList.add(view);
+            return this.addHeaderView(view, false);
+        }
+        public Configurator addHeaderView(@NonNull View view, boolean isSelectable) {
+            headerViewList.add(Pair.create(view, isSelectable));
             return this;
         }
         public Configurator addFooterView(@NonNull View view) {
-            footerViewList.add(view);
+            return this.addFooterView(view, false);
+        }
+        public Configurator addFooterView(@NonNull View view, boolean isSelectable) {
+            footerViewList.add(Pair.create(view, isSelectable));
             return this;
         }
         public Configurator setCancelable(boolean cancelable) {
             this.cancelable = cancelable;
-            return this;
-        }
-        public Configurator setHeaderOnClickListener(OnClickListener onClickListener) {
-            this.headerOnClickListener = onClickListener;
-            return this;
-        }
-        public Configurator setFooterOnClickListener(OnClickListener onClickListener) {
-            this.footerOnClickListener = onClickListener;
             return this;
         }
         //        public Configurator setMultiChoiceItems(@ArrayRes int items) {
@@ -261,8 +271,6 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
 //            return this;
 //        }
         public void apply() {
-            this.setListeners(headerViewList, headerOnClickListener);
-            this.setListeners(footerViewList, footerOnClickListener);
             mSpinner.dismiss();
             mSpinner.mCancelable = cancelable;
             mSpinner.mDividerHeight = dividerHeight;
@@ -270,12 +278,6 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
             mSpinner.mFooterViewList = footerViewList;
             if (baseAdapter != null)
                 mSpinner.mWrapperListAdapter.setBaseAdapter(baseAdapter);
-        }
-        private void setListeners(List<View> viewList, OnClickListener onClickListener) {
-            if (viewList != null) {
-                for (View view : viewList)
-                    view.setOnClickListener(onClickListener);
-            }
         }
     }
     
