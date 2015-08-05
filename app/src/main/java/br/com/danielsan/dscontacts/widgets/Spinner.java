@@ -31,6 +31,8 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
     private int mDividerHeight;
     private int mSpinnerMode;
     private boolean mCancelable;
+    private List<View> mHeaderViewList;
+    private List<View> mFooterViewList;
     private Context mContext;
     private WrapperListAdapter mWrapperListAdapter;
 
@@ -58,11 +60,11 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
 
         mContext = context;
         mCancelable = true;
-        mSpinnerMode = attrs.getAttributeIntValue(ANDROID_NAMESPACE_ATTRIBUTES, ATTRIBUTE_SPINNER_MODE, MODE_DIALOG);
-    }
-
-    private void apply(Configuration configuration) {
-        mDividerHeight = configuration.height;
+        mDividerHeight = 0;
+        mHeaderViewList = null;
+        mFooterViewList = null;
+        mWrapperListAdapter = new WrapperListAdapter();
+        mSpinnerMode = attrs.getAttributeIntValue(ANDROID_NAMESPACE_ATTRIBUTES, ATTRIBUTE_SPINNER_MODE, MODE_DROPDOWN);
     }
 
     @Override
@@ -79,33 +81,51 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        this.setSelection(i, true);
-        if (mCancelable) {
-            if (mSpinnerMode == MODE_DROPDOWN)
-                mPopupWindow.dismiss();
-            else if (mSpinnerMode == MODE_DIALOG)
-                mAlertDialog.dismiss();
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        if (mCancelable)
+            this.dismiss();
 
-            mPopupWindow = null;
-            mAlertDialog = null;
-        }
-        if (this.getOnItemSelectedListener() != null)
-            this.getOnItemSelectedListener().onItemSelected(this, view, i, l);
+        int index = (mHeaderViewList == null) ? position : (position - mHeaderViewList.size());
+        if (index < mWrapperListAdapter.getCount())
+            this.setSelection(index, true);
     }
 
     @Override
     public void setAdapter(SpinnerAdapter adapter) {
         try {
-            mWrapperListAdapter = new WrapperListAdapter((BaseAdapter) adapter);
+            mWrapperListAdapter.setBaseAdapter((BaseAdapter) adapter);
             super.setAdapter(adapter);
         } catch (ClassCastException e) {
             throw new ClassCastException(adapter.toString() + " must extend BaseAdapter.");
         }
     }
 
+    public void dismiss() {
+        if (mSpinnerMode == MODE_DROPDOWN && mPopupWindow != null)
+            mPopupWindow.dismiss();
+        else if (mSpinnerMode == MODE_DIALOG && mAlertDialog != null)
+            mAlertDialog.dismiss();
+
+        mPopupWindow = null;
+        mAlertDialog = null;
+    }
+
+    public Configurator getConfigurator() {
+        return new Configurator(this);
+    }
+
     private ListView createList() {
         ListView listView = new ListView(mContext);
+
+        if (mHeaderViewList != null) {
+            for (View view : mHeaderViewList)
+                listView.addHeaderView(view);
+        }
+        if (mFooterViewList != null) {
+            for (View view : mFooterViewList)
+                listView.addFooterView(view);
+        }
+
         if (mWrapperListAdapter != null) {
             listView.setAdapter(mWrapperListAdapter);
             listView.setOnItemClickListener(this);
@@ -130,7 +150,7 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
 
     private static class WrapperListAdapter implements ListAdapter {
         private BaseAdapter mBaseAdapter;
-        public WrapperListAdapter(BaseAdapter baseAdapter) {
+        public void setBaseAdapter(@NonNull BaseAdapter baseAdapter) {
             mBaseAdapter = baseAdapter;
         }
         @Override
@@ -183,36 +203,79 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
         }
     }
 
-    public static class Configuration {
-        private int height;
+    public static class Configurator {
+        private Spinner mSpinner;
+        private int dividerHeight;
         private boolean cancelable;
         private BaseAdapter baseAdapter;
         private List<View> headerViewList;
         private List<View> footerViewList;
-        public Configuration() {
+        private OnClickListener headerOnClickListener;
+        private OnClickListener footerOnClickListener;
+        private Configurator(Spinner spinner) {
+            mSpinner = spinner;
+            dividerHeight = 0;
             cancelable = true;
+            baseAdapter = null;
             headerViewList = new ArrayList<>();
             footerViewList = new ArrayList<>();
+            headerOnClickListener = null;
+            footerOnClickListener = null;
         }
-        public Configuration setDividerHeight(int height) {
-            this.height = height;
+        public Configurator setDividerHeight(int height) {
+            this.dividerHeight = height;
             return this;
         }
-        public Configuration setAdapter(@NonNull BaseAdapter baseAdapter) {
+        public Configurator setAdapter(@NonNull BaseAdapter baseAdapter) {
             this.baseAdapter = baseAdapter;
             return this;
         }
-        public Configuration addHeraderView(@NonNull View view) {
+        public Configurator addHeaderView(@NonNull View view) {
             headerViewList.add(view);
             return this;
         }
-        public Configuration addFooterView(@NonNull View view) {
+        public Configurator addFooterView(@NonNull View view) {
             footerViewList.add(view);
             return this;
         }
-        public Configuration setCancelable(boolean cancelable) {
+        public Configurator setCancelable(boolean cancelable) {
             this.cancelable = cancelable;
             return this;
+        }
+        public Configurator setHeaderOnClickListener(OnClickListener onClickListener) {
+            this.headerOnClickListener = onClickListener;
+            return this;
+        }
+        public Configurator setFooterOnClickListener(OnClickListener onClickListener) {
+            this.footerOnClickListener = onClickListener;
+            return this;
+        }
+        //        public Configurator setMultiChoiceItems(@ArrayRes int items) {
+//            this.setCancelable(false);
+//            this.setAdapter(baseAdapter);
+//            return this;
+//        }
+//        public Configurator setMultiChoiceItems(@ArrayRes int items) {
+//            this.setCancelable(false);
+//            this.setAdapter(baseAdapter);
+//            return this;
+//        }
+        public void apply() {
+            this.setListeners(headerViewList, headerOnClickListener);
+            this.setListeners(footerViewList, footerOnClickListener);
+            mSpinner.dismiss();
+            mSpinner.mCancelable = cancelable;
+            mSpinner.mDividerHeight = dividerHeight;
+            mSpinner.mHeaderViewList = headerViewList;
+            mSpinner.mFooterViewList = footerViewList;
+            if (baseAdapter != null)
+                mSpinner.mWrapperListAdapter.setBaseAdapter(baseAdapter);
+        }
+        private void setListeners(List<View> viewList, OnClickListener onClickListener) {
+            if (viewList != null) {
+                for (View view : viewList)
+                    view.setOnClickListener(onClickListener);
+            }
         }
     }
     
