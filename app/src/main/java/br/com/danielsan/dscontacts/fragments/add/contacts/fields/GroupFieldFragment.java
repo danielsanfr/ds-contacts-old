@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Spinner;
 
 import br.com.danielsan.dscontacts.R;
 import br.com.danielsan.dscontacts.adapters.FieldSpinnerAdapter;
 import br.com.danielsan.dscontacts.model.Contact;
+import br.com.danielsan.dscontacts.widgets.Spinner;
 import butterknife.Bind;
 
 /**
