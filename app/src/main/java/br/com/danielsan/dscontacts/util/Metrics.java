@@ -2,6 +2,7 @@ package br.com.danielsan.dscontacts.util;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 /**
  * Created by daniel on 22/06/15.
@@ -19,6 +20,10 @@ public class Metrics {
     public static int pxToDp(Context context, int px) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+    private static int fromDpToPx(Context context, int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
 
 }
