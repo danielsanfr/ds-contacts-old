@@ -1,10 +1,9 @@
 package br.com.danielsan.dscontacts.widgets;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.DataSetObserver;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.PopupWindowCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.AttributeSet;
@@ -15,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
 import android.widget.SpinnerAdapter;
 
@@ -24,12 +24,17 @@ import java.util.List;
 /**
  * Created by daniel on 04/08/15.
  */
-public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClickListener {
+public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClickListener,
+        PopupWindow.OnDismissListener,
+        DialogInterface.OnDismissListener {
 
-    public static final String TAG_HEADER = "tag_header";
-    public static final String TAG_FOOTER = "tag_footer";
     private static final String ATTRIBUTE_SPINNER_MODE = "spinnerMode";
     private static final String ANDROID_NAMESPACE_ATTRIBUTES = "http://schemas.android.com/apk/res/android";
+
+    public enum Tags {
+        HEADER,
+        FOOTER
+    }
 
     private int mDividerHeight;
     private int mSpinnerMode;
@@ -39,8 +44,8 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
     private Context mContext;
     private WrapperListAdapter mWrapperListAdapter;
 
-    private PopupWindow mPopupWindow;
     private AlertDialog mAlertDialog;
+    private ListPopupWindow mListPopupWindow;
 
     public Spinner(Context context) {
         super(context);
@@ -84,6 +89,16 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
     }
 
     @Override
+    public void setAdapter(SpinnerAdapter adapter) {
+        try {
+            mWrapperListAdapter.setBaseAdapter((BaseAdapter) adapter);
+            super.setAdapter(adapter);
+        } catch (ClassCastException e) {
+            throw new ClassCastException(adapter.toString() + " must extend BaseAdapter.");
+        }
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         if (mCancelable)
             this.dismiss();
@@ -101,67 +116,71 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
     }
 
     @Override
-    public void setAdapter(SpinnerAdapter adapter) {
-        try {
-            mWrapperListAdapter.setBaseAdapter((BaseAdapter) adapter);
-            super.setAdapter(adapter);
-        } catch (ClassCastException e) {
-            throw new ClassCastException(adapter.toString() + " must extend BaseAdapter.");
-        }
+    public void onDismiss() {
+        this.dismiss();
     }
 
-    public void dismiss() {
-        if (mSpinnerMode == MODE_DROPDOWN && mPopupWindow != null)
-            mPopupWindow.dismiss();
-        else if (mSpinnerMode == MODE_DIALOG && mAlertDialog != null)
-            mAlertDialog.dismiss();
-
-        mPopupWindow = null;
-        mAlertDialog = null;
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        this.dismiss();
     }
 
     public Configurator getConfigurator() {
         return new Configurator(this);
     }
 
-    private ListView createList() {
-        ListView listView = new ListView(mContext);
+    private void showDropdown() {
+        mListPopupWindow = new ListPopupWindow(mContext);
+        mListPopupWindow.setHeight(ListPopupWindow.WRAP_CONTENT);
+        mListPopupWindow.setWidth(ListPopupWindow.WRAP_CONTENT);
+        mListPopupWindow.setAnchorView(this);
+        mListPopupWindow.show();
 
+        this.configureList(mListPopupWindow.getListView());
+
+        mListPopupWindow.show();
+    }
+
+    private void showDialog() {
+        ListView listView = new ListView(mContext);
+        this.configureList(listView);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setCancelable(true);
+        builder.setView(listView);
+        mAlertDialog = builder.show();
+    }
+
+    public void dismiss() {
+        if (mSpinnerMode == MODE_DROPDOWN && mListPopupWindow != null)
+            mListPopupWindow.dismiss();
+        else if (mSpinnerMode == MODE_DIALOG && mAlertDialog != null)
+            mAlertDialog.dismiss();
+
+        mListPopupWindow = null;
+        mAlertDialog = null;
+    }
+
+    private void configureList(ListView listView) {
         if (mHeaderViewList != null) {
             for (Pair<View, Boolean> viewBooleanPair : mHeaderViewList) {
                 if (viewBooleanPair.second)
-                    viewBooleanPair.first.setTag(TAG_HEADER);
+                    viewBooleanPair.first.setTag(Tags.HEADER);
                 listView.addHeaderView(viewBooleanPair.first, null, viewBooleanPair.second);
             }
         }
         if (mFooterViewList != null) {
             for (Pair<View, Boolean> viewBooleanPair : mFooterViewList) {
                 if (viewBooleanPair.second)
-                    viewBooleanPair.first.setTag(TAG_FOOTER);
+                    viewBooleanPair.first.setTag(Tags.FOOTER);
                 listView.addFooterView(viewBooleanPair.first, null, viewBooleanPair.second);
             }
         }
 
-        if (mWrapperListAdapter != null) {
+        if (mWrapperListAdapter != null)
             listView.setAdapter(mWrapperListAdapter);
-            listView.setOnItemClickListener(this);
-            listView.setDividerHeight(mDividerHeight);
-        }
-
-        return listView;
-    }
-
-    private void showDropdown() {
-        mPopupWindow = new PopupWindow(this.createList(), this.getWidth(), this.getWidth(), true);
-        mPopupWindow.setBackgroundDrawable(mContext.getResources().getDrawable(android.R.drawable.dialog_holo_light_frame));
-        PopupWindowCompat.showAsDropDown(mPopupWindow, this, 0, 0, GravityCompat.START);
-    }
-
-    private void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setCancelable(true);
-        builder.setView(this.createList());
-        mAlertDialog = builder.show();
+        listView.setOnItemClickListener(this);
+        listView.setDividerHeight(mDividerHeight);
     }
 
     private static class WrapperListAdapter implements ListAdapter {
@@ -260,16 +279,6 @@ public class Spinner extends AppCompatSpinner implements AdapterView.OnItemClick
             this.cancelable = cancelable;
             return this;
         }
-        //        public Configurator setMultiChoiceItems(@ArrayRes int items) {
-//            this.setCancelable(false);
-//            this.setAdapter(baseAdapter);
-//            return this;
-//        }
-//        public Configurator setMultiChoiceItems(@ArrayRes int items) {
-//            this.setCancelable(false);
-//            this.setAdapter(baseAdapter);
-//            return this;
-//        }
         public void apply() {
             mSpinner.dismiss();
             mSpinner.mCancelable = cancelable;
