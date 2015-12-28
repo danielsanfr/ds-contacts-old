@@ -53,7 +53,7 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
     // Same animation that FloatingActionButton.Behavior uses to
     // hide the FAB when the AppBarLayout exits
     private void animateOut(final FloatingActionButton button) {
-        if (Build.VERSION.SDK_INT >= 14) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
            ViewCompat.animate(button).scaleX(0.0F).scaleY(0.0F).alpha(0.0F)
                     .setInterpolator(INTERPOLATOR).withLayer()
                     .setListener(new ViewPropertyAnimatorListener() {
@@ -70,25 +70,25 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
                             view.setVisibility(View.GONE);
                         }
                     }).start();
-        } else {
-            Animation anim = AnimationUtils.loadAnimation(button.getContext(), R.anim.fab_out);
-            anim.setInterpolator(INTERPOLATOR);
-            anim.setDuration(200L);
-            anim.setAnimationListener(new Animation.AnimationListener() {
-                public void onAnimationStart(Animation animation) {
-                    ScrollAwareFABBehavior.this.mIsAnimatingOut = true;
-                }
-
-                public void onAnimationEnd(Animation animation) {
-                    ScrollAwareFABBehavior.this.mIsAnimatingOut = false;
-                    button.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onAnimationRepeat(final Animation animation) {
-                }
-            });
-            button.startAnimation(anim);
+//        } else {
+//            Animation anim = AnimationUtils.loadAnimation(button.getContext(), R.anim.fab_out);
+//            anim.setInterpolator(INTERPOLATOR);
+//            anim.setDuration(200L);
+//            anim.setAnimationListener(new Animation.AnimationListener() {
+//                public void onAnimationStart(Animation animation) {
+//                    ScrollAwareFABBehavior.this.mIsAnimatingOut = true;
+//                }
+//
+//                public void onAnimationEnd(Animation animation) {
+//                    ScrollAwareFABBehavior.this.mIsAnimatingOut = false;
+//                    button.setVisibility(View.GONE);
+//                }
+//
+//                @Override
+//                public void onAnimationRepeat(final Animation animation) {
+//                }
+//            });
+//            button.startAnimation(anim);
         }
     }
 
@@ -96,15 +96,15 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
     // uses to show the FAB when the AppBarLayout enters
     private void animateIn(FloatingActionButton button) {
         button.setVisibility(View.VISIBLE);
-        if (Build.VERSION.SDK_INT >= 14) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             ViewCompat.animate(button).scaleX(1.0F).scaleY(1.0F).alpha(1.0F)
                     .setInterpolator(INTERPOLATOR).withLayer().setListener(null)
                     .start();
-        } else {
-            Animation anim = AnimationUtils.loadAnimation(button.getContext(), R.anim.fab_in);
-            anim.setDuration(200L);
-            anim.setInterpolator(INTERPOLATOR);
-            button.startAnimation(anim);
+//        } else {
+//            Animation anim = AnimationUtils.loadAnimation(button.getContext(), R.anim.fab_in);
+//            anim.setDuration(200L);
+//            anim.setInterpolator(INTERPOLATOR);
+//            button.startAnimation(anim);
         }
     }
 
